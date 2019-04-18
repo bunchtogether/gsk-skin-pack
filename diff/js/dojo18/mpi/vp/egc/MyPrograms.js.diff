@@ -1,5 +1,5 @@
 --- ./default/js/dojo18/mpi/vp/egc/MyPrograms.js	2019-04-18 16:02:36.000000000 -0400
-+++ ./custom/js/dojo18/mpi/vp/egc/MyPrograms.js	2019-04-18 16:02:34.000000000 -0400
++++ ./custom/js/dojo18/mpi/vp/egc/MyPrograms.js	2019-04-18 16:04:48.000000000 -0400
 @@ -1,5 +1,6 @@
  define([
  	"dojo/Stateful",
@@ -387,10 +387,10 @@
  							console.log("_m.viewModel.quickCapture2Enabled: " + _m.viewModel.quickCapture2Enabled);
  							if (_m.viewModel.quickCapture2Enabled()) {
 -								g = window.open("/som/QumuQuickCapture2UserGuide.pdf");
-+								g = window.open("https://wb.gsk.com/som/QumuQuickCapture2UserGuide.pdf");
++								g = window.open("https://wbdev.gsk.com/som/QumuQuickCapture2UserGuide.pdf");
  							} else {
 -								g = window.open("/som/QumuQuickCaptureUserGuide.pdf");
-+								g = window.open("https://wb.gsk.com/som/QumuQuickCapture2UserGuide.pdf");
++								g = window.open("https://wbdev.gsk.com/som/QumuQuickCapture2UserGuide.pdf");
  							}
  							popup.close(this.dialog);
  								}));

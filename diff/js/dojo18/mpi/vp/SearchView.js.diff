@@ -1,5 +1,5 @@
 --- ./default/js/dojo18/mpi/vp/SearchView.js	2019-04-18 16:02:36.000000000 -0400
-+++ ./custom/js/dojo18/mpi/vp/SearchView.js	2019-04-18 16:02:34.000000000 -0400
++++ ./custom/js/dojo18/mpi/vp/SearchView.js	2019-04-18 16:04:48.000000000 -0400
 @@ -24,10 +24,38 @@
  ], function(View, _Templated, i18n, dom, domStyle, domClass, domConstruct, query, lang, declare, has, sniff, TooltipDialog, popup, restXhr, eventHandling, template, keys, string, on, queryj) {
  	
@@ -28,7 +28,7 @@
 +		}
 +		var footer = document.createElement("div");
 +		footer.id = "gskFooter";
-+		footer.innerHTML = '<div class="footerLabel">GSK Tube</div><div class="footerList"><a href="https://cbshelp.gsk.com/Pages/GSKTube-Terms-and-Conditions.aspx">GSK Tube terms and conditions</a><a href="https://myconnect.gsk.com/sites/cGSKAssets/pages/UseAndAccessPolicies.aspx">Your responsibilities online</a><a href="https://connect.gsk.com/sites/scs/CITC/CCC/GSKTube/Documents/Branded%20Consent%20to%20record.docx">Consent request form</a><a href="https://fb.me/g/9Sb3Voelh/uyt3wZrx">Contacts</a><a href="https://cbshelp.gsk.com/Pages/GSK-Tube-Record-Retention-Policy.aspx">GSK Tube record retention policy</a></div>';
++		footer.innerHTML = '<div class="footerLabel">GSK Tube</div><div class="footerList"><a href="https://cbshelp.gsk.com/Pages/GSKTube-Terms-and-Conditions.aspx">GSKTube terms and conditions</a><a href="https://myconnect.gsk.com/sites/cGSKAssets/pages/UseAndAccessPolicies.aspx">Your responsibilities online</a><a href="https://connect.gsk.com/sites/scs/CITC/CCC/GSKTube/Documents/Branded%20Consent%20to%20record.docx">Consent request form</a><a href="https://fb.me/g/9Sb3Voelh/uyt3wZrx">Contacts</a><a href="https://cbshelp.gsk.com/Pages/GSK-Tube-Record-Retention-Policy.aspx">GSK Tube record retention policy</a></div>';
 +    document.body.appendChild(footer);
 +	}
 +	updateSubnavigation();
@@ -40,7 +40,7 @@
  		RC: RC,
  		allowLogin: true,
  		templateString: template,
-@@ -45,6 +73,11 @@
+@@ -45,6 +73,12 @@
  		defaultSearch: null,
  		isAutoSuggestionEnabled: false,
  		params : null, 
@@ -48,11 +48,12 @@
 +		favoritesActive: path === "myfavorites.vp" ? "active" : '',
 +		broadcastsActive: path === "mywebcasts.vp" ? "active" : '',
 +		uploadActive: path === "myprograms.vp" ? "active" : '',
-+		supportActive: path + search === "channel.vp?channelId=esc_prg_cntr_chn:2502" ? "active" : '',
++		supportActive: path + search === "channel.vp?channelId=esc_prg_cntr_chn:601" ? "active" : '',
++
  		postCreate: function() {
  			this.inherited(arguments);
  			
-@@ -64,7 +97,7 @@
+@@ -64,7 +98,7 @@
  			this.toolTipContainer.appendChild(this.dialog.domNode);
  			
  			if(this.dialog.containerNode.parentElement.parentElement) {
@@ -61,7 +62,7 @@
  			}
  			
  			on(window, "resize", lang.hitch(this, this._onWindowResize));
-@@ -170,7 +203,7 @@
+@@ -170,7 +204,7 @@
  		_onWindowResize: function(e) {
  			if(domClass.contains(this.accessButton,"active")) {
  				this._openAccessPanel(e);
@@ -70,7 +71,7 @@
  			}
  			if(this.isAutoSuggestionEnabled && !domClass.contains(this.possibleSearchTermsNode, "hide")) {
  				domClass.add(this.possibleSearchTermsNode, "hide");
-@@ -231,8 +264,7 @@
+@@ -231,8 +265,7 @@
  			if(this.defaultSearch == true) e.target.value = "";
  			this.searchInput.focus();
  			
@@ -80,7 +81,7 @@
  			this.initiateAutoSuggest();
  		},
  		
-@@ -261,7 +293,7 @@
+@@ -261,7 +294,7 @@
  				this.defaultSearch = true;
  			}
  		},
@@ -89,7 +90,7 @@
  		initiateAutoSuggest: function() {
  			if(!has("qumu-phone") && this.isAutoSuggestionEnabled) {
  				//if(!this.sendToServer || (this.sendToServer && this.sendToServer == this.searchInput.value && !domClass.contains(this.possibleSearchTermsNode, "hide"))) {
-@@ -329,7 +361,7 @@
+@@ -329,7 +362,7 @@
  				for(var i=0; i<this.possibleSearchTerms.length; i++) {
  					searchTerm = domConstruct.create("div",{"class": "possibleSearchTerm", "data": this.possibleSearchTerms[i].prefix + this.possibleSearchTerms[i].suggestion}, d,"last");
  					if(this.possibleSearchTerms[i].prefix.length > 0) {
@@ -98,7 +99,7 @@
  					}
  					//this.possibleSearchTerms[i].suggestion = this.possibleSearchTerms[i].suggestion + "garbage_garbage_garbage_garbage_garbage_garbage_garbage_garbage_garbage_garbage_";
  					domConstruct.create("span",{"class": "autoCompleteTerm", "innerHTML": this.possibleSearchTerms[i].suggestion, "data": this.possibleSearchTerms[i].prefix + this.possibleSearchTerms[i].suggestion}, searchTerm,"last");
-@@ -374,7 +406,7 @@
+@@ -374,7 +407,7 @@
  					}
  				});
  				
@@ -107,7 +108,7 @@
  				for(var i = 0; i < d.children.length; i++) {
  					childrenWidth += getEleWidth(d.children[i].getBoundingClientRect());
  				}
-@@ -479,7 +511,7 @@
+@@ -479,7 +512,7 @@
  					} else {
  						this.autoSuggestPointer = -1;
  						this.searchInput.value = this.sendToServer;
@@ -116,7 +117,7 @@
  				}));
  				return true;
  			}
-@@ -503,7 +535,7 @@
+@@ -503,7 +536,7 @@
  		},
  		_search: function() {
  			if(!has("qumu-phone")) {
@@ -125,7 +126,7 @@
  			} else {
  				this._showOrHidePhoneSearchBox();
  			}
-@@ -532,6 +564,7 @@
+@@ -532,6 +565,7 @@
  			}
  			this.params= filteredParams;
  		},
@@ -133,7 +134,7 @@
  		_searchIt: function() {
  			
  			var query = this.searchInput.value;
-@@ -543,14 +576,14 @@
+@@ -543,14 +577,14 @@
  			}
  			if(this.threshold>0)	query = query + '&threshold=' + this.threshold;
  			if(this.drill)	query = query + '&drill=' + encodeURIComponent(this.drill);
@@ -151,7 +152,7 @@
  		},
  		
  		_showOrHidePhoneSearchBox: function() {
-@@ -594,6 +627,19 @@
+@@ -594,6 +628,19 @@
  			}
  		},
  		

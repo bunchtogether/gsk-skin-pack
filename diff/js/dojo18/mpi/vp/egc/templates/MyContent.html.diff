@@ -1,5 +1,5 @@
 --- ./default/js/dojo18/mpi/vp/egc/templates/MyContent.html	2019-04-18 16:02:36.000000000 -0400
-+++ ./custom/js/dojo18/mpi/vp/egc/templates/MyContent.html	2019-04-18 16:02:34.000000000 -0400
++++ ./custom/js/dojo18/mpi/vp/egc/templates/MyContent.html	2019-04-18 16:04:48.000000000 -0400
 @@ -1,182 +1,176 @@
  <div>
 -	<table width=100% cellspacing=0 cellpadding=2 data-bind="css: { locked: inEditMode, locked: adding}" data-dojo-attach-point="_contentTable">
@@ -134,7 +134,7 @@
 +          </div>        
 +        </td>
 +        <td align="right" class="add" colspan="3">
-+          <div><button class="lightButton genericButton" title="{{RC.addlabel}}" aria-label="{{R.addContentAriaLabel}}" data-bind="css: $root.buttonEnable($data), enable: !loadingJobs() && !loadingContent() && !adding() && !inEditMode(), attr: {tabindex: $root.getTabindex($data)}" data-dojo-attach-event="onclick: addContent, onkeydown: addContent">{{R.addContentAriaLabel}}</button> 
++          <div><button class="lightButton genericButton" title="{{RC.addlabel}}" aria-label="{{R.addContentAriaLabel}}" data-bind="css: $root.buttonEnable($data), enable: !loadingJobs() && !loadingContent() && !adding() && !inEditMode(), attr: {tabindex: $root.getTabindex($data)}" data-dojo-attach-event="onclick: addContent, onkeydown: addContent">{{R.addContentAriaLabel}}</button>
 +          <button class="genericButton addButton" title="{{RC.addlabel}}" aria-label="{{R.addContentAriaLabel}}" data-bind="css: $root.buttonEnable($data), enable: !loadingJobs() && !loadingContent() && !adding() && !inEditMode(), attr: {tabindex: $root.getTabindex($data)}" data-dojo-attach-point="addContentButtonNode"></button></div>
 +        </td>
 +      </tr>

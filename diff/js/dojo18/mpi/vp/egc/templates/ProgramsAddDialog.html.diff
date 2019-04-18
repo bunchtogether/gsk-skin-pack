@@ -1,5 +1,5 @@
 --- ./default/js/dojo18/mpi/vp/egc/templates/ProgramsAddDialog.html	2019-04-18 16:02:36.000000000 -0400
-+++ ./custom/js/dojo18/mpi/vp/egc/templates/ProgramsAddDialog.html	2019-04-18 16:02:34.000000000 -0400
++++ ./custom/js/dojo18/mpi/vp/egc/templates/ProgramsAddDialog.html	2019-04-18 16:04:48.000000000 -0400
 @@ -1,33 +1,53 @@
 -<div style="min-height:130px">	
 -	<div class="subHeader"><span>{{RC.newProgram}}</span></div>
@@ -63,7 +63,7 @@
 +			<div class="gsk-instructions">
 +				<h3>Only upload videos that comply with:</h3>
 +				<div>1. Comply with GSK's <a href="https://cbshelp.gsk.com/Pages/GSKTube-Terms-and-Conditions.aspx">GSKTube terms and conditions</a></div>
-+				<div>2. <a href="https://myconnect.gsk.com/sites/cGSKAssets/pages/UseAndAccessPolicies.aspx">Your Responsibilities Online</a></div>
++				<div>2. <a href="https://connect.gsk.com/pages/UseAndAccessPolicies.aspx">Your Responsibilities Online</a></div>
 +				<div>3. GSK established security standards and policies.</div>
 +				<h4>Unsure what to do?</h4>
 +				<div>Check out <a href="https://cbshelp.gsk.com/Pages/Uploading-videos-to-GSKTube.aspx">Getting started with Uploading</a></div>
