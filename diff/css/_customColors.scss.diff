@@ -1,0 +1,25 @@
+--- ./default/css/_customColors.scss	2019-04-18 16:02:34.000000000 -0400
++++ ./custom/css/_customColors.scss	2017-07-25 23:40:37.000000000 -0400
+@@ -3,4 +3,20 @@
+ Copy this file to your overrides directory and change it
+ to implement your custom branding
+ 
+-*/
+\ No newline at end of file
++*/
++
++
++$color_Light1:            #fafafb;
++$color_header:             #544f40;
++$color_header_active:         #f36633;
++$color_header_hover:         #15717d;
++$color_Mid1:             #a9a79f;
++$color_Mid4:             #d5d1ce;
++
++$color_background_hover:      #EEEDEC;
++
++$color_buttonSelected:         #f36633;      
++$color_buttonHighlight:       #f36633;
++$color_scrubber_highlight:      #f36633;
++$color_selected:          #f36633;
++$color_highlight:          #f36633;  

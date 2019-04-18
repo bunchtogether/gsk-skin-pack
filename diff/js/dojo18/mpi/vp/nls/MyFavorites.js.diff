@@ -1,0 +1,24 @@
+--- ./default/js/dojo18/mpi/vp/nls/MyFavorites.js	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/vp/nls/MyFavorites.js	2017-07-25 23:40:37.000000000 -0400
+@@ -4,17 +4,17 @@
+     "channelContent1" : "Favorites provide quick access to channels. Subscriptions allow you to receive email alerts from selected channels.",
+     "channelContent2" : "Click the heart icon on the thumbnail to add a channel to your favorites list.",
+     "confirm" : "Confirm",
+-    "content1" : "Favorites provide quick access to videos. Subscriptions allow you to receive email alerts from selected programs.",
++    "content1" : "Favourites provide quick access to videos. Subscriptions allow you to receive email alerts from selected programs.",
+     "content2" : "Click the heart icon at the top of the video to add a program to your favorites list.",
+     "contentBin" : "Content Bin",
+-    "head" : "You have not created any favorites.",
++    "head" : "You have not created any favourites.",
+     "pending" : "Pending Uploads",
+-    "remove" : "<p>Remove this item from your Favorites list?</p>",
++    "remove" : "<p>Remove this item from your Favourites list?</p>",
+     "removeFile" : "Remove File",
+     "subscribe" : "Subscribe",
+     "subscribeTitle" : "Subscribe to email notifications.",
+     "title" : "My Content",
+-    "unFavorite" : "Remove From Favorites",
++    "unFavorite" : "Remove From Favourites",
+     "unsubscribe" : "Unsubscribe",
+     "unsubscribeTitle" : "Unsubscribe from email notifications.",
+     "yes" : "Yes"

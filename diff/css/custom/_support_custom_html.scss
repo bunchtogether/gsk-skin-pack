@@ -1,0 +1,105 @@
+.gskSupport {
+  &:before {
+    content: "";
+    position: absolute;
+    top: -16px;
+    bottom: -15px;
+    left: -16px;
+    right: -16px;
+    background:$primaryBackground;
+    z-index:99;
+  }
+  @media #{$smallViewport} {
+    &:before {
+      top: -20px;
+      bottom: -15px;
+      left: -1px;
+      right: -1px;
+    }
+    box-sizing: border-box;
+    padding:0px 15px 0 15px;
+  }
+  width: 100%;
+  padding-top:0px;
+  padding-bottom:20px;
+  position:relative;
+	> a {
+    box-sizing: border-box;
+    font-weight:bold;
+    z-index:100;
+    position: relative;
+    display:inline-block;
+    background-color: $color_White;
+    border: 1px solid $secondaryBorder;
+    text-align:center;
+    text-decoration: none;
+    color: $color_header_hover;
+    @media #{$largeViewport} {
+      width: 451px;
+      height: 107px;
+      font-size:24px;
+      line-height: 107px;
+      vertical-align: middle;
+      margin-left:20px;
+      margin-bottom:20px;
+      margin-top: 60px;
+    }
+    @media #{$mediumViewport} {
+      width: 335px;
+      height: 107px;
+      font-size:24px;
+      line-height: 107px;
+      vertical-align: middle;
+      margin-left:20px;
+      margin-bottom:20px;
+      margin-top: 60px;
+    }
+    &:before {
+      content: "";
+      width: 84px;
+      height: 84px;
+      position: absolute;
+      top:-62px;
+      left: 50%;
+      margin-left: -42px;
+    }
+
+    @media #{$smallViewport} {
+      text-align: left;
+      width:calc(100% - 30px);
+      font-size:18px;
+      height: 65px;
+      margin: 0px 15px 15px 25px;
+      line-height: 65px;
+      vertical-align:middle;
+      padding-left: 40px;
+      &:before {
+        top:5px;
+        width: 55px;
+        height: 55px;
+        left:-27px;  
+        margin-left: 0;
+      }
+    }
+	 	&.gettingStarted {
+      &:before {
+        background-image: url('../images/gsk/svg/support_getting_started.svg');
+      }
+		}	
+		&.frequentlyAskedQuestions {
+      &:before {
+        background-image: url('../images/gsk/svg/support_faq.svg');
+      }
+		}	
+		&.uploadingVideos {
+      &:before {
+        background-image: url('../images/gsk/svg/support_upload.svg');
+      }
+		}	
+		&.contactHelpdesk {
+      &:before {
+        background-image: url('../images/gsk/svg/support_helpdesk.svg');
+      }
+		}
+	}	
+}

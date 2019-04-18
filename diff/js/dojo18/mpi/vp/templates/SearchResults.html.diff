@@ -1,0 +1,283 @@
+--- ./default/js/dojo18/mpi/vp/templates/SearchResults.html	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/vp/templates/SearchResults.html	2019-04-18 16:02:34.000000000 -0400
+@@ -1,151 +1,131 @@
+ <div class="search_result_item">
+-	<div class="thumbAndBasic">
+-		<div class="thumbnail" style="width: 163px; height: 108px" data-dojo-attach-point="_imgContainerNode" data-dojo-attach-event="ondijitclick: _click" tabindex="3020" aria-label="{{accessibilityInfo}}">
+-			<img src="{{{thumbnail}}}" data-dojo-attach-event="onload: _imgLoad"/>
+-			
+-			{{^isLive}}
+-			{{#hasRatings}}
+-			<div class="ratingContainer">
+-				<div class="bgOverlay"></div>
+-				<span class="rates dataItem ratingField" title="{{ratingAverage}} {{RC.starsLabel}}" data-dojo-attach-point="ratingFieldNode" data-dojo-attach-event="ondijitclick: _openRatingPanel, onmouseover: _openRatingPanel, onmouseleave: _cancelOpeningRatingPanel">
+-					<div class="pod_starContainer whiteIcons">
+-						<div class="starHolder">
+-							<div class="baseStar"></div>
+-							<div class="star" style="width: {{avgRating1}}%"></div>
+-						</div>
+-						<div class="starHolder">
+-							<div class="baseStar"></div>
+-							<div class="star" style="width: {{avgRating2}}%"></div>
+-						</div>
+-						<div class="starHolder">
+-							<div class="baseStar"></div>
+-							<div class="star" style="width: {{avgRating3}}%"></div>
+-						</div>
+-						<div class="starHolder">
+-							<div class="baseStar"></div>
+-							<div class="star" style="width: {{avgRating4}}%"></div>
+-						</div>
+-						<div class="starHolder">
+-							<div class="baseStar"></div>
+-							<div class="star" style="width: {{avgRating5}}%"></div>
+-						</div>
+-						<div class="totalCount">({{totalCount}})</div>
+-					</div>
+-				</span>
+-			</div>
+-			{{/hasRatings}}
+-			{{/isLive}}
+-		</div>
+-		
+-		<div class="basic">
+-			<div class="titleAuthorDurPub">
+-				<div class="title" data-dojo-attach-point="titleNode" title="{{rawTitle}}">{{{title}}}</div>	
+-				{{^isLive}}
+-					{{#hasDuration}}
+-					<div class="duration dataItem">{{duration}}</div>
+-					{{/hasDuration}}
+-				
+-					{{#hasAuthor}}
+-					<div class="author" data-dojo-attach-point="authorNode" data-dojo-attach-event="click: drillByAuthor">{{{author}}}</div>
+-					{{/hasAuthor}}
+-					
+-					{{#hasPublicationDate}}
+-					<div class="publicationDate dataItem">{{publicationDate}}</div>
+-					{{/hasPublicationDate}}
+-				{{/isLive}}
+-				
+-				{{#isLive}}
+-					{{#hasUpcoming}}
+-						<div class="liveSchedule" title="{{scheduleTitle}}">
+-							<div class="statusIcon {{iconClass}}"></div>
+-							<div class="timeDate">
+-								<div class="startTime">{{{startTime}}}</div>
+-								<BR><div class="startDate">{{startDate}}</div>							
+-							</div>
+-						</div>
+-						{{#hasAuthor}}
+-							<div class="author" data-dojo-attach-point="authorNode" data-dojo-attach-event="click: drillByAuthor">{{{author}}}</div>
+-						{{/hasAuthor}}
+-					{{/hasUpcoming}}
+-					{{^hasUpcoming}}
+-						<div class="liveSchedule">
+-							<div class="statusIcon status3"></div>
+-							<div class="timeDate">
+-								<div class="startDate noDate">{{RC.noUpcomingBroadcasts}}</div>
+-							</div>	
+-						</div>
+-						{{#hasAuthor}}
+-							<div class="author" data-dojo-attach-point="authorNode" data-dojo-attach-event="click: drillByAuthor">{{{author}}}</div>
+-						{{/hasAuthor}}
+-					{{/hasUpcoming}}
+-				{{/isLive}}	
++  <div class="thumbAndBasic">
++    <div class="thumbnail" data-dojo-attach-point="_imgContainerNode" data-dojo-attach-event="ondijitclick: _click" tabindex="3020" aria-label="{{accessibilityInfo}}" style="background-image: url({{{thumbnail}}});"> 
++      {{^isLive}}
++        {{#hasDuration}}
++        <div class="duration dataItem">{{duration}}</div>
++        {{/hasDuration}}
++      {{/isLive}}
++      {{^isLive}}
++      {{#hasRatings}}
++      <div class="ratingContainer">
++        <div class="bgOverlay"></div>
++        <span class="rates dataItem ratingField" title="{{ratingAverage}} {{RC.starsLabel}}" data-dojo-attach-point="ratingFieldNode" data-dojo-attach-event="ondijitclick: _openRatingPanel, onmouseover: _openRatingPanel, onmouseleave: _cancelOpeningRatingPanel">
++          <div class="pod_starContainer whiteIcons">
++            <div class="starHolder">
++              <div class="baseStar"></div>
++              <div class="star" style="width: {{avgRating1}}%"></div>
++            </div>
++            <div class="starHolder">
++              <div class="baseStar"></div>
++              <div class="star" style="width: {{avgRating2}}%"></div>
++            </div>
++            <div class="starHolder">
++              <div class="baseStar"></div>
++              <div class="star" style="width: {{avgRating3}}%"></div>
++            </div>
++            <div class="starHolder">
++              <div class="baseStar"></div>
++              <div class="star" style="width: {{avgRating4}}%"></div>
++            </div>
++            <div class="starHolder">
++              <div class="baseStar"></div>
++              <div class="star" style="width: {{avgRating5}}%"></div>
++            </div>
++            <div class="totalCount">({{totalCount}})</div>
++          </div>
++        </span>
++      </div>
++      {{/hasRatings}}
++      {{/isLive}}
++    </div>
++    
++    <div class="basic">
++      <div class="titleAuthorDurPub" data-dojo-attach-event="ondijitclick: _click">
++        <div class="title" data-dojo-attach-point="titleNode" title="{{rawTitle}}">{{{title}}}</div>  
++        
++        {{#isLive}}
++          {{#hasUpcoming}}
++            <div class="liveSchedule" title="{{scheduleTitle}}">
++              <div class="statusIcon {{iconClass}}"></div>
++              <div class="timeDate">
++                <div class="startTime">{{{startTime}}}</div>
++                <BR><div class="startDate">{{startDate}}</div>              
++              </div>
++            </div>
++          {{/hasUpcoming}}
++          {{^hasUpcoming}}
++            <div class="liveSchedule">
++              <div class="statusIcon status3"></div>
++              <div class="timeDate">
++                <div class="startDate noDate">{{RC.noUpcomingBroadcasts}}</div>
++              </div>  
++            </div>
++          {{/hasUpcoming}}
++        {{/isLive}}  
+ 
+-			</div>
+-			
+-			<div class="channelName {{isChannelActive}}" data-dojo-attach-event="ondijitclick: _openChannel">
+-				{{channelName}}
+-			</div>
+-		
+-			<div class="programDescription">
+-				<div class="description" data-dojo-attach-point="descriptionNode">{{{description}}}</div>
+-			</div>
+-		
+-			
+-		</div>
+-	</div>
+-	
+-	<div class="selectionBar">
+-		<div class="viewLikeComment">
+-			{{^isLive}}
+-				{{#hasLikesOrViews}}
+-				<div class="likesViews" data-dojo-attach-point="likesViewsNode">
+-					{{#hasViews}}
+-					<span class="views dataItem">{{viewCount}}<span class="viewIcon"></span></span>
+-					{{/hasViews}}
+-					{{#hasLikes}}
+-					<span class="likeField">
+-						<span class="likes dataItem">{{likeCount}}<span class="likeIcon"></span></span>
+-					</span>
+-					{{/hasLikes}}
+-				</div>
+-				{{/hasLikesOrViews}}
+-		
+-		
+-				{{#hasCommentCount}}
+-				<div class="commentCount dataItem commentField" title="{{commentCount}} {{RC.commentsLabel}}">{{commentCount}}<div class="commentIcon"></div></div>
+-				{{/hasCommentCount}}
+-			{{/isLive}}	
+-		</div>
+-		
+-		<div class="tagsAttributesSpeech" data-dojo-attach-point="tagsAttributesSpeechNode">
+-			<div class="speechMatches {{speechAvailable}}" data-dojo-attach-point="speechMatchesNode">
+-				{{#hasSpeech}}
+-				<div class="speechMatchesPresent tabItem" title="{{speechCount}} {{RC.speechLabel}}" data-dojo-attach-point="speechMatchesPresent" data-dojo-attach-event="ondijitclick: _toggleSpeech" tabindex="3020" aria-label="{{speechCount}} {{RC.speechLabel}}"><span class="count">{{speechCount}}</span> <div class="bgIcon"></div></div>
+-				{{/hasSpeech}}
+-				{{^hasSpeech}}
+-				<div class="speechMatchesNotPresent tabItem" title="{{RC.noSpeechLabelHover}}"><div class="bgIcon"></div></div>
+-				{{/hasSpeech}}
+-			</div>
+-			<div class="tags {{tagAvailable}}" data-dojo-attach-point="tagsNode">
+-				{{#hasTags}}
+-				<div class="tagsPresent tabItem" title="{{tagsCount}} {{RC.tagsLabel}}" data-dojo-attach-point="tagsPresent" data-dojo-attach-event="ondijitclick: _toggleTag" tabindex="3020" aria-label="{{tagsCount}} {{RC.tagsLabel}}"><span class="count">{{tagsCount}}</span> <div class="bgIcon"></div></div>
+-				{{/hasTags}}
+-				{{^hasTags}}
+-				<div class="tagsNotPresent tabItem" title="{{RC.noTagsLabel}}"><div class="bgIcon"></div></div>
+-				{{/hasTags}}
+-			</div>
+-			<div class="customAttributes {{attributeAvailable}}" data-dojo-attach-point="attributesNode">
+-				{{#hasAttributes}}
+-				<div class="customAttrPresent tabItem" title="{{attributesCount}} {{RC.attributesLabel}}" data-dojo-attach-point="customAttrPresent" data-dojo-attach-event="ondijitclick: _toggleAttribute" tabindex="3020" aria-label="{{attributesCount}} {{RC.attributesLabel}}"><span class="count">{{attributesCount}}</span> <div class="bgIcon"></div></div>
+-				{{/hasAttributes}}
+-				{{^hasAttributes}}
+-				<div class="customAttrNotPresent tabItem" title="{{RC.noAttributesLabel}}"><div class="bgIcon"></div></div>
+-				{{/hasAttributes}}
+-			</div>
+-		</div>
+-	</div>
+-	
+-	<div class="container" data-dojo-attach-point="containerNode">
+-	</div>
+-	<div class="clear"></div>
++      </div>
++    
++      <div class="viewLikeComment">
++        {{^isLive}}
++          {{#hasLikesOrViews}}
++            {{#hasViews}}
++            <span class="views dataItem">{{viewCount}}<span class="viewIcon"></span></span>
++            {{/hasViews}}
++            {{#hasLikes}}
++            <span class="likeField">
++              <span class="likes dataItem">{{likeCount}}<span class="likeIcon"></span></span>
++            </span>
++            {{/hasLikes}}
++          {{/hasLikesOrViews}}
++      
++      
++          {{#hasCommentCount}}
++          <div class="commentCount dataItem commentField" title="{{commentCount}} {{RC.commentsLabel}}">{{commentCount}}<div class="commentIcon"></div></div>
++          {{/hasCommentCount}}
++        {{/isLive}}  
++      </div>
++      {{#hasAuthor}}
++        <div class="author" data-dojo-attach-point="authorNode" data-dojo-attach-event="click: drillByAuthor">{{{author}}}</div>
++      {{/hasAuthor}}
++       • 
++      {{#hasPublicationDate}}
++        <div class="publicationDate dataItem">{{publicationDate}}</div>
++      {{/hasPublicationDate}}
++    
++    </div>
++  </div>
++  
++  <div class="selectionBar">    
++    <div class="tagsAttributesSpeech" data-dojo-attach-point="tagsAttributesSpeechNode">
++      <div class="speechMatches {{speechAvailable}}" data-dojo-attach-point="speechMatchesNode">
++        {{#hasSpeech}}
++        <div class="speechMatchesPresent tabItem" title="{{speechCount}} {{RC.speechLabel}}" data-dojo-attach-point="speechMatchesPresent" data-dojo-attach-event="ondijitclick: _toggleSpeech" tabindex="3020" aria-label="{{speechCount}} {{RC.speechLabel}}"><span class="count">{{speechCount}}</span> <div class="bgIcon"></div></div>
++        {{/hasSpeech}}
++        {{^hasSpeech}}
++        <div class="speechMatchesNotPresent tabItem" title="{{RC.noSpeechLabelHover}}"><div class="bgIcon"></div></div>
++        {{/hasSpeech}}
++      </div>
++      <div class="tags {{tagAvailable}}" data-dojo-attach-point="tagsNode">
++        {{#hasTags}}
++        <div class="tagsPresent tabItem" title="{{tagsCount}} {{RC.tagsLabel}}" data-dojo-attach-point="tagsPresent" data-dojo-attach-event="ondijitclick: _toggleTag" tabindex="3020" aria-label="{{tagsCount}} {{RC.tagsLabel}}"><span class="count">{{tagsCount}}</span> <div class="bgIcon"></div></div>
++        {{/hasTags}}
++        {{^hasTags}}
++        <div class="tagsNotPresent tabItem" title="{{RC.noTagsLabel}}"><div class="bgIcon"></div></div>
++        {{/hasTags}}
++      </div>
++      <div class="customAttributes {{attributeAvailable}}" data-dojo-attach-point="attributesNode">
++        {{#hasAttributes}}
++        <div class="customAttrPresent tabItem" title="{{attributesCount}} {{RC.attributesLabel}}" data-dojo-attach-point="customAttrPresent" data-dojo-attach-event="ondijitclick: _toggleAttribute" tabindex="3020" aria-label="{{attributesCount}} {{RC.attributesLabel}}"><span class="count">{{attributesCount}}</span> <div class="bgIcon"></div></div>
++        {{/hasAttributes}}
++        {{^hasAttributes}}
++        <div class="customAttrNotPresent tabItem" title="{{RC.noAttributesLabel}}"><div class="bgIcon"></div></div>
++        {{/hasAttributes}}
++      </div>
++    </div>
++  </div>
++  
++  <div class="container" data-dojo-attach-point="containerNode">
++  </div>
++  <div class="clear"></div>
+ </div>
+\ No newline at end of file

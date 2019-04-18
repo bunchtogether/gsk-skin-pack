@@ -1,0 +1,43 @@
+--- ./default/js/dojo18/mpi/vp/templates/PlayerTabs.html	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/vp/templates/PlayerTabs.html	2017-07-25 23:40:37.000000000 -0400
+@@ -1,22 +1,20 @@
+ <div class="playerTabs" data-dojo-attach-point="_playerTabs" data-dojo-attach-event="onclick: tabInteract, onmouseover: tabMouseover, onmouseout: tabMouseout, onmouseover: showButtons, onmouseout: hideButtons">
+-	<div data-dojo-attach-point="_buttonContainer" class="buttonContainer" data-dojo-attach-event="">
+-		
+-		<button data-tab-name="close" style="display:none;" title="{{R.hide}}" data-dojo-attach-point="closeButton" class="tabClose" tabindex="1190" data-dojo-attach-event="onclick: closeTabs, onkeydown: keyDownOnCloseTabs" aria-label="{{R.closeTab}}"></button>
+-		
+-		<button data-tab-name="info" title="{{R.programDetail}}" data-dojo-attach-point="infoButton" class="info lastSelected present" tabindex="1110" data-dojo-attach-event="onclick: showTab, onkeydown: showTab" aria-label="{{R.progInfoTab}}"></button>
+-		<button data-tab-name="toc" title="{{R.TOC}}" data-dojo-attach-point="tocButton" class="pButton toc" tabindex="1120" data-dojo-attach-event="onclick: showTab, onkeydown: showTab" aria-label="{{R.tocTab}}"></button>
+-		<button data-tab-name="phonetic" title="{{R.speechSearch}}" data-dojo-attach-point="phoneticButton" class="pButton phonetic" tabindex="1130" data-dojo-attach-event="onclick: showTab, onkeydown: showTab" aria-label="{{R.phoneticTab}}"></button>
+-		<button data-tab-name="share" title="{{R.shareEmbed}}" data-dojo-attach-point="shareButton" class="pButton share" tabindex="1140" data-dojo-attach-event="onclick: showTab, onkeydown: showTab" aria-label="{{R.shareEmbedTab}}"></button>
+-		<button data-tab-name="presenters" title="{{R.presenter}}" data-dojo-attach-point="presentersButton" class="pButton presenters" tabindex="1150" data-dojo-attach-event="onclick: showTab, onkeydown: showTab" aria-label="{{R.presenterTab}}"></button>
+-		<button data-tab-name="schedules" title="{{R.schedules}}" data-dojo-attach-point="schedulesButton" class="pButton schedules" tabindex="1160" data-dojo-attach-event="onclick: showTab, onkeydown: showTab" aria-label="{{R.schedulesTab}}"></button>
+-		<button data-tab-name="questions" title="{{R.questions}}" data-dojo-attach-point="questionsButton" class="pButton questions" tabindex="1170" data-dojo-attach-event="onclick: showTab, onkeydown: showTab" aria-label="{{R.questionsTab}}"></button>
+-		<button data-tab-name="content" title="{{R.content}}" data-dojo-attach-point="videosButton" class="pButton videos" tabindex="1180" data-dojo-attach-event="onclick: showTab, onkeydown: showTab" aria-label="{{R.videosTab}}"></button>
+-		<button data-tab-name="flag" style="display:none;" title="flag {{R.content}}" data-dojo-attach-point="flagButton" class="pButton flags" tabindex="1185" data-dojo-attach-event="onclick: showTab, onkeydown: showTab" aria-label="{{R.videosTab}}"></button>
+-		<div class="overlay" data-dojo-attach-event="onmouseover: showButtons, onmouseout: hideButtons"></div>
+-	</div>
+-	<div dojo class="playerTabsInner" data-dojo-attach-point="paneContainer">	
+-		<div class="playerTabSeparator"></div>
+-		<div class="overlayBackground"></div>
+-		<div class="overlayBackground_top"></div>
+-	</div>
++  <div data-dojo-attach-point="_buttonContainer" class="buttonContainer" data-dojo-attach-event="">
++    <button data-tab-name="close" style="display:none;" title="{{R.hide}}" data-dojo-attach-point="closeButton" class="tabClose" tabindex="1190" data-dojo-attach-event="onclick: closeTabs, onkeydown: keyDownOnCloseTabs" aria-label="{{R.closeTab}}"></button>
++    <button data-tab-name="info" title="{{R.programDetail}}" data-dojo-attach-point="infoButton" class="info lastSelected present" tabindex="1110" data-dojo-attach-event="onclick: showTab, onkeydown: showTab" aria-label="{{R.progInfoTab}}"></button>
++    <button data-tab-name="toc" title="{{R.TOC}}" data-dojo-attach-point="tocButton" class="pButton toc" tabindex="1120" data-dojo-attach-event="onclick: showTab, onkeydown: showTab" aria-label="{{R.tocTab}}"></button>
++    <button data-tab-name="phonetic" title="{{R.speechSearch}}" data-dojo-attach-point="phoneticButton" class="pButton phonetic" tabindex="1130" data-dojo-attach-event="onclick: showTab, onkeydown: showTab" aria-label="{{R.phoneticTab}}"></button>
++    <button data-tab-name="share" title="{{R.shareEmbed}}" data-dojo-attach-point="shareButton" class="pButton share" tabindex="1140" data-dojo-attach-event="onclick: showTab, onkeydown: showTab" aria-label="{{R.shareEmbedTab}}"></button>
++    <button data-tab-name="presenters" title="{{R.presenter}}" data-dojo-attach-point="presentersButton" class="pButton presenters" tabindex="1150" data-dojo-attach-event="onclick: showTab, onkeydown: showTab" aria-label="{{R.presenterTab}}"></button>
++    <button data-tab-name="schedules" title="{{R.schedules}}" data-dojo-attach-point="schedulesButton" class="pButton schedules" tabindex="1160" data-dojo-attach-event="onclick: showTab, onkeydown: showTab" aria-label="{{R.schedulesTab}}"></button>
++    <button data-tab-name="questions" title="{{R.questions}}" data-dojo-attach-point="questionsButton" class="pButton questions" tabindex="1170" data-dojo-attach-event="onclick: showTab, onkeydown: showTab" aria-label="{{R.questionsTab}}"></button>
++    <button data-tab-name="content" title="{{R.content}}" data-dojo-attach-point="videosButton" class="pButton videos" tabindex="1180" data-dojo-attach-event="onclick: showTab, onkeydown: showTab" aria-label="{{R.videosTab}}"></button>
++    <button data-tab-name="flag" style="display:none;" title="flag {{R.content}}" data-dojo-attach-point="flagButton" class="pButton flags" tabindex="1185" data-dojo-attach-event="onclick: showTab, onkeydown: showTab" aria-label="{{R.videosTab}}"></button>
++    <div class="overlay" data-dojo-attach-event="onmouseover: showButtons, onmouseout: hideButtons"></div>
++  </div>
++  <div dojo class="playerTabsInner" data-dojo-attach-point="paneContainer">  
++    <div class="playerTabSeparator"></div>
++    <div class="overlayBackground"></div>
++    <div class="overlayBackground_top"></div>
++  </div>
+ </div>

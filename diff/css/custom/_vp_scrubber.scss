@@ -1,0 +1,47 @@
+.vp_scrubber {
+  .trackWrapper {
+    border: none;
+  }
+  .handle {
+    background: transparent !important;
+    border: none !important;
+    overflow: visible;
+    &:after {
+      content: "";
+      width: 14px;
+      height: 5px;
+      background: $color_White;
+      display:block;
+      left:2px;
+      top:2px;
+      position: relative;
+    }
+  }
+  
+  .gutter {
+    margin-top: 11px;
+    margin-left: 0;
+    margin-right: 0;
+    height: 11px;
+    border: none;
+    opacity: 1;
+    .scrubberRange {
+      height: 12px;
+      &.buffered {
+        opacity: 1;
+        background: $color_Mid4;
+      }
+      &.played {
+        opacity: 1;
+        background: $color_header_active;
+      }
+    }    
+  }
+
+}
+
+.vp_scrubber, .vp_accuracy {
+  .track {
+    left: 0;
+  }
+}

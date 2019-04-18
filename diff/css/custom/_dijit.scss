@@ -1,0 +1,37 @@
+body {
+  @extend .placeholder;  
+}
+
+.claro {
+  .dijitTextBox {
+    &.dijitTextBoxErrorFocused {
+      border: 1px solid $color_header_active;
+    }
+    border: 1px solid $color_header;
+    .dijitInputField {
+      padding: 4px 9px;
+      .dijitInputInner {
+        @extend .placeholder;
+        padding:0;
+        margin:0;
+        color: $color_header;
+        font-size: 16px;
+        height: 34px;
+        min-height: 34px;
+        -webkit-appearance: none; -moz-appearance: none; appearance: none;
+        -webkit-border-radius: 0px; 
+        -moz-border-radius: 0px; 
+        border-radius: 0px;
+      }
+      .dijitPlaceHolder {
+        color: $color_Mid1;
+        font-style: normal;
+        padding:0;
+        font-size: 16px;
+        height: 34px;
+        top:12px;
+        left:9px
+      }
+    }
+  }
+}

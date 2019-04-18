@@ -1,0 +1,99 @@
+--- ./default/js/dojo18/mpi/ap/ProgramEditor.js	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/ap/ProgramEditor.js	2019-04-18 16:02:34.000000000 -0400
+@@ -72,7 +72,7 @@
+ 	var contentJobsStore = new JsonRestStore({
+ 		idProperty: "id",
+ 		target: "/adminportal/services/rest/" + (window["com.mpi.settings"] ? window["com.mpi.settings"].domainId : 'defaultdomain') + "/contentjobs/"
+-	});	
++	}); 
+ 		
+ 	var domainOptionsData;
+ 	
+@@ -358,7 +358,13 @@
+ 			pd.videoUploading = ko.observable(false);
+ 			pd.dlUploading = ko.observable(false);
+ 			pd.isMyProgram = ko.observable(false);
+-			
++			pd.advancedMode = ko.observable(false);
++			pd.setBasicMode = function(){
++				pd.advancedMode(false);
++			}
++			pd.setAdvancedMode = function(e){
++				pd.advancedMode(true);
++			}
+ 			pd.enableSave = ko.computed(function() {
+ 				//console.log("checking enable save");
+ 				var r = true;
+@@ -809,7 +815,7 @@
+ 				}
+ 			});
+ 			
+-			pd.canPickThumbUse =  ko.computed(function() {
++			pd.canPickThumbUse =	ko.computed(function() {
+ 				return (pd.isNew() && !pd.isLive());
+ 			});
+ 			
+@@ -840,7 +846,7 @@
+ 				return !pd.allowPolls();
+ 			});
+ 			
+-			//TODO:  We now need to support multiple schedule times. 
++			//TODO:	 We now need to support multiple schedule times. 
+ 			pd.occurrenceTime = ko.computed({
+ 				read: function() {
+ 					if(pd.schedules().length) {
+@@ -907,13 +913,13 @@
+ 			});
+ 			
+ 			pd.questionsAllowedLocked = ko.computed(function() {
+-				return 	pd.anonymousQuestionsAllowedLocked() || 
++				return	pd.anonymousQuestionsAllowedLocked() || 
+ 						pd.questionsAllowedBeforeBroadcastLocked() ||
+ 						pd.questionsAllowedDuringBroadcastLocked();
+ 			});
+ 			
+-			//FUTURE:  We should support multiple schedule
+-			//times.  This simplified widget will only support a single run.
++			//FUTURE:	 We should support multiple schedule
++			//times.	This simplified widget will only support a single run.
+ 			pd.occurrenceTimeValidation = ko.computed(function() {
+ 				var occurTime = pd.occurrenceTime();
+ 				if(occurTime == null) {
+@@ -928,8 +934,8 @@
+ 				}
+ 			});
+ 			
+-			//FUTURE:  We should support multiple schedule
+-			//times.  This simplified widget will only support a single run.
++			//FUTURE:	 We should support multiple schedule
++			//times.	This simplified widget will only support a single run.
+ 			pd.expirationDateValidation = ko.computed(function() {
+ 				var occurTime = pd.expirationDate();
+ 				if(occurTime == null) {
+@@ -1042,7 +1048,7 @@
+ 				var p = value;
+ 				var n = this.initialThumbnailUse;
+ 				
+-				if (value[0]  && value[0].identifier) {
++				if (value[0]	&& value[0].identifier) {
+ 					this.thumbnailUse_extract.disabled = true;
+ 					this.thumbnailUse_select.click();
+ 				} else {
+@@ -1317,7 +1323,7 @@
+ 					} else {
+ 						e = e.data.violations[0];
+ 						_this.viewModel.errorData(e);
+-						_this.viewModel.errorMessage(RE["egc.error"] + " - Property: " + e.property  +" : " + e.message);						
++						_this.viewModel.errorMessage(RE["egc.error"] + " - Property: " + e.property	 +" : " + e.message);						
+ 					}
+ 				} else if(e[0]){
+ 					//template validation errors
+@@ -1523,7 +1529,7 @@
+ 				query: {
+ 					ageMins: "1440",
+ 					accessCnt: "100"
+-                },
++								},
+ 				handleAs: "text"
+ 			}).then(lang.hitch(this, function(r) {
+ 					if(this.viewModel.quickCaptureEnabled()) {

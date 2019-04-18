@@ -1,0 +1,85 @@
+.playerTab {
+  .flagBody {
+    .flagButtons {
+      button {
+        @extend button.genericButton;
+      }
+    }
+  }
+}
+.playerTabs {
+  .buttonContainer {
+    @media #{$smallViewport} {
+      display:none;
+    }
+    button {
+      background-size: 20px 20px;
+      border-radius: 0;
+    }
+    button.info {
+      background-position: 50% 50% !important;
+      background-image: url('../images/gsk/svg/info_active_white.svg') !important;
+      &.selected, &:hover {
+        background-position: 50% 50% !important;
+        background-image: url('../images/gsk/svg/info_active_white.svg') !important;
+      }
+      &:disabled {
+        cursor: not-allowed;
+        background-position: 50% 50% !important;
+        background-image: url('../images/gsk/svg/info_down.svg') !important;
+      }
+    }
+    button.toc {
+      background-position: 50% 50% !important;
+      background-image: url('../images/gsk/svg/details_active_white.svg') !important;
+      &.selected, &:hover {
+        background-position: 50% 50% !important;
+        background-image: url('../images/gsk/svg/details_active_white.svg') !important;
+      }
+      &:disabled {
+        cursor: not-allowed;
+        background-position: 50% 50% !important;
+        background-image: url('../images/gsk/svg/details_down.svg') !important;
+      }
+    }
+    button.phonetic {
+      background-position: 50% 50% !important;
+      background-image: url('../images/gsk/svg/phonetic_active_white.svg') !important;
+      &.selected, &:hover {
+        background-position: 50% 50% !important;
+        background-image: url('../images/gsk/svg/phonetic_active_white.svg') !important;
+      }
+      &:disabled {
+        cursor: not-allowed;
+        background-position: 50% 50% !important;
+        background-image: url('../images/gsk/svg/phonetic_down.svg') !important;
+      }
+    }
+    button.share {
+      background-position: 50% 50% !important;
+      background-image: url('../images/gsk/svg/share_active_white.svg') !important;
+      &.selected, &:hover {
+        background-position: 50% 50% !important;
+        background-image: url('../images/gsk/svg/share_active_white.svg') !important;
+      }
+      &:disabled {
+        cursor: not-allowed;
+        background-position: 50% 50% !important;
+        background-image: url('../images/gsk/svg/share_down.svg') !important;
+      }
+    }
+    button.videos {
+      background-position: 50% 50% !important;
+      background-image: url('../images/gsk/svg/attach_active_white.svg') !important;
+      &.selected, &:hover {
+        background-position: 50% 50% !important;
+        background-image: url('../images/gsk/svg/attach_active_white.svg') !important;
+      }
+      &:disabled {
+        cursor: not-allowed;
+        background-position: 50% 50% !important;
+        background-image: url('../images/gsk/svg/attach_down.svg') !important;
+      }
+    }
+  }
+}

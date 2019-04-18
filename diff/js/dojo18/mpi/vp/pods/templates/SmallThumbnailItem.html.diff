@@ -1,0 +1,168 @@
+--- ./default/js/dojo18/mpi/vp/pods/templates/SmallThumbnailItem.html	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/vp/pods/templates/SmallThumbnailItem.html	2017-07-25 23:40:37.000000000 -0400
+@@ -1,101 +1,65 @@
+ <div class="vp_pod_item_smallthumb">
+-	<div class="thumbnail {{isLiveRunningNow}}" style="width: 226px; height: 151px" data-dojo-attach-point="_imgContainerNode" data-dojo-attach-event="onclick: _click,onkeydown: _keydown" tabindex="3020" aria-label="{{accessibilityInfo}}">
+-		<img src="{{{thumbnail}}}" data-dojo-attach-event="onload: _imgLoad"/>
+-		<div class="overlay"></div>
+-		<div class="title mpi_Ellipsis" data-dojo-attach-point="titleNode" title="{{title}}"><div class="titleInner" data-dojo-attach-point="titleInnerNode" style="min-height:20px;position:relative">{{title}}</div></div>
+-		{{#hasAuthor}}
+-		<div class="author" title="{{author}}">{{author}}</div>
+-		{{/hasAuthor}}
+-	</div>
+-	
+-	{{^isLive}}
+-		{{^isCategory}}
+-		<div class="programLikesViewsPublicationComment" data-dojo-attach-point="programLikesViewsPublicationCommentNode">
+-			{{#hasLikesOrViews}}
+-			<div class="likesViews">
+-				{{#hasViews}}
+-				<span class="views dataItem" title="{{viewCount}} {{RC.viewsLabel}}">{{viewCount}}<span class="viewIcon"></span></span>
+-				{{/hasViews}}
+-				{{#hasLikes}}
+-				<span class="likes dataItem likeField" title="{{likeCount}} {{RC.likesLabel}}">{{likeCount}}<span class="likeIcon"></span></span>
+-				{{/hasLikes}}
+-				{{^allowSubscriptions}}
+-				{{#hasRatings}}
+-				<span class="rates dataItem ratingField inRp" title="{{ratingAverage}} {{RC.starsLabel}}" data-dojo-attach-point="ratingFieldNode" data-dojo-attach-event="onmouseover: _openRatingPanel, onmouseleave: _cancelOpeningRatingPanel">
+-					<div class="pod_starContainer inRp">
+-						<div class="starHolder inRp">
+-							<div class="baseStar inRp"></div>
+-							<div class="star inRp" style="width: {{avgRating1}}%"></div>
+-						</div>
+-						<div class="starHolder inRp">
+-							<div class="baseStar inRp"></div>
+-							<div class="star inRp" style="width: {{avgRating2}}%"></div>
+-						</div>
+-						<div class="starHolder inRp">
+-							<div class="baseStar inRp"></div>
+-							<div class="star inRp" style="width: {{avgRating3}}%"></div>
+-						</div>
+-						<div class="starHolder inRp">
+-							<div class="baseStar inRp"></div>
+-							<div class="star inRp" style="width: {{avgRating4}}%"></div>
+-						</div>
+-						<div class="starHolder inRp">
+-							<div class="baseStar inRp"></div>
+-							<div class="star inRp" style="width: {{avgRating5}}%"></div>
+-						</div>
+-						<div class="totalCount inRp">({{totalCount}})</div>
+-					</div>
+-				</span>
+-				{{/hasRatings}}
+-				{{/allowSubscriptions}}
+-			</div>
+-			{{/hasLikesOrViews}}
+-			
+-			{{#hasPublicationDate}}
+-			<div class="publicationDate dataItem" title="{{RC.availableDateLabel}}">{{publicationDate}}</div>
+-			{{/hasPublicationDate}}
+-			
+-			{{#hasCommentCount}}
+-			<div class="commentCount dataItem commentField" title="{{commentCount}} {{RC.commentsLabel}}">{{commentCount}}<div class="commentIcon"></div></div>
+-			{{/hasCommentCount}}
+-			
+-			{{#hasDuration}}
+-			<div class="duration dataItem" title="{{RC.durationLabel}}">{{duration}}</div>
+-			{{/hasDuration}}
+-		</div>
+-		<div class="subscribeBar" style="display:none;">
+-			{{#allowSubscriptions}}
+-				{{#isSubscribed}}
+-				<div class="unSubscribeButton" title="{{R.unsubscribeTitle}}" data-dojo-attach-event="ondijitclick: _unSubscribeMe" tabindex="3020"></div><span class="unSubText">{{R.unsubscribe}}</span>
+-				{{/isSubscribed}}
+-				{{^isSubscribed}}
+-				<div class="subscribeButton" title="{{R.subscribeTitle}}" data-dojo-attach-event="ondijitclick: _subscribeMe" tabindex="3020"></div><span class="subText">{{R.subscribe}}</span>
+-				{{/isSubscribed}}
+-			{{/allowSubscriptions}}
+-			<div class="removeFile" title={{R.unFavorite}} data-dojo-attach-event="ondijitclick: _unFavoriteIt" tabindex="3020"></div>
+-		</div>
+-		{{/isCategory}}
+-	{{/isLive}}
+-	{{#isLive}}
+-		{{#hasUpcoming}}
+-			<div class="liveSchedule">
+-				<div class="statusIcon {{iconClass}} {{isLiveRunningNow}}" title="{{scheduleTitle}}" ></div>
+-				<div class="timeDate">
+-					<div class="startTime">{{{startTime}}}</div>
+-					<BR><div class="startDate">{{startDate}}</div>							
+-				</div>
+-			</div>
+-		{{/hasUpcoming}}
+-		{{^hasUpcoming}}
+-			<div class="liveSchedule">
+-				<div class="statusIcon status3" title="{{RC.noUpcomingBroadcasts}}"></div>
+-				<div class="timeDate">
+-					<div class="startTime">&nbsp;</div>
+-					<BR><div class="startDate noDate">{{RC.noUpcomingBroadcasts}}</div>
+-				</div>
+-			</div>
+-		{{/hasUpcoming}}
+-	{{/isLive}}	
+-	
+-	<div class="clear"></div>
++  <div class="thumbnail {{isLiveRunningNow}}" data-dojo-attach-point="_imgContainerNode" data-dojo-attach-event="onclick: _click,onkeydown: _keydown" tabindex="3020" aria-label="{{accessibilityInfo}}" style="background-image: url({{{thumbnail}}});">
++    {{#hasDuration}}
++    <div class="duration dataItem" title="{{RC.durationLabel}}">{{duration}}</div>
++    {{/hasDuration}}
++  </div>
++  <h3 class="title mpi_Ellipsis" data-dojo-attach-point="titleNode" title="{{title}}" data-dojo-attach-event="onclick: _click,onkeydown: _keydown"><div class="titleInner" data-dojo-attach-point="titleInnerNode" style="min-height:20px;position:relative">{{title}}</div></h3>
++  {{^isLive}}
++    {{^isCategory}}
++
++    <div class="programLikesViewsPublicationComment" data-dojo-attach-point="programLikesViewsPublicationCommentNode">
++
++      {{#hasViews}}
++      <span class="views dataItem" title="{{viewCount}} {{RC.viewsLabel}}">{{viewCount}}<span class="viewIcon"></span></span>
++      {{/hasViews}}
++      
++      {{#hasLikes}}
++      <span class="likes dataItem likeField" title="{{likeCount}} {{RC.likesLabel}}">{{likeCount}}<span class="likeIcon"></span></span>
++      {{/hasLikes}}
++
++      {{#hasCommentCount}}
++      <div class="commentCount dataItem commentField" title="{{commentCount}} {{RC.commentsLabel}}">{{commentCount}}<div class="commentIcon"></div></div>
++      {{/hasCommentCount}}
++      
++      {{#hasPublicationDate}}
++      <div class="publicationDate dataItem" title="{{RC.availableDateLabel}}">{{publicationDate}}</div>
++      {{/hasPublicationDate}}
++      
++    </div>
++    <div class="subscribeBar" style="display:none;">
++      {{#allowSubscriptions}}
++        {{#isSubscribed}}
++        <div class="unSubscribeButton" title="{{R.unsubscribeTitle}}" data-dojo-attach-event="ondijitclick: _unSubscribeMe" tabindex="3020"></div><span class="unSubText">{{R.unsubscribe}}</span>
++        {{/isSubscribed}}
++        {{^isSubscribed}}
++        <div class="subscribeButton" title="{{R.subscribeTitle}}" data-dojo-attach-event="ondijitclick: _subscribeMe" tabindex="3020"></div><span class="subText">{{R.subscribe}}</span>
++        {{/isSubscribed}}
++      {{/allowSubscriptions}}
++      <div class="removeFile" title={{R.unFavorite}} data-dojo-attach-event="ondijitclick: _unFavoriteIt" tabindex="3020"></div>
++    </div>
++    {{/isCategory}}
++  {{/isLive}}
++  {{#isLive}}
++    {{#hasUpcoming}}
++      <div class="liveSchedule">
++        <div class="statusIcon {{iconClass}} {{isLiveRunningNow}}" title="{{scheduleTitle}}" ></div>
++        <div class="timeDate">
++          <div class="startTime">{{{startTime}}}</div>
++          <BR><div class="startDate">{{startDate}}</div>              
++        </div>
++      </div>
++    {{/hasUpcoming}}
++    {{^hasUpcoming}}
++      <div class="liveSchedule">
++        <div class="statusIcon status3" title="{{RC.noUpcomingBroadcasts}}"></div>
++        <div class="timeDate">
++          <div class="startTime">&nbsp;</div>
++          <BR><div class="startDate noDate">{{RC.noUpcomingBroadcasts}}</div>
++        </div>
++      </div>
++    {{/hasUpcoming}}
++  {{/isLive}}  
++  
++  <div class="clear"></div>
+ </div>
+\ No newline at end of file

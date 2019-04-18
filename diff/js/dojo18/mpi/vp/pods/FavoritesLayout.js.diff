@@ -1,0 +1,24 @@
+--- ./default/js/dojo18/mpi/vp/pods/FavoritesLayout.js	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/vp/pods/FavoritesLayout.js	2019-04-18 16:02:34.000000000 -0400
+@@ -31,6 +31,7 @@
+ 		},
+ 		
+ 		render: function(renderItems) {
++
+ 			this.destroyDescendants();
+ 			domConstruct.empty(this.containerNode);
+ 			if(renderItems) {
+@@ -39,6 +40,13 @@
+ 						var ri = renderItems[i];
+ 						var d = domConstruct.create("div", {"class": "podItem c" + ((i % 4) + 1)}, this.domNode, "last");
+ 						ri.placeAt(d);
++						setTimeout(function(){
++							if(ri.titleInnerNode.clientHeight > ri.titleNode.clientHeight) {
++								ri.startup();
++							}
++						}, 100);
++						//console.log(ri.titleInnerNode.clientHeight, ri.titleNode.clientHeight);
++
+ 					}
+ 				} else {
+ 					domClass.add(document.getElementById('extraPodsContainer'), "noFavAdded");

@@ -1,0 +1,233 @@
+--- ./default/js/dojo18/mpi/util/time.js	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/util/time.js	2019-04-18 16:02:34.000000000 -0400
+@@ -1,33 +1,12 @@
+ define([ "dojo/i18n", "i18n!mpi/util/nls/time" ], function(i18n, R) {
+ 	return {
+ 		formatDuration: function(durationMillis){
+-			var format;
+-			var val;
+-			if (durationMillis<0) durationMillis = durationMillis * -1;
+-			var seconds = Math.ceil(durationMillis / 1000);
+-		    var formats = [
+-		            [86400, R.days],
+-		            [3600, R.hours], 
+-		            [60, R.minutes],
+-		            [1, R.seconds]
+-		        ];
+-		    var r = "";
+-		    for(var i = 0; i < formats.length; i++) {
+-		    	format = formats[i];
+-		    	if(seconds >= format[0]) {
+-		    		val = Math.floor(seconds / format[0]);
+-		    		seconds = seconds % format[0];
+-		    		r += val + format[1];
+-		    		if(i + 1 < formats.length) {
+-		    			format = formats[i + 1];
+-		    			val = Math.floor(seconds / format[0]);
+-			    		seconds = seconds % format[0];
+-			    		r += " " + val + format[1];
+-		    		}
+-		    		break;
+-		    	}
+-		    }
+-		    return r || ("0" + R.seconds);
++			var date = new Date(null);
++			if (durationMillis < 0) {
++				durationMillis = durationMillis * -1;
++			}
++			date.setMilliseconds(durationMillis);
++			return date.toISOString().substr(14, 5);
+ 		},
+ 		
+ 		formatTimeInColons: function(t) {
+@@ -89,98 +68,99 @@
+ 			var val;
+ 			if (durationMillis<0) durationMillis = durationMillis * -1;
+ 			var seconds = Math.ceil(durationMillis / 1000);
+-		    var formats = [
+-		            [86400, R.dayA11y, R.daysA11y],
+-		            [3600, R.hourA11y, R.hoursA11y], 
+-		            [60, R.minuteA11y, R.minutesA11y],
+-		            [1, R.secondA11y, R.secondsA11y]
+-		        ];
+-		    var r = "";
+-		    for(var i = 0; i < formats.length; i++) {
+-		    	format = formats[i];
+-		    	if(seconds >= format[0]) {
+-		    		val = Math.floor(seconds / format[0]);
+-		    		seconds = seconds % format[0];
+-		    		r += val + ((val<=1) ? format[1]: format[2]);
+-		    		if(i + 1 < formats.length) {
+-		    			format = formats[i + 1];
+-		    			val = Math.floor(seconds / format[0]);
+-			    		seconds = seconds % format[0];
+-			    		r += " " + val + ((val<=1) ? format[1]: format[2]);
+-		    		}
+-		    		break;
+-		    	}
+-		    }
+-		    return r || ("0" + R.secondsA11y);
+-		},
+-		
+-		msToTime: function(duration) {
+-		    var milliseconds = parseInt((duration%1000)/10)
+-		        , seconds = parseInt((duration/1000)%60)
+-		        , minutes = parseInt((duration/(1000*60))%60)
+-		        , hours = parseInt((duration/(1000*60*60))%24);
+-
+-		    hours = (hours < 10) ? "0" + hours : hours;
+-		    minutes = (minutes < 10) ? "0" + minutes : minutes;
+-		    seconds = (seconds < 10) ? "0" + seconds : seconds;
+-
+-		    return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+-		},
+-		
+-		formatTime: function(t) {
+-			var timeString = '';
+-			var carry = 0;
+-			var m = t / 60;				// minutes
+-			m = Math.floor(m);
+-			m = m.toFixed(0);
+-			if(m >= 1) {
+-				t = t % 60;
+-			}
+-			
+-			var s = t.toFixed(0);
+-			if(s > 0) {
+-				if(s < 10) {
+-					timeString = timeString + '0' + s;
+-				} else {
+-					if(s<=59) {
+-						timeString = timeString + s;					
+-					} else {
+-						timeString = timeString + '00';
+-						carry = 1;
+-					}
+-				}
+-			} else {
+-				timeString = timeString + '00';
+-			}
+-			
+-			m = parseInt(m) + parseInt(carry);
+-			if(m >= 1) {
+-				if(m < 10) {
+-					timeString = '0' + m + ':' + timeString;
+-				} else {
+-					if(m<=59) {
+-						timeString = m + ':' + timeString;
+-					} else {
+-						var newMin = parseInt(m % 60);
+-						var h = parseInt(m / 60);
+-						if(newMin < 10) {
+-							timeString = '0' + newMin + ':' + timeString;
+-						} else {
+-							timeString = newMin + ':' + timeString;
+-						}
+-						if(h<10) {
+-							timeString = '0' + h + ':' + timeString;
+-						} else {
+-							timeString = h + ':' + timeString;						
++				var formats = [
++								[86400, R.dayA11y, R.daysA11y],
++								[3600, R.hourA11y, R.hoursA11y], 
++								[60, R.minuteA11y, R.minutesA11y],
++								[1, R.secondA11y, R.secondsA11y]
++						];
++				var r = "";
++				for(var i = 0; i < formats.length; i++) {
++					format = formats[i];
++					if(seconds >= format[0]) {
++						val = Math.floor(seconds / format[0]);
++						seconds = seconds % format[0];
++						r += val + ((val<=1) ? format[1]: format[2]);
++						if(i + 1 < formats.length) {
++							format = formats[i + 1];
++							val = Math.floor(seconds / format[0]);
++							seconds = seconds % format[0];
++							r += " " + val + ((val<=1) ? format[1]: format[2]);
+ 						}
+-						
++						break;
+ 					}
+ 				}
+-			} else {
+-				timeString = '00:' + timeString;
+-			}
+-			
+-			return timeString;
+-		}
++				return r || ("0" + R.secondsA11y);
++		},
++
++ 		msToTime: function(duration) {
++ 		    var milliseconds = parseInt((duration%1000)/10)
++ 		        , seconds = parseInt((duration/1000)%60)
++ 		        , minutes = parseInt((duration/(1000*60))%60)
++ 		        , hours = parseInt((duration/(1000*60*60))%24);
++ 
++ 		    hours = (hours < 10) ? "0" + hours : hours;
++ 		    minutes = (minutes < 10) ? "0" + minutes : minutes;
++ 		    seconds = (seconds < 10) ? "0" + seconds : seconds;
++ 
++ 		    return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
++ 		},
++ 		
++ 		formatTime: function(t) {
++ 			var timeString = '';
++ 			var carry = 0;
++ 			var m = t / 60;				// minutes
++ 			m = Math.floor(m);
++ 			m = m.toFixed(0);
++ 			if(m >= 1) {
++ 				t = t % 60;
++ 			}
++ 			
++ 			var s = t.toFixed(0);
++ 			if(s > 0) {
++ 				if(s < 10) {
++ 					timeString = timeString + '0' + s;
++ 				} else {
++ 					if(s<=59) {
++ 						timeString = timeString + s;					
++ 					} else {
++ 						timeString = timeString + '00';
++ 						carry = 1;
++ 					}
++ 				}
++ 			} else {
++ 				timeString = timeString + '00';
++ 			}
++ 			
++ 			m = parseInt(m) + parseInt(carry);
++ 			if(m >= 1) {
++ 				if(m < 10) {
++ 					timeString = '0' + m + ':' + timeString;
++ 				} else {
++ 					if(m<=59) {
++ 						timeString = m + ':' + timeString;
++ 					} else {
++ 						var newMin = parseInt(m % 60);
++ 						var h = parseInt(m / 60);
++ 						if(newMin < 10) {
++ 							timeString = '0' + newMin + ':' + timeString;
++ 						} else {
++ 							timeString = newMin + ':' + timeString;
++ 						}
++ 						if(h<10) {
++ 							timeString = '0' + h + ':' + timeString;
++ 						} else {
++ 							timeString = h + ':' + timeString;						
++ 						}
++ 						
++ 					}
++ 				}
++ 			} else {
++ 				timeString = '00:' + timeString;
++ 			}
++ 			
++ 			return timeString;
++
++  	} 
+ 	} 
+ });
+\ No newline at end of file

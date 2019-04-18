@@ -1,0 +1,64 @@
+--- ./default/js/dojo18/mpi/vp/templates/SearchView.html	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/vp/templates/SearchView.html	2019-04-18 16:02:34.000000000 -0400
+@@ -1,18 +1,43 @@
+ <div class="searchView" data-dojo-attach-point="searchViewNode">
+-	<form onsubmit="return false;">
+-	<!--button class="facetButton" data-dojo-attach-point="facetButtonNode" data-dojo-attach-event="onclick: _showFacets"></button-->
+-	<INPUT class="searchInput" data-dojo-attach-point="searchInput" value="${RC.searchLabel}" aria-label="${RC.searchTextBox}" tabindex="20" data-dojo-attach-event="onclick: _searchClick, onkeyup: _searchKeyUp, onkeydown: _searchKeyDown" maxlength="199">
+-	<button class="submitButton" title="${RC.searchLabel}" data-dojo-attach-event="onclick: _search" tabindex="30"></button>
+-	<div class="possibleSearchTerms hide" data-dojo-attach-point="possibleSearchTermsNode">
+-		
+-	</div>
+-	
+-	<button class="accessButton" title="${RC.privateCodeTitle}" data-dojo-attach-point="accessButton" tabindex="40"></button>
+-	<div class="dijitHidden" data-dojo-attach-point="toolTipContainer">
+-		<div class="accessPane" data-dojo-attach-point="popupContent">
+-			<span class="panelTitle" dojoAttachPoint="messageNode">${RC.privateCodeTitle}</span><BR>
+-			<div class="codeCont" id="codeCont"><input type="text" data-dojo-attach-point="codeInput" data-dojo-attach-event="onkeydown:_onGoClick"/><button id="codeButton" class="goButton" data-dojo-attach-event="click:_onGoClick"></button></div>
+-		</div>
+-	</div>
+-	</form>
+-</div>
+\ No newline at end of file
++  <form onsubmit="return false;">
++  <INPUT class="searchInput" data-dojo-attach-point="searchInput" value="${RC.searchLabel}" aria-label="${RC.searchTextBox}" tabindex="20" data-dojo-attach-event="onclick: _searchClick, onkeyup: _searchKeyUp, onkeydown: _searchKeyDown" maxlength="199">
++  <button class="submitButton" title="${RC.searchLabel}" data-dojo-attach-event="onclick: _search" tabindex="30"></button>
++  <div class="possibleSearchTerms hide" data-dojo-attach-point="possibleSearchTermsNode"></div>
++  <button class="accessButton" title="${RC.privateCodeTitle}" data-dojo-attach-point="accessButton" tabindex="40"></button>
++  <div class="dijitHidden" data-dojo-attach-point="toolTipContainer">
++    <div class="accessPane" data-dojo-attach-point="popupContent">
++      <span class="panelTitle" dojoAttachPoint="messageNode">${RC.privateCodeTitle}</span><BR>
++      <div class="codeCont" id="codeCont"><input type="text" data-dojo-attach-point="codeInput" data-dojo-attach-event="onkeydown:_onGoClick"/><button id="codeButton" class="goButton" data-dojo-attach-event="click:_onGoClick"></button></div>
++    </div>
++  </div>
++  </form>
++  <div id="gskHamburger" data-dojo-attach-event="onclick: _onHamburgerClick, onkeydown: _onHamburgerClick" aria-label="${RC.allCategories}" data-dojo-attach-point="hamburger">
++  </div>
++  <div id="gskTitle" onclick="document.location.href='home.vp'" onkeydown="showHome(event)">
++    GSK Tube
++  </div>
++  <div id="gskSidebar">
++    <h3>Top Categories</h3>
++    <div class="categories">
++      <a href="channelList.vp?categoryId=esc_category:501"><div>About GSK</div></a>
++      <a href="channelList.vp?categoryId=esc_category:502"><div>CET communications</div></a>
++      <a href="channelList.vp?categoryId=esc_category:503"><div>Consumer Healthcare</div></a>
++      <a href="channelList.vp?categoryId=esc_category:504"><div>Pharma Supply Chain</div></a>
++      <a href="channelList.vp?categoryId=esc_category:505"><div>Pharma Asia Pacific</div></a>
++      <a href="channelList.vp?categoryId=esc_category:506"><div>Pharma Europe</div></a>
++      <a href="channelList.vp?categoryId=esc_category:507"><div>Global Franchises &amp; Platforms</div></a>
++      <a href="channelList.vp?categoryId=esc_category:508"><div>Research &amp; Development</div></a>
++      <a href="channelList.vp?categoryId=esc_category:509"><div>Vaccines</div></a>
++      <a href="channelList.vp?categoryId=esc_category:510"><div>ViiV Healthcare</div></a>
++    </div>
++    <a href="channelList.vp" class="browseAll"><div>Browse all</div></a>
++    <!-- <span>90c42c4</span> -->
++  </div>
++  <div id="gskSubNavigation">
++    <a href="home.vp" class="home ${homeActive}"><div><span>Home</span></div></a>
++    <a href="myfavorites.vp" class="favourites ${favoritesActive}"><div><span>Favourites</span></div></a>
++    <a href="https://wb.gsk.com" class="broadcasts ${broadcastsActive}"><div><span>Web Broadcasts</span></div></a>
++    <a href="myprograms.vp?upload=true" class="upload" id="upload-subnavigation"><div><span>Upload</span></div></a>
++    <a href="channel.vp?channelId=esc_prg_cntr_chn:2502" class="support ${supportActive}"><div><span>Support</span></div></a>
++  </div>
++</div>

@@ -1,0 +1,26 @@
+--- ./default/js/dojo18/mpi/ap/templates/ImagePicker.html	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/ap/templates/ImagePicker.html	2017-07-25 23:40:37.000000000 -0400
+@@ -1,14 +1,16 @@
+-<div style="width:364px; max-width:364px">
+-	<table width="100%" cellspacing=0 cellpadding=0 style="table-layout:fixed;max-width:364px">
++<div>
++	<div class="gsk-button-container">
++		<div class="gsk-inline-label">[R reset] [R thumbnail]</div>
++		<button style="vertical-align:top;" title="[R reset]" aria-label="[R reset] [R thumbnail]" data-bind="click: $root.resetItem, disable: addWidgetIsUploading(), css: addWidgetIsUploading() ? 'resetButton disabled' : 'resetButton'"></button>
++		<div class="gsk-inline-label" data-dojo-attach-event="ondijitclick: _showPicker">[R select] [R thumbnail]</div>
++		<button style="vertical-align:top;" title="[R select]" aria-label="[R select] [R thumbnail]" data-bind="disable: addWidgetIsUploading(), css: addWidgetIsUploading() ? 'selectButton disabled' : 'selectButton'" data-dojo-attach-event="ondijitclick: _showPicker"></button>
++	</div>
++	<table width="100%" cellspacing=0 cellpadding=0>
+ 		<thead>
+ 			<tr class="principalTableHeader">
+-				<th class="add" nowrap>
+-					<button style="vertical-align:top;" title="[R reset]" aria-label="[R reset] [R thumbnail]" data-bind="click: $root.resetItem, disable: addWidgetIsUploading(), css: addWidgetIsUploading() ? 'resetButton disabled' : 'resetButton'"></button>
+-					<button style="vertical-align:top;" title="[R select]" aria-label="[R select] [R thumbnail]" data-bind="disable: addWidgetIsUploading(), css: addWidgetIsUploading() ? 'selectButton disabled' : 'selectButton'" data-dojo-attach-event="ondijitclick: _showPicker"></button>
+-				</th>
+ 				<td class="add" colspan=2>
+ 					<div class="imgPreview" data-dojo-attach-point="imgPreview">
+-						<img data-bind="attr: { src: 'simplePreview.do?contentId=' + displayItem().identifier }" align="top" height="23" data-dojo-attach-point="previewImage">
++						<img data-bind="attr: { src: 'simplePreview.do?contentId=' + displayItem().identifier }" align="top" data-dojo-attach-point="previewImage">
+ 						<button style="vertical-align:top; margin-top:5px;" data-dojo-attach-point="bundlePickerButton" class="selectThumbButton" title="[R selectFrame]" data-bind="disable: false" data-dojo-attach-event="ondijitclick: _showIdxPicker"></button>
+ 						<span class="imgName" data-bind="text: $root.displayItemName, attr: {'title': $root.displayItemName}"></span>
+ 					</div>

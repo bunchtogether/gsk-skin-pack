@@ -1,0 +1,50 @@
+#gskFooter {
+	@media #{$smallViewport} {
+		position: relative;
+		bottom: auto;
+		height: auto;
+	}
+    position: absolute;
+    bottom: 0;
+    height: 120px;
+	width: 100%;
+	background-color:$color_White;
+	border-top: 1px solid $secondaryBorder;
+	color: $color_header;
+	margin: 40px 0 0 0;
+	.footerLabel {
+		margin:10px 20px 0px 20px;
+		padding:0 0 10px 0;
+		width:calc(100% - 40px);
+		display: block;
+		width:auto;
+		border-bottom: 1px solid $secondaryBorder;
+		font-size:14px;
+		font-weight: bold;
+	}
+	.footerList {
+		width:100%;
+		box-sizing: border-box;
+		padding:0px 20px 0px 20px;
+		background-color:$color_White;
+		a {
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			height:60px;
+			line-height:60px;
+			vertical-align: middle;
+			display:inline-block;
+			margin-right:2%;
+			@media #{$smallViewport} {
+				font-size:12px;
+    			width: 100%;
+    			line-height: 40px;
+  			} 
+			width:18%;
+			font-size:12px;
+			text-decoration: none;
+			color: $color_header;
+		}
+	}
+}

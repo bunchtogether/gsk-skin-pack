@@ -1,0 +1,27 @@
+--- ./default/js/dojo18/mpi/vp/templates/CommentsEdit.html	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/vp/templates/CommentsEdit.html	2017-07-25 23:40:37.000000000 -0400
+@@ -1,13 +1,13 @@
+ <div class="new-post">
+-	<div class='textarea-wrapper'>
+-		<textarea {{#disabled}}disabled{{/disabled}} wrap='soft' rows='2' data-dojo-attach-point="textArea">{{text}}</textarea>
+-	</div>
+-	<div class="edit-menu" data-dojo-attach-point="commentEditAddComment">
+-		<span class="addedit-counter">
+-			<span data-dojo-attach-point="commentEditCounter"></span>
+-			<span data-dojo-attach-point="commentEditCounterMessage"></span>
+-		</span>
+-		<button type="button" class="post" tabindex="4010" {{#disabled}}disabled{{/disabled}} data-dojo-attach-event='onclick: _save' data-dojo-attach-point="saveButton">{{R.saveLabel}}</button>
+-		<button type="button" tabindex="4010" {{#disabled}}disabled{{/disabled}} data-dojo-attach-event='onclick: _cancel' data-dojo-attach-point="cancelButton">{{R.cancelLabel}}</button>
+-	</div>
++  <div class='textarea-wrapper'>
++    <textarea {{#disabled}}disabled{{/disabled}} wrap='soft' rows='2' data-dojo-attach-point="textArea">{{text}}</textarea>
++  </div>
++  <div class="edit-menu" data-dojo-attach-point="commentEditAddComment">
++    <span class="addedit-counter">
++      <span data-dojo-attach-point="commentEditCounter"></span>
++      <span data-dojo-attach-point="commentEditCounterMessage"></span>
++    </span>
++    <button type="button" class="post" tabindex="4010" {{#disabled}}disabled{{/disabled}} data-dojo-attach-event='onclick: _save' data-dojo-attach-point="saveButton">{{R.saveLabel}}</button>
++    <button type="button" tabindex="4010" {{#disabled}}disabled{{/disabled}} data-dojo-attach-event='onclick: _cancel' data-dojo-attach-point="cancelButton">{{R.cancelLabel}}</button>
++  </div>
+ </div>

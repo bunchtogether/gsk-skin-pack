@@ -1,0 +1,312 @@
+--- ./default/js/dojo18/mpi/vp/pods/templates/ProgramPoster.html	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/vp/pods/templates/ProgramPoster.html	2019-04-18 16:02:34.000000000 -0400
+@@ -1,158 +1,152 @@
+ <div class="vp_pod_program_poster">
+-	{{#noAudience}}
+-		<div class="noAudienceError">{{RC.noAudience}}</div>
+-	{{/noAudience}}
+-	{{^noAudience}}
+-		<div class="largeThumbnailAndProgramDetails">
+-			{{^playEnabled}}
+-				<div class="thumbnail" style="width: 500px; height: 333px" data-dojo-attach-point="_imgContainerNode" data-dojo-attach-event="ondijitclick: _click" tabindex="3020" aria-label="{{accessibilityInfo}}">
+-					<img src="{{{thumbnail}}}" data-dojo-attach-event="onload: _imgLoad"/>
+-				</div>
+-			{{/playEnabled}}
+-			{{#playEnabled}}
+-				{{^autoPlay}}
+-					<div class="thumbnail" style="width: {{thumbnailWidth}}; height: 333px" data-dojo-attach-point="_imgContainerNode" data-dojo-attach-event="ondijitclick: _click" tabindex="3020" aria-label="{{accessibilityInfo}}">
+-						<img src="{{{thumbnail}}}" data-dojo-attach-event="onload: _imgLoad"/>
+-						<div class="controlStrip" title="{{RC.clickToWatch}}">
+-							<div class="transparentOverlay"></div>
+-							<button class="play"></button>
+-							<div class="buttonSeparator"></div>
+-							<div class="title">{{title}}</div>
+-							{{#hasDisplayImage}}
+-								<div><img class="securityClassifier" src='{{getDisplayImage}}' data-dojo-attach-point="securityClassfierImage"/></div>
+-							{{/hasDisplayImage}}
+-						</div>
+-					</div>
+-				{{/autoPlay}}
+-				{{#autoPlay}}
+-					<div class="thumbnail allowOverflow" style="width: {{thumbnailWidth}}; height: 333px" data-dojo-attach-point="_imgContainerNode" tabindex="3020" aria-label="{{accessibilityInfo}}">
+-						<script type='text/javascript' src='{{fsSource}}'></script>
+-						<iframe seamless frameborder=0 allowfullscreen webkitallowfullscreen mozallowfullscreen src='{{embedSource}}' width='100%' height='100%'></iframe>
+-					</div>
+-				{{/autoPlay}}
+-			{{/playEnabled}}
+-			
+-			
+-			{{#showProgramInfo}}
+-			{{^isLive}}
+-				<div class="programDetailsVOD" data-dojo-attach-point="detailsPanel">
+-					<div class="viewsLikesAndComments">
+-						<span class="views">{{viewCount}}<span class="viewIcon"></span></span>
+-						{{#hasLikes}}
+-						<span class="likes"> {{likeCount}}<span class="likeIcon"></span></span>
+-						{{/hasLikes}}
+-						<span class="comments">{{commentCount}}<span class="commentIcon"></span></span>
+-					</div>
+-					
+-					{{#hasRatings}}
+-					<span class="rates dataItem ratingField inRp" title="{{ratingAverage}} {{RC.starsLabel}}" data-dojo-attach-point="ratingFieldNode" data-dojo-attach-event="onmouseover: _openRatingPanel, onmouseleave: _cancelOpeningRatingPanel">
+-						<div class="overlay inRp"></div>
+-						<div class="pod_starContainer inRp">
+-							<div class="starHolder inRp">
+-								<div class="baseStar inRp"></div>
+-								<div class="star inRp" style="width: {{avgRating1}}%"></div>
+-							</div>
+-							<div class="starHolder inRp">
+-								<div class="baseStar inRp"></div>
+-								<div class="star inRp" style="width: {{avgRating2}}%"></div>
+-							</div>
+-							<div class="starHolder inRp">
+-								<div class="baseStar inRp"></div>
+-								<div class="star inRp" style="width: {{avgRating3}}%"></div>
+-							</div>
+-							<div class="starHolder inRp">
+-								<div class="baseStar inRp"></div>
+-								<div class="star inRp" style="width: {{avgRating4}}%"></div>
+-							</div>
+-							<div class="starHolder inRp">
+-								<div class="baseStar inRp"></div>
+-								<div class="star inRp" style="width: {{avgRating5}}%"></div>
+-							</div>
+-							<div class="totalCount inRp">({{totalCount}})</div>
+-						</div>
+-					</span>
+-					{{/hasRatings}}
+-					
+-					<div class="programTitle"><div class="title" data-dojo-attach-point="titleNode" title="{{title}}">{{title}}</div></div>
+-					<div class="programAuthor"><div class="author" data-author="{{author}}" data-dojo-attach-event="ondijitclick: _drillByAuthor">{{author}}</div></div>
+-					<div class="channelName" data-dojo-attach-event="ondijitclick: _openChannel">{{channel}}</div>
+-					<div class="programPublicationDate">{{publicationDate}}</div>
+-					<div class="programDuration">{{duration}}</div>
+-					<div class="programDescription">{{description}}</div>
+-					
+-					<div class="programAttributes">
+-						<div class="customAttributes">
+-						{{#hasAttributes}}
+-						
+-							{{#attributes}}	
+-								{{^displayImage}}
+-								<div class="customAttrPresent">
+-									<div class="customAttrName">{{displayName}}: </div>
+-									<div class="customAttrValue">{{displayValue}}</div>
+-								</div>
+-								{{/displayImage}}	
+-							{{/attributes}}
+-						
+-						{{/hasAttributes}}
+-						</div>
+-					</div>
+-					<div class="programTags">
+-						{{#hasTags}}
+-						<div class="tagsPresent">
+-							{{#tags}}	
+-								<span class="tags"  data-dojo-attach-event="ondijitclick: _search"><a>{{name}}</a>  </span>
+-							{{/tags}}
+-						</div>
+-						{{/hasTags}}
+-					</div>
+-				</div>
+-			{{/isLive}}
+-			
+-			{{#isLive}}
+-				<div class="programDetailsLIVE" data-dojo-attach-point="detailsPanel">
+-					{{#hasUpcoming}}
+-						<div class="liveSchedule">
+-							<div class="startTime">{{{startTime}}}</div>
+-							<div class="startDay">{{{startDay}}}</div>
+-							<div class="startDate">{{startDate}}</div>							
+-						</div>
+-					{{/hasUpcoming}}
+-					{{^hasUpcoming}}
+-						<div class="liveSchedule">
+-							<div class="startDate noDate">{{RC.noUpcomingBroadcasts}}</div>
+-						</div>
+-					{{/hasUpcoming}}
+-					<div class="programTitle"><div class="title" data-dojo-attach-point="titleNode" title="{{title}}">{{title}}</div></div>
+-					<div class="programAuthor"><div class="author" data-author="{{author}}" data-dojo-attach-event="ondijitclick: _drillByAuthor">{{author}}</div></div>
+-					<div class="programDescription">{{description}}</div>
+-				</div>
+-				{{#hasUpcoming}}
+-				<div class="bottomButtons">
+-					{{^isRunningNow}}
+-						<div class="addToCalendar" data-dojo-attach-point="actionBarNode" tabindex="3020" data-dojo-attach-event="ondijitclick: _eventActionClick"> 
+-							<button class="addToCalendarButton" data-dojo-attach-event="ondijitclick: _eventActionClick"></button>
+-							<div class="addToCalendarText" data-dojo-attach-point="actionLabel" data-dojo-attach-event="ondijitclick: _eventActionClick">{{RC.playVideoLabelAdd}}</div> 
+-						</div>
+-					{{/isRunningNow}}
+-					{{#isRunningNow}}
+-						<div class="watchLive" data-dojo-attach-point="actionBarNode" tabindex="3020" data-dojo-attach-event="ondijitclick: _eventActionClickLive"> 
+-							<button class="watchLiveButton" data-dojo-attach-event="ondijitclick: _eventActionClickLive"></button>
+-							<div class="watchLiveText" data-dojo-attach-point="actionLabel" data-dojo-attach-event="ondijitclick: _eventActionClickLive">{{RC.playVideoLabelPlay}}</div> 
+-						</div>
+-					{{/isRunningNow}}
+-				</div>
+-				{{/hasUpcoming}}
+-				{{^hasUpcoming}}
+-				<div class="bottomButtons">
+-					<div class="addToCalendar concluded"> 
+-							<div class="addToCalendarText">{{RC.cRConcluded}}</div> 
+-							<button class="addToCalendarButton" style="display: none;"></button>
+-					</div>
+-				</div>
+-				{{/hasUpcoming}}
+-			{{/isLive}}
+-	 		{{/showProgramInfo}}
+-		</div>
+-	{{/noAudience}}
+-	<div class="clear"></div>
++  {{#noAudience}}
++    <div class="noAudienceError">{{RC.noAudience}}</div>
++  {{/noAudience}}
++  {{^noAudience}}
++    <div class="largeThumbnailAndProgramDetails">
++      {{^playEnabled}}
++        <div class="thumbnail" data-dojo-attach-point="_imgContainerNode" data-dojo-attach-event="ondijitclick: _click" tabindex="3020" aria-label="{{accessibilityInfo}}" style="background-image: url({{{thumbnail}}});">
++        </div>
++      {{/playEnabled}}
++      {{#playEnabled}}
++        {{^autoPlay}}
++          <div class="thumbnail" data-dojo-attach-point="_imgContainerNode" data-dojo-attach-event="ondijitclick: _click" tabindex="3020" aria-label="{{accessibilityInfo}}" style="background-image: url({{{thumbnail}}});">
++            <div class="controlStrip" title="{{RC.clickToWatch}}">
++              <div class="transparentOverlay"></div>
++              <button class="play"></button>
++              <div class="buttonSeparator"></div>
++              <div class="title">{{title}}</div>
++              {{#hasDisplayImage}}
++                <div><img class="securityClassifier" src='{{getDisplayImage}}' data-dojo-attach-point="securityClassfierImage"/></div>
++              {{/hasDisplayImage}}
++            </div>
++          </div>
++        {{/autoPlay}}
++        {{#autoPlay}}
++          <div class="thumbnail allowOverflow" style="width: {{thumbnailWidth}}; height: 333px" data-dojo-attach-point="_imgContainerNode" tabindex="3020" aria-label="{{accessibilityInfo}}">
++            <script type='text/javascript' src='{{fsSource}}'></script>
++            <iframe seamless frameborder=0 allowfullscreen webkitallowfullscreen mozallowfullscreen src='{{embedSource}}' width='100%' height='100%'></iframe>
++          </div>
++        {{/autoPlay}}
++      {{/playEnabled}}
++      
++      
++      {{^isLive}}
++        <div class="programDetailsVOD" data-dojo-attach-point="detailsPanel">
++          <div class="viewsLikesAndComments">
++            <span class="views">{{viewCount}}<span class="viewIcon"></span></span>
++            {{#hasLikes}}
++            <span class="likes"> {{likeCount}}<span class="likeIcon"></span></span>
++            {{/hasLikes}}
++            <span class="comments">{{commentCount}}<span class="commentIcon"></span></span>
++            <div class="programPublicationDate">{{publicationDate}}</div>
++          </div>
++
++          {{#hasRatings}}
++          <span class="rates dataItem ratingField inRp" title="{{ratingAverage}} {{RC.starsLabel}}" data-dojo-attach-point="ratingFieldNode" data-dojo-attach-event="onmouseover: _openRatingPanel, onmouseleave: _cancelOpeningRatingPanel">
++            <div class="overlay inRp"></div>
++            <div class="pod_starContainer inRp">
++              <div class="starHolder inRp">
++                <div class="baseStar inRp"></div>
++                <div class="star inRp" style="width: {{avgRating1}}%"></div>
++              </div>
++              <div class="starHolder inRp">
++                <div class="baseStar inRp"></div>
++                <div class="star inRp" style="width: {{avgRating2}}%"></div>
++              </div>
++              <div class="starHolder inRp">
++                <div class="baseStar inRp"></div>
++                <div class="star inRp" style="width: {{avgRating3}}%"></div>
++              </div>
++              <div class="starHolder inRp">
++                <div class="baseStar inRp"></div>
++                <div class="star inRp" style="width: {{avgRating4}}%"></div>
++              </div>
++              <div class="starHolder inRp">
++                <div class="baseStar inRp"></div>
++                <div class="star inRp" style="width: {{avgRating5}}%"></div>
++              </div>
++              <div class="totalCount inRp">({{totalCount}})</div>
++            </div>
++          </span>
++          {{/hasRatings}}
++          
++          <div class="programTitle"><div class="title" data-dojo-attach-point="titleNode" title="{{title}}">{{title}}</div></div>
++          <div class="programAuthor"><div class="author" data-author="{{author}}" data-dojo-attach-event="ondijitclick: _drillByAuthor">{{author}}</div></div>
++          <div class="channelName" data-dojo-attach-event="ondijitclick: _openChannel">{{channel}}</div>
++          <div class="programDuration">{{duration}}</div>
++          <div class="programDescription">{{description}}</div>
++          
++          <div class="programAttributes">
++            <div class="customAttributes">
++            {{#hasAttributes}}
++              {{#attributes}} 
++                {{^displayImage}}
++                <div class="customAttrPresent">
++                  <div class="customAttrName">{{displayName}}: </div>
++                  <div class="customAttrValue">{{displayValue}}</div>
++                </div>
++                {{/displayImage}} 
++              {{/attributes}}
++            {{/hasAttributes}}
++            </div>
++          </div>
++          <div class="programTags">
++            {{#hasTags}}
++            <div class="tagsPresent">
++              {{#tags}}  
++                <span class="tags"  data-dojo-attach-event="ondijitclick: _search"><a>{{name}}</a>  </span>
++              {{/tags}}
++            </div>
++            {{/hasTags}}
++          </div>
++        </div>
++      {{/isLive}}
++      
++      {{#isLive}}
++        <div class="programDetailsLIVE" data-dojo-attach-point="detailsPanel">
++          {{#hasUpcoming}}
++            <div class="liveSchedule">
++              <div class="startTime">{{{startTime}}}</div>
++              <div class="startDay">{{{startDay}}}</div>
++              <div class="startDate">{{startDate}}</div>              
++            </div>
++          {{/hasUpcoming}}
++          {{^hasUpcoming}}
++            <div class="liveSchedule">
++              <div class="startDate noDate">{{RC.noUpcomingBroadcasts}}</div>
++            </div>
++          {{/hasUpcoming}}
++          <div class="programTitle"><div class="title" data-dojo-attach-point="titleNode" title="{{title}}">{{title}}</div></div>
++          <div class="programAuthor"><div class="author" data-author="{{author}}" data-dojo-attach-event="ondijitclick: _drillByAuthor">{{author}}</div></div>
++          <div class="programDescription">{{description}}</div>
++        </div>
++        {{#hasUpcoming}}
++        <div class="bottomButtons">
++          {{^isRunningNow}}
++            <div class="addToCalendar" data-dojo-attach-point="actionBarNode" tabindex="3020" data-dojo-attach-event="ondijitclick: _eventActionClick"> 
++              <button class="addToCalendarButton" data-dojo-attach-event="ondijitclick: _eventActionClick"></button>
++              <div class="addToCalendarText" data-dojo-attach-point="actionLabel" data-dojo-attach-event="ondijitclick: _eventActionClick">{{RC.playVideoLabelAdd}}</div> 
++            </div>
++          {{/isRunningNow}}
++          {{#isRunningNow}}
++            <div class="watchLive" data-dojo-attach-point="actionBarNode" tabindex="3020" data-dojo-attach-event="ondijitclick: _eventActionClickLive"> 
++              <button class="watchLiveButton" data-dojo-attach-event="ondijitclick: _eventActionClickLive"></button>
++              <div class="watchLiveText" data-dojo-attach-point="actionLabel" data-dojo-attach-event="ondijitclick: _eventActionClickLive">{{RC.playVideoLabelPlay}}</div> 
++            </div>
++          {{/isRunningNow}}
++        </div>
++        {{/hasUpcoming}}
++        {{^hasUpcoming}}
++        <div class="bottomButtons">
++          <div class="addToCalendar concluded"> 
++              <div class="addToCalendarText">{{RC.cRConcluded}}</div> 
++              <button class="addToCalendarButton" style="display: none;"></button>
++          </div>
++        </div>
++        {{/hasUpcoming}}
++      {{/isLive}}
++    </div>
++  {{/noAudience}}
++  <div class="clear"></div>
+ </div>
+\ No newline at end of file

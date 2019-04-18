@@ -1,0 +1,359 @@
+--- ./default/js/dojo18/mpi/vp/egc/templates/MyContent.html	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/vp/egc/templates/MyContent.html	2019-04-18 16:02:34.000000000 -0400
+@@ -1,182 +1,176 @@
+ <div>
+-	<table width=100% cellspacing=0 cellpadding=2 data-bind="css: { locked: inEditMode, locked: adding}" data-dojo-attach-point="_contentTable">
+-	
+-		<colgroup>
+-			<col width="40">
+-			<col width="278">
+-			<col width="160">
+-			<col width="42">
+-		</colgroup>
+-		<thead>
+-			<tr>
+-				<td colspan="3">
+-					<div class="titleBar">
+-						<div class="title">
+-							{{R.title}}
+-						</div>
+-					</div>				
+-				</td>
+-				<td align="right" class="add">
+-					<div><button class="genericButton addButton" title="{{RC.addlabel}}" aria-label="{{R.addContentAriaLabel}}" data-bind="css: $root.buttonEnable($data), enable: !loadingJobs() && !loadingContent() && !adding() && !inEditMode(), attr: {tabindex: $root.getTabindex($data)}" data-dojo-attach-point="addContentButtonNode"></button></div>
+-					<!-- data-dojo-attach-event="onclick: addContent, onkeydown: addContent" 
+-					<div><button class="genericButton" title="{{RC.addlabel}}" aria-label="{{R.addContentAriaLabel}}" data-bind="css: $root.buttonEnable($data), enable: !loading() && !adding() && !inEditMode(), attr: {tabindex: $root.getTabindex($data)}" data-dojo-attach-event="onclick: addCaption, onkeydown: addCaption" data-dojo-attach-point="addCaptionButtonNode">Add Caption</button></div>
+-					-->
+-					
+-				</td>
+-			</tr>
+-			<tr data-bind="visible: pendingJobs().length > 0">
+-				<td colspan="2">
+-					<div class="titleSubBar">
+-						<div class="title">
+-							{{R.pending}}
+-						</div>
+-					</div>				
+-				</td>
+-				<td align=right colspan="2">
+-					<div style="margin-top: 15px;" ></div>
+-					<div class="uploadingPager" data-dojo-attach-point="uploadingPager" data-dojo-type="mpi/util/Pager" data-bind="visible: uploadingPager.availableRecords() > uploadingPager.pageSize(), dijit: { disabled:inEditMode() || adding(), pageSize: uploadingPager.pageSize, startIndex: uploadingPager.pageStart, availableRecords: uploadingPager.availableRecords }"></div>
+-				</td>
+-			</tr>
+-			<tr data-bind="visible: pendingJobs().length > 0" class="pendingContentUploadsTable">
+-				<th>&nbsp;</th>
+-				<th>{{R.name}}</th>
+-				<th>&nbsp;</th>
+-				<th>&nbsp;</th>
+-			</tr>
+-		</thead>
+-		<tbody data-bind="visible: loadingJobs">
+-			<tr>
+-				<td colspan=4 align=center><div class="loadingIcon"></div> {{RC.loadingMessageShort}}</td>
+-			</tr>
+-		</tbody>
+-		<tbody data-bind="visible: pendingJobs().length > 0, foreach: pendingJobs">
+-			<tr class="mainRow pendingJobs" data-bind="attr: {tabindex: (status == 'ERROR') ? $root.getTabindex($data): '-1'}, event: { keydown: $root.launchPendingMenu}">
+-				<td>&nbsp;</td>
+-				<td class="nameHolder"><div data-bind="text: name, attr {title:name}"></div></td>
+-				<td data-bind="text: $root.displayStatus(status), attr: { title: $root.displayErrorMessages(errors) }"></td>
+-				<td> 
+-					<button data-bind="visible: status == 'ERROR', click: $root.launchPendingMenu" class="menuButton"></button>
+-				</td>
+-			</tr>
+-		</tbody>
+-		<tbody data-bind="visible: pendingJobs().length > 0">
+-			<tr>
+-				<td colspan="4">&nbsp;</td>
+-			</tr>		
+-		</tbody>
+-		
+-		<thead>
+-			<tr>
+-				
+-			</tr>
+-		</thead>
+-		<tbody>
+-			<tr>
+-				<td colspan="4">
+-					<div class="titleBar">
+-						<div class="filter">
+-							{{RC.quickFilters}}:
+-						</div>
+-						<div class="clearAll" data-dojo-attach-event="ondijitclick: clearFilter" data-bind="visible: (quickFilter)">({{RC.clearAll}})</div>
+-					</div>
+-					<div class="contentFilterContainer" data-dojo-attach-point="contentFilterContainer" data-dojo-attach-event="ondijitclick: fiterContents">
+-						<div class="filterItem" data-bind="disable: (loadingJobs() || loadingContent()), css:{ disabled: loadingJobs() || loadingContent()}" data-id="MEDIA">{{RC.audioVideo}}</div>
+-						<div class="filterItem" data-bind="disable: (loadingJobs() || loadingContent()), css:{ disabled: loadingJobs() || loadingContent()}" data-id="SLIDES">{{RC.slides}}</div>
+-						<div class="filterItem" data-bind="disable: (loadingJobs() || loadingContent()), css:{ disabled: loadingJobs() || loadingContent()}" data-id="EXTERNAL_LINK">{{RC.link}}</div>
+-						<div class="filterItem" data-bind="disable: (loadingJobs() || loadingContent()), css:{ disabled: loadingJobs() || loadingContent()}" data-id="DOWNLOADABLE">{{RC.downloadable}}</div>
+-						<div class="filterItem" data-bind="disable: (loadingJobs() || loadingContent()), css:{ disabled: loadingJobs() || loadingContent()}" data-id="IMAGE">{{RC.image}}</div>
+-						<div class="filterItem" data-bind="disable: (loadingJobs() || loadingContent()), css:{ disabled: loadingJobs() || loadingContent()}" data-id="POLL">{{RC.pollLabel}}</div>
+-						<!-- 
+-						<div class="filterItem" data-id="COMPLEX_PRESENTATION">{{RC.complexPresentation}}</div>
+-						<div class="filterItem" data-id="EXTERNAL_MEDIA">{{RC.externalMedia}}</div>
+-						<div class="filterItem" data-id="IMAGE_BUNDLE">{{RC.imageBundle}}</div>
+-						
+-						-->
+-					</div>
+-				</td>
+-			</tr>
+-		</tbody>
+-		
+-		
+-		<thead>
+-			<tr>
+-				<td colspan=2>
+-					<div class="titleSubBar">
+-						<div class="title">
+-							{{R.contentBin}}
+-						</div>
+-					</div>	
+-				</td>
+-				<td align=right colspan="2">
+-					<div style="margin-top: 15px;" ></div>
+-					<div class="egcPager" data-dojo-attach-point="contentPager" data-dojo-type="mpi/util/Pager" data-bind="visible: contentPager.availableRecords() > contentPager.pageSize(), dijit: { disabled:inEditMode() || adding(), pageSize: contentPager.pageSize, startIndex: contentPager.pageStart, availableRecords: contentPager.availableRecords }"></div>
+-				</td>
+-			</tr>
+-			<tr>
++  <table width=100% cellspacing=0 cellpadding=2 data-bind="css: { locked: inEditMode, locked: adding}" data-dojo-attach-point="_contentTable">
++  
++    <colgroup>
++      <col width="40">
++      <col width="278">
++      <col width="160">
++      <col width="42">
++    </colgroup>
++    <thead>
++      <tr>
++        <td colspan="2">
++          <div class="titleBar">
++            <div class="title">
++              {{R.title}}
++            </div>
++          </div>        
++        </td>
++        <td align="right" class="add" colspan="3">
++          <div><button class="lightButton genericButton" title="{{RC.addlabel}}" aria-label="{{R.addContentAriaLabel}}" data-bind="css: $root.buttonEnable($data), enable: !loadingJobs() && !loadingContent() && !adding() && !inEditMode(), attr: {tabindex: $root.getTabindex($data)}" data-dojo-attach-event="onclick: addContent, onkeydown: addContent">{{R.addContentAriaLabel}}</button> 
++          <button class="genericButton addButton" title="{{RC.addlabel}}" aria-label="{{R.addContentAriaLabel}}" data-bind="css: $root.buttonEnable($data), enable: !loadingJobs() && !loadingContent() && !adding() && !inEditMode(), attr: {tabindex: $root.getTabindex($data)}" data-dojo-attach-point="addContentButtonNode"></button></div>
++        </td>
++      </tr>
++      <tr data-bind="visible: pendingJobs().length > 0">
++        <td colspan="2">
++          <div class="titleSubBar">
++            <div class="title">
++              {{R.pending}}
++            </div>
++          </div>        
++        </td>
++        <td align=right colspan="2">
++          <div style="margin-top: 15px;" ></div>
++          <div class="uploadingPager" data-dojo-attach-point="uploadingPager" data-dojo-type="mpi/util/Pager" data-bind="visible: uploadingPager.availableRecords() > uploadingPager.pageSize(), dijit: { disabled:inEditMode() || adding(), pageSize: uploadingPager.pageSize, startIndex: uploadingPager.pageStart, availableRecords: uploadingPager.availableRecords }"></div>
++        </td>
++      </tr>
++      <tr data-bind="visible: pendingJobs().length > 0" class="pendingContentUploadsTable">
++        <th>&nbsp;</th>
++        <th>{{R.name}}</th>
++        <th>&nbsp;</th>
++        <th>&nbsp;</th>
++      </tr>
++    </thead>
++    <tbody data-bind="visible: loadingJobs">
++      <tr>
++        <td colspan=4 align=center><div class="loadingIcon"></div> {{RC.loadingMessageShort}}</td>
++      </tr>
++    </tbody>
++    <tbody data-bind="visible: pendingJobs().length > 0, foreach: pendingJobs">
++      <tr class="mainRow pendingJobs" data-bind="attr: {tabindex: (status == 'ERROR') ? $root.getTabindex($data): '-1'}, event: { keydown: $root.launchPendingMenu}">
++        <td>&nbsp;</td>
++        <td class="nameHolder"><div data-bind="text: name, attr {title:name}"></div></td>
++        <td data-bind="text: $root.displayStatus(status), attr: { title: $root.displayErrorMessages(errors) }"></td>
++        <td> 
++          <button data-bind="visible: status == 'ERROR', click: $root.launchPendingMenu" class="menuButton"></button>
++        </td>
++      </tr>
++    </tbody>
++    <tbody data-bind="visible: pendingJobs().length > 0">
++      <tr>
++        <td colspan="4">&nbsp;</td>
++      </tr>    
++    </tbody>
++    <thead>
++      <tr>
++        
++      </tr>
++    </thead>
++    <tbody>
++      <tr>
++        <td colspan="4">
++          <div class="titleBar">
++            <div class="filter">
++              {{RC.quickFilters}}:
++            </div>
++            <div class="clearAll" data-dojo-attach-event="ondijitclick: clearFilter" data-bind="visible: (quickFilter)">({{RC.clearAll}})</div>
++          </div>
++          <div class="contentFilterContainer" data-dojo-attach-point="contentFilterContainer" data-dojo-attach-event="ondijitclick: fiterContents">
++            <div class="filterItem" data-bind="disable: (loadingJobs() || loadingContent()), css:{ disabled: loadingJobs() || loadingContent()}" data-id="MEDIA">{{RC.audioVideo}}</div>
++            <div class="filterItem" data-bind="disable: (loadingJobs() || loadingContent()), css:{ disabled: loadingJobs() || loadingContent()}" data-id="SLIDES">{{RC.slides}}</div>
++            <div class="filterItem" data-bind="disable: (loadingJobs() || loadingContent()), css:{ disabled: loadingJobs() || loadingContent()}" data-id="EXTERNAL_LINK">{{RC.link}}</div>
++            <div class="filterItem" data-bind="disable: (loadingJobs() || loadingContent()), css:{ disabled: loadingJobs() || loadingContent()}" data-id="DOWNLOADABLE">{{RC.downloadable}}</div>
++            <div class="filterItem" data-bind="disable: (loadingJobs() || loadingContent()), css:{ disabled: loadingJobs() || loadingContent()}" data-id="IMAGE">{{RC.image}}</div>
++            <div class="filterItem" data-bind="disable: (loadingJobs() || loadingContent()), css:{ disabled: loadingJobs() || loadingContent()}" data-id="POLL">{{RC.pollLabel}}</div>
++            <!-- 
++            <div class="filterItem" data-id="COMPLEX_PRESENTATION">{{RC.complexPresentation}}</div>
++            <div class="filterItem" data-id="EXTERNAL_MEDIA">{{RC.externalMedia}}</div>
++            <div class="filterItem" data-id="IMAGE_BUNDLE">{{RC.imageBundle}}</div>
++            
++            -->
++          </div>
++        </td>
++      </tr>
++    </tbody>
++    <thead>
++      <tr>
++        <td colspan=2>
++          <div class="titleSubBar">
++            <div class="title">
++              {{R.contentBin}}
++            </div>
++          </div>  
++        </td>
++        <td align=right colspan="2">
++          <div style="margin-top: 15px;" ></div>
++          <div class="egcPager" data-dojo-attach-point="contentPager" data-dojo-type="mpi/util/Pager" data-bind="visible: contentPager.availableRecords() > contentPager.pageSize(), dijit: { disabled:inEditMode() || adding(), pageSize: contentPager.pageSize, startIndex: contentPager.pageStart, availableRecords: contentPager.availableRecords }"></div>
++        </td>
++      </tr>
++      <tr>
+ 
+-				<th class="pointer" sid="contentTypeName" pid="contentPager" aria-label="{{RC.sortByType}}" data-bind="click: $root.setSort, attr: {tabindex: $root.getTabindex($data)}, event: { keydown: $root.setSort}">{{R.type}}<div data-bind="visible:contentPager.sortParam()=='contentTypeName', css:$root.sortDirIcon($root.contentPager)"></div></th>
+-				<th colspan=3 class="pointer" sid="name" pid="contentPager" aria-label="{{RC.sortByName}}" data-bind="click: $root.setSort, attr: {tabindex: $root.getTabindex($data)}, event: { keydown: $root.setSort}">{{R.name}}<div data-bind="visible:contentPager.sortParam()=='name', css:$root.sortDirIcon($root.contentPager)"></div></th>			
+-			</tr>			
+-		</thead>
+-		<tbody data-bind="visible: loadingContent">
+-			<tr>
+-				<td colspan=4 align=center><div class="loadingIcon"></div> {{RC.loadingMessageShort}}</td>
+-			</tr>
+-		</tbody>
+-		<tbody class="addingWidget" data-bind="visible: adding">
+-			<tr>
+-				<td colspan="4" class="indented">
+-					<div>
+-						<div 
+-							data-dojo-type="mpi/ap/SimpleContentCreator"
+-							data-dojo-attach-point="_addWidget"></div>
+-					</div>
+-				</td>
+-			</tr>
+-		</tbody>
+-		<tbody class="contentList" data-bind="foreach: content">
+-			
+-			<tr class="mainRow" data-bind="css: { selected: inEditMode, otherSelected: $root.isAnyInEditMode($data) }, attr: {tabindex: $root.getTabindex($data), 'aria-label': $root.ariaLabel($data)}, event: { keydown: $root.launchMenu}">
+-				<td align="center" data-bind=" click: $root.selectRow">
+-					<div style="vertical-align: middle;" data-bind=" click: $root.selectRow, css: $root.typeIcon($data), attr{title:$root.typeIconName($data)}"></div>
+-				</td>
+-				<td valign="middle" colspan=2 data-bind=" click: $root.selectRow">
+-					<div class="nameDisplay nameHolder pointer" data-bind="click: $root.selectRow, text: name, attr {title:name}"></div>
+-				</td>
+-				<td><button class="menuButton" data-bind="visible: (deletable || editable), click: $root.launchMenu"></button></td>
+-			</tr>
+-			<!-- 
+-			<tr class="editRow" data-bind="visible: editable && inEditMode()">
+-				<td align="center">
+-				</td>
+-				<td valign="middle" colspan=2>
+-					<div  class="renamer" >
+-						<input data-dojo-attach-point="renameBox" type="text" data-bind="event { keyup:$root.renameKeyUp, keydown:$root.renameKeyDown}, value: newName, hasFocus: inEditMode()" tabindex="1000">
+-						<div class="genericCharCount" data-dojo-attach-point="_renameBoxCharCount"></div>
+-						<div style="float:right;">
+-							<button data-bind="css: $root.enableRenameButton($data), enable: $root.validName(), click: $root.renameContent, event: { keydown: $root.renameContent}" tabindex="1000" class="genericButton renameButtonText inline">{{RC.renameLabel}}</button>
+-							<button data-bind="click: $root.hideRename, event: { keydown: $root.hideRename}" tabindex="1000" class="genericButton cancelButtonText inline">{{RC.cancelLabel}}</button>
+-						</div>
+-						
+-					</div>
+-				</td>
+-				<td>
+-				</td>
+-			</tr>
+-			 -->
+-		</tbody>
+-		
+-		<tbody data-bind="visible: contentPager.availableRecords() == 0">
+-			<tr class="noItemsRow">
+-				<td>&nbsp;</td>
+-				<td colspan="2" width="100%">{{RC.none}}</td>
+-				<td>&nbsp;</td>
+-			</tr>
+-		</tbody>
+-	</table>
+-	<div id="deleteConfirmationDialog" data-dojo-type="dijit.Dialog" title="{{RC.deleteContent}}">
+-	    <div class="deleteConfirmationDialog">{{RC.deleteDialog}}</div>
+-	    <button class="genericButton cancelBroadcastButton" type="button" data-dojo-attach-event="ondijitclick: _hideDeleteConfirmation">{{RC.no}}</button>
+-	    <button class="genericButton deleteBroadcastButton" type="button" data-dojo-attach-event="ondijitclick: _deleteProgram">{{RC.yes}}</button>
+-	</div>
++        <th class="pointer" sid="contentTypeName" pid="contentPager" aria-label="{{RC.sortByType}}" data-bind="click: $root.setSort, attr: {tabindex: $root.getTabindex($data)}, event: { keydown: $root.setSort}">{{R.type}}<div data-bind="visible:contentPager.sortParam()=='contentTypeName', css:$root.sortDirIcon($root.contentPager)"></div></th>
++        <th colspan=3 class="pointer" sid="name" pid="contentPager" aria-label="{{RC.sortByName}}" data-bind="click: $root.setSort, attr: {tabindex: $root.getTabindex($data)}, event: { keydown: $root.setSort}">{{R.name}}<div data-bind="visible:contentPager.sortParam()=='name', css:$root.sortDirIcon($root.contentPager)"></div></th>      
++      </tr>      
++    </thead>
++    <tbody data-bind="visible: loadingContent">
++      <tr>
++        <td colspan=4 align=center><div class="loadingIcon"></div> {{RC.loadingMessageShort}}</td>
++      </tr>
++    </tbody>
++    <tbody class="addingWidget" data-bind="visible: adding">
++      <tr>
++        <td colspan="4" class="indented">
++          <div>
++            <div 
++              data-dojo-type="mpi/ap/SimpleContentCreator"
++              data-dojo-attach-point="_addWidget"></div>
++          </div>
++        </td>
++      </tr>
++    </tbody>
++    <tbody data-bind="foreach: content">
++      
++      <tr class="mainRow" data-bind="css: { selected: inEditMode, otherSelected: $root.isAnyInEditMode($data) }, attr: {tabindex: $root.getTabindex($data), 'aria-label': $root.ariaLabel($data)}, event: { keydown: $root.launchMenu}">
++        <td align="center" data-bind=" click: $root.selectRow">
++          <div style="vertical-align: middle;" data-bind=" click: $root.selectRow, css: $root.typeIcon($data), attr{title:$root.typeIconName($data)}"></div>
++        </td>
++        <td valign="middle" colspan=2 data-bind=" click: $root.selectRow">
++          <div class="nameDisplay nameHolder pointer" data-bind="click: $root.selectRow, text: name, attr {title:name}"></div>
++        </td>
++        <td><button class="menuButton" data-bind="visible: (deletable || editable), click: $root.launchMenu"></button></td>
++      </tr>
++      <!-- 
++      <tr class="editRow" data-bind="visible: editable && inEditMode()">
++        <td align="center">
++        </td>
++        <td valign="middle" colspan=2>
++          <div  class="renamer" >
++            <input data-dojo-attach-point="renameBox" type="text" data-bind="event { keyup:$root.renameKeyUp, keydown:$root.renameKeyDown}, value: newName, hasFocus: inEditMode()" tabindex="1000">
++            <div class="genericCharCount" data-dojo-attach-point="_renameBoxCharCount"></div>
++            <div style="float:right;">
++              <button data-bind="css: $root.enableRenameButton($data), enable: $root.validName(), click: $root.renameContent, event: { keydown: $root.renameContent}" tabindex="1000" class="genericButton renameButtonText inline">{{RC.renameLabel}}</button>
++              <button data-bind="click: $root.hideRename, event: { keydown: $root.hideRename}" tabindex="1000" class="genericButton cancelButtonText inline">{{RC.cancelLabel}}</button>
++            </div>
++            
++          </div>
++        </td>
++        <td>
++        </td>
++      </tr>
++      -->
++    </tbody>
++    
++    <tbody data-bind="visible: contentPager.availableRecords() == 0">
++      <tr class="noItemsRow">
++        <td>&nbsp;</td>
++        <td colspan="2" width="100%">{{RC.none}}</td>
++        <td>&nbsp;</td>
++      </tr>
++    </tbody>
++  </table>
++  <div id="deleteConfirmationDialog" data-dojo-type="dijit.Dialog" title="{{RC.deleteContent}}">
++      <div class="deleteConfirmationDialog">{{RC.deleteDialog}}</div>
++      <button class="genericButton cancelBroadcastButton" type="button" data-dojo-attach-event="ondijitclick: _hideDeleteConfirmation">{{RC.no}}</button>
++      <button class="genericButton deleteBroadcastButton" type="button" data-dojo-attach-event="ondijitclick: _deleteProgram">{{RC.yes}}</button>
++  </div>
+ </div>
+\ No newline at end of file

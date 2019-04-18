@@ -1,0 +1,38 @@
+--- ./default/js/dojo18/mpi/ap/ContextBoundContentCreator.js	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/ap/ContextBoundContentCreator.js	2019-04-18 16:02:34.000000000 -0400
+@@ -73,7 +73,8 @@
+ 				tipsToShow:false,
+ 				uploadCancelled:false,
+ 				ask360Video:false,
+-				is360Video:false
++				is360Video:false,
++				chosenFileName: "Browses for a file"
+ 			}, this.defaults);
+ 		},
+ 		
+@@ -237,8 +238,8 @@
+ 		
+ 		_upload: function(e) {
+ 			//First send all the metadata up to the server and get a UploadData
+-			//back.  Once we have the UploadData we can create an IFRAME that will
+-			//be used to send up the data to the server.  We can detect that load
++			//back.	 Once we have the UploadData we can create an IFRAME that will
++			//be used to send up the data to the server.	We can detect that load
+ 			//and once it's complete we're good to go.
+ 			if(e) {
+ 				var target = e.target || e.srcElement;
+@@ -278,7 +279,13 @@
+ 				m.uploading(false);
+ 			}));
+ 		},
+-		
++
++		_fileInputChange: function(e) {
++			var fi = e.target;
++			this._chosenFileName.innerHTML = fi.files.item(0).name;
++			return true;
++		},
++
+ 		_fileInputKeydown: function(e) {
+ 			if(e.keyCode == 13) {
+ 				if(has("ie") || has("ie11")) {       

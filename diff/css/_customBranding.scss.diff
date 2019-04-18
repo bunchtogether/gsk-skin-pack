@@ -1,0 +1,47 @@
+--- ./default/css/_customBranding.scss	2019-04-18 16:02:34.000000000 -0400
++++ ./custom/css/_customBranding.scss	2017-07-25 23:40:37.000000000 -0400
+@@ -4,4 +4,42 @@
+ to implement your custom branding
+ 
+ */
+- 
+\ No newline at end of file
++
++$siteFont:               Arial, Helvetica;
++$primaryBackgroundImage:       none;
++$mainPageBackground:         transparent;
++$headerButtonBackground:      transparent;
++$mainPageBackgroundImage:       none;
++
++$mobileLogoWidth:           48px;
++$mobileLogoHeight:           48px;
++
++$logoWidth:             60px;
++$logoHeight:            60px;
++
++$logo:                url('../images/gsk/svg/gsk_logo.svg');
++$mobileLogo:             url('../images/gsk/svg/gsk_logo.svg');
++
++$gskSubNavigationHeight:      50px;
++$gskSidebarWidth:          236px;
++$gskTitleWidth:            180px;
++$gskHeaderHeight:          65px;
++
++$gskMobileSubNavigationHeight:    40px;
++$gskMobileHeaderHeight:        50px;
++$gskMobileTitleWidth:        100px;
++
++$playerControlBackground:      transparent;
++$playerControlHighlight:      $color_highlight;
++$supplementalButtonHighlight:    $color_highlight;
++$sliderBufferedColor:         $color_Mid4;
++
++$facetPrimaryForeground:      $color_header_hover;
++$facetSecondaryForeground:      $color_header_hover;
++$facetForegroundHighlight:      $color_header_active;
++$facetBackgroundHighlight:       transparent;
++
++$buttonBackground:           $color_header_hover;
++$buttonBackgroundDisabled:      $color_Mid1;
++$buttonForegroundDisabled:      $color_Mid4;
++$buttonBorderDisabled:        $color_Mid1;

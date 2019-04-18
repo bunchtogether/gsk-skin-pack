@@ -1,0 +1,848 @@
+--- ./default/js/dojo18/mpi/ap/templates/ProgramEditor.html	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/ap/templates/ProgramEditor.html	2019-04-18 16:02:34.000000000 -0400
+@@ -1,388 +1,486 @@
+-<div>
++<div class="gsk-program-editor">
++
+ 	<div data-bind="visible: loading"  class="loadingMsg">
+ 		<div class="loadingIcon"></div><span>{{RC.loadingMessageShort}}</span>
+ 	</div>
+ 	
+ 	<div data-bind="visible: (!loading() && !error())">
+-		<div data-bind="visible: !isNew()">
++		<div data-bind="visible: !isNew()" style="height:120px;">
+ 			<div class="subHeader" data-bind="visible:!isLive()"><span>{{RC.editProgram}}</span></div>
+ 			<div class="subHeader" data-bind="visible:isLive()"><span>{{RC.editWebcast}}</span></div>
+ 			<div class="instructions">{{RC.noteUpload}}</div>
+ 		</div>
+ 		
+ 		<div class="instructions" data-bind="visible: !isNew() &&  programApprovalRequired()">{{RC.noteApproval}}</div>
+-		
+ 	</div>
+-	
+ 	<div data-bind="visible: (!loading() && !error())" data-dojo-attach-point="containerNode">
+-		
+-		<div data-bind="visible: (!isLive() && !createProgramForQC())">
+-			<div class="form-row" data-bind="style: {display: createProgramForQC() ? 'none' : ''}">
+-				<div class="form-label">{{RC.videoFile}}</div>
+-				<div class="form-control">
+-					<div data-dojo-type="mpi/ap/VideosPicker"
+-						data-dojo-attach-point="videosPicker"
+-						data-bind="dijit: { selectedItems: contents, hasValidItem: hasPrimaryMedia, showContentEditOption: true }"
+-						data-dojo-props="uploadEnabled: true"></div>
+-				</div>
+-			</div>
++		<div class="gsk-header">
++			Step 2 of 2: <span>Upload your video and complete the video information fields below</span>
+ 		</div>
+-		
+-		<div class="subHeader"><span>{{R.programInformation}}</span></div>
+-		
+-		{{<row}}
+-			{{$name}}name{{/name}}
+-			{{$control}}
+-				<input class="textBox" type="text" aria-label="{{R.name}}" data-dojo-type="dijit/form/ValidationTextBox" intermediateChanges="true" data-bind="dijit: { value: name, required: true}, event: { keydown: $root.checkEnterKey}" maxlength="128" data-dojo-props="regExp:'.*[^ ].*', invalidMessage:this.R.invalidWhitespace"/> <div class="requiredStar">*</div>
+-			{{/control}}
+-		{{/row}}
+-		
+-		{{<row}}
+-			{{$name}}author{{/name}}
+-			{{$control}}
+-				<input class="textBox" type="text" aria-label="{{R.author}}" data-dojo-type="dijit/form/ValidationTextBox" intermediateChanges="true" data-bind="dijit: { value: authorOrPublisher, required:true }, event: { keydown: $root.checkEnterKey}" maxlength="128"  data-dojo-props="regExp:'.*[^ ].*', invalidMessage:this.R.invalidWhitespace"/> <div class="requiredStar">*</div>
+-			{{/control}}
+-		{{/row}}
+-		
+-		{{<row}}
+-			{{$name}}copyright{{/name}}
+-			{{$control}}
+-				<input class="textBox" type="text" aria-label="{{R.copyright}}" data-dojo-type="dijit/form/TextBox" intermediateChanges="true" data-bind="dijit: { value: copyright }, event: { keydown: $root.checkEnterKey}" maxlength="128"/> 
+-			{{/control}}
+-		{{/row}}
+-		
+-		<!-- TODO:  When we move to admin portal
+-			add a channel selector widget here -->
+-		
+-		{{<row}}
+-			{{$name}}shortDescription{{/name}}
+-			{{$control}}
+-				<textarea class="textBox" rows="5" data-dojo-attach-point="shortDescriptionTextBox" aria-label="{{R.shortDescription}}" maxlength="255" data-dojo-attach-event="onfocus: textAreaFocused" data-bind="value: shortDescription, valueUpdate: ['change', 'keyup'], event: { keydown: $root.checkEnterKeySD, keyup: $root.keyUpShortDescription}"></textarea>
+-				<div class="genericCharCount" data-dojo-attach-point="_shortDescriptionCharCountNode"></div> 
+-			{{/control}}
+-		{{/row}}
+-		
+-		{{<row}}
+-			{{$name}}longDescription{{/name}}
+-			{{$control}}
+-				<input type="checkbox"  aria-label="{{R.includeLongDescription}} {{R.checkbox}}" style="vertical-align: top;" data-bind="checked: showLongDescription, disable: longDescription, event: { keydown: $root.checkUncheckLongDescription}"/>
+-				<br/>
+-				<textarea class="textBox" rows="5" data-dojo-attach-point="longDescriptionTextBox" aria-label="{{R.longDescription}}" maxlength="32767" data-dojo-attach-event="onfocus: textAreaFocused" data-bind="value: longDescription, valueUpdate: ['change', 'keyup'], visible: longDescription() || showLongDescription(), event: { keydown: $root.checkEnterKeyLD, keyup: $root.keyUpLongDescription}"></textarea>
+-				<div class="genericCharCount" data-dojo-attach-point="_longDescriptionCharCountNode"></div> 
+-			{{/control}}
+-		{{/row}}
+-
+-		{{<row}}
+-			{{$name}}keywords{{/name}}
+-			{{$control}}
+-				<input class="textBox" type="text" aria-label="{{R.keywords}}" data-dojo-type="dijit/form/TextBox" intermediateChanges="true" data-bind="dijit: { value: keywords }, event: { keydown: $root.checkEnterKey}" maxlength="1299"/>  
+-			{{/control}}
+-		{{/row}}
+-		<div data-bind="visible: commentsDomainOptionEnabled()">
+-		{{<row}}
+-			{{$name}}commentsEnabled{{/name}}
+-			{{$control}}
+-				<input type="checkbox" aria-label="{{R.commentsEnabled}} {{R.checkbox}}" data-bind="checked: commentsEnabled, event: { keydown: $root.checkUncheckEnableComments}"/>
+-			{{/control}}
+-			{{$visible}}!isLive(){{/visible}}
+-		{{/row}}
+-		
+-		{{<row}}
+-			{{$name}}allowCommentsNotification{{/name}}
+-			{{$control}}
+-				<input type="checkbox" aria-label="{{R.allowCommentsNotification}} {{R.checkbox}}" data-bind="checked: allowCommentsNotification, event: { keydown: $root.checkUncheckAllowCommentsNotification}"/>
+-			{{/control}}
+-			{{$visible}}(!isLive() && showCommentsNotification()){{/visible}}
+-		{{/row}}	
+-		
++		<div class="gsk-settings gsk-basic-settings" data-bind="visible: !advancedMode()">
++			<a href="#" class="basic" data-bind="event: { click: $root.setBasicMode, keydown: $root.setBasicMode}">Basic Info <span>(Recommended)</span></a>
++			<a href="#" class="advanced" data-bind="event: { click: $root.setAdvancedMode, keydown: $root.setAdvancedMode}">Advanced Settings</a>
+ 		</div>
+-		
+-		{{<row}}
+-			{{$name}}relatedVideosEnabled{{/name}}
+-			{{$control}}
+-				<input type="checkbox" aria-label="{{R.relatedVideosEnabled}} {{R.checkbox}}" data-bind="checked: relatedVideosEnabled, event: { keydown: $root.checkUncheckEnableRelatedVideos}"/>
+-			{{/control}}
+-			{{$visible}}!isLive(){{/visible}}
+-		{{/row}}	
+-		
+-		{{<row}}
+-			{{$name}}tags{{/name}}
+-			{{$control}}
+-				<div data-dojo-attach-point="tp" data-dojo-type="mpi/ap/TagPicker" data-bind="dijit: { selectedTags: tags, required: true }"></div>
+-			{{/control}}
+-		{{/row}}
+-		
+-		
+-		<div class="form-row">
+-			<div data-bind="foreach: attributeDefinitions">
+-				<div class="form-label"><label data-bind="text: displayName"></label></div>
+-				<!-- ko if: attributeType == 'freetext' -->
+-				<div class="form-control">
+-					 <!-- ko with: $root.attrValue(identifier) -->
+-					<input type="text" class="customAttr" data-bind="value: value, valueUpdate: 'keyup', event: { keydown: $root.checkEnterKey}"/>
+-					<div class="requiredStar" data-bind="visible: $parent.required">*</div>
+-					<!-- /ko -->
++		<div class="gsk-settings gsk-advanced-settings" data-bind="visible: advancedMode()">
++			<a href="#" class="basic" data-bind="event: { click: $root.setBasicMode, keydown: $root.setBasicMode}">Basic Info <span>(Recommended)</span></a>
++			<a href="#" class="advanced"  data-bind="event: { click: $root.setAdvancedMode, keydown: $root.setAdvancedMode}">Advanced Settings</a>
++		</div>
++		<div class="gsk-row">
++			<div class="gsk-column">
++				<div data-bind="visible: (!isLive() && !createProgramForQC())">
++					<div class="form-row" data-bind="style: {display: createProgramForQC() ? 'none' : ''}">
++						<div class="form-label">{{RC.videoFile}}</div>
++						<div class="form-control">
++							<div data-dojo-type="mpi/ap/VideosPicker"
++								data-dojo-attach-point="videosPicker"
++								data-bind="dijit: { selectedItems: contents, hasValidItem: hasPrimaryMedia, showContentEditOption: true }"
++								data-dojo-props="uploadEnabled: true"></div>
++						</div>
++					</div>
+ 				</div>
+-				<!-- /ko -->
+ 				
+-				<!-- ko if: attributeType == 'picklist' ||  attributeType == 'pickimagelist' -->
+-				<div class="form-control">
+-					 <!-- ko with: $root.attrValue(identifier) -->
+-					<select class="customAttr" data-bind="value: value, valueUpdate: 'keyup', css: { valRequired: $parent.required }, options: $parent.eventAttributeOptions, optionsText: 'displayText', optionsValue: 'value', optionsCaption: $parent.required ? null : '{{RC.selectAttribute}}' "></select>
+-					<div class="requiredStar" data-bind="visible: $parent.required">*</div>
+-					<!-- /ko -->
++				<div class="subHeader"><span>{{R.programInformation}}</span></div>
++				
++				{{<row}}
++					{{$name}}name{{/name}}
++					{{$control}}
++						<input class="textBox" type="text" aria-label="{{R.name}}" data-dojo-type="dijit/form/ValidationTextBox" intermediateChanges="true" data-bind="dijit: { value: name, required: true}, event: { keydown: $root.checkEnterKey}" maxlength="128" data-dojo-props="regExp:'.*[^ ].*', invalidMessage:this.R.invalidWhitespace" placeholder="{{R.name}}" /> <div class="requiredStar">*</div>
++					{{/control}}
++				{{/row}}
++				
++				{{<row}}
++					{{$name}}author{{/name}}
++					{{$control}}
++						<input class="textBox" type="text" aria-label="{{R.author}}" data-dojo-type="dijit/form/ValidationTextBox" intermediateChanges="true" data-bind="dijit: { value: authorOrPublisher, required:true }, event: { keydown: $root.checkEnterKey}" maxlength="128"  data-dojo-props="regExp:'.*[^ ].*', invalidMessage:this.R.invalidWhitespace" placeholder="{{R.author}}" /> <div class="requiredStar">*</div>
++					{{/control}}
++				{{/row}}
++				
++				{{<row}}
++					{{$name}}copyright{{/name}}
++					{{$control}}
++						<input class="textBox" type="text" aria-label="{{R.copyright}}" data-dojo-type="dijit/form/TextBox" intermediateChanges="true" data-bind="dijit: { value: copyright }, event: { keydown: $root.checkEnterKey}" maxlength="128" placeholder="{{R.copyright}}" /> 
++					{{/control}}
++				{{/row}}
++				
++				<!-- TODO:  When we move to admin portal
++					add a channel selector widget here -->
++				
++				{{<row}}
++					{{$name}}shortDescription{{/name}}
++					{{$control}}
++						<textarea class="textBox" rows="5" data-dojo-attach-point="shortDescriptionTextBox" aria-label="{{R.shortDescription}}" maxlength="255" data-dojo-attach-event="onfocus: textAreaFocused" data-bind="value: shortDescription, valueUpdate: ['change', 'keyup'], event: { keydown: $root.checkEnterKeySD, keyup: $root.keyUpShortDescription}" placeholder="{{R.shortDescription}}"></textarea>
++						<div class="genericCharCount" data-dojo-attach-point="_shortDescriptionCharCountNode"></div> 
++					{{/control}}
++				{{/row}}
++				
++				{{<row}}
++					{{$name}}longDescription{{/name}}
++					{{$control}}
++						<div data-bind="visible: advancedMode()">
++							<label class="gsk-checkbox">
++								<input type="checkbox"  aria-label="{{R.includeLongDescription}} {{R.checkbox}}" style="vertical-align: top;" data-bind="checked: showLongDescription, disable: longDescription, event: { keydown: $root.checkUncheckLongDescription}"/>
++								<span></span>
++							</label> 
++							<div class="gsk-label">{{R.includeLongDescription}}</div>
++							<br/>
++							<textarea class="textBox" rows="5" data-dojo-attach-point="longDescriptionTextBox" aria-label="{{R.longDescription}}" maxlength="32767" data-dojo-attach-event="onfocus: textAreaFocused" data-bind="value: longDescription, valueUpdate: ['change', 'keyup'], visible: longDescription() || showLongDescription(), event: { keydown: $root.checkEnterKeyLD, keyup: $root.keyUpLongDescription}"  placeholder="{{R.longDescription}}"></textarea>
++							<div class="genericCharCount" data-dojo-attach-point="_longDescriptionCharCountNode"></div> 
++						</div>
++					{{/control}}
++				{{/row}}
++				<div data-bind="visible: advancedMode()">
++					{{<row}}
++						{{$name}}keywords{{/name}}
++						{{$control}}
++							<input class="textBox" type="text" aria-label="{{R.keywords}}" data-dojo-type="dijit/form/TextBox" intermediateChanges="true" data-bind="dijit: { value: keywords }, event: { keydown: $root.checkEnterKey}" maxlength="1299" placeholder="{{R.keywords}}"/>  
++						{{/control}}
++					{{/row}}
++					
++					{{<row}}
++						{{$name}}tags{{/name}}
++						{{$control}}
++							<div data-dojo-attach-point="tp" data-dojo-type="mpi/ap/TagPicker" data-bind="dijit: { selectedTags: tags, required: true }"></div>
++						{{/control}}
++					{{/row}}
++				
++					<div class="subHeader" data-bind="visible: !hideUserAccessSettings()"><span>{{R.userAccess}}</span></div>
++					
++					{{<row}}
++						{{$name}}publisher{{/name}}
++						{{$control}}
++							<div data-dojo-type="mpi/ap/SinglePrincipalPicker" data-dojo-props="groupsSelectable: false" data-bind="dijit: { selectedPrincipal: publisher }" data-user="publisher"></div>  
++						{{/control}}
++					{{/row}}
++					 
++					{{<row}}
++						{{$name}}publishers{{/name}}
++						{{$control}}
++							<div class="sideLabel">[R publishers]</div>
++							<div data-dojo-type="mpi/ap/PrincipalPicker" data-bind="dijit: { selectedPrincipals: publishers }" data-user="publishers"></div>  
++						{{/control}}
++					{{/row}}
++					 
++					{{<row}}
++						{{$name}}viewers{{/name}}
++						{{$control}}
++							<div class="sideLabel">[R viewers]</div>
++							<div data-dojo-type="mpi/ap/PrincipalPicker" data-bind="dijit: { selectedPrincipals: viewers }" data-user="viewer"></div>  
++						{{/control}}
++					{{/row}}
+ 				</div>
+-				<!-- /ko -->
+ 			</div>
+-		</div>
+-		
+-		<div class="subHeader" data-bind="visible: !hidePlayerSettings()"><span>{{R.playerSettings}}</span></div>
+-		
+-		{{<row}}
+-			{{$name}}playerFullScreenEnabled{{/name}}
+-			{{$control}}
+-				<input type="checkbox" aria-label="{{R.playerFullScreenEnabled}} {{R.checkbox}}" data-bind="checked: playerFullScreenEnabled, event: { keydown: $root.checkUncheckFullScreenControls}"/>  
+-			{{/control}}
+-		{{/row}}
+-		
+-		{{<row}}
+-			{{$name}}playerCaptioningEnabled{{/name}}
+-			{{$control}}
+-				<input type="checkbox" aria-label="{{R.playerCaptioningEnabled}} {{R.checkbox}}" data-bind="checked: playerCaptioningEnabled, event: { keydown: $root.checkUncheckCaptionsControls}"/>  
+-			{{/control}}
+-		{{/row}}
+-		
+-		{{<row}}
+-			{{$name}}playerLayoutControlEnabled{{/name}}
+-			{{$control}}
+-				<input type="checkbox" aria-label="{{R.playerLayoutControlEnabled}} {{R.checkbox}}" data-bind="checked: playerLayoutControlEnabled, event: { keydown: $root.checkUncheckLayoutControls}"/>  
+-			{{/control}}
+-		{{/row}}
+-
+-		{{<row}}
+-			{{$name}}likeEnabled{{/name}}
+-			{{$control}}
+-				<input type="checkbox" aria-label="{{R.likeEnabled}} {{R.checkbox}}" data-bind="checked: likeEnabled, event: { keydown: $root.checkUncheckLikes}"/>  
+-			{{/control}}
+-			{{$visible}}!isLive() && !starRatingType() && isLikesEnabled(){{/visible}}
+-		{{/row}}
+-		
+-		{{<row}}
+-			{{$name}}starRatingEnabled{{/name}}
+-			{{$control}}
+-				<input type="checkbox" aria-label="{{R.starRatingEnabled}} {{R.checkbox}}" data-bind="checked: starRatingEnabled, event: { keydown: $root.checkUncheckStarRatings}"/>  
+-			{{/control}}
+-			{{$visible}}!isLive() && starRatingType() && isStarRatingsEnabled(){{/visible}}
+-		{{/row}}
+-
+-		{{<row}}
+-			{{$name}}shareEnabled{{/name}}
+-			{{$control}}
+-				<input type="checkbox" aria-label="{{R.shareEnabled}} {{R.checkbox}}" data-bind="checked: shareEnabled, event: { keydown: $root.checkUncheckShare}"/>  
+-			{{/control}}
+-			{{$visible}}!isLive(){{/visible}}
+-		{{/row}}
+-
+-			
+-		{{<row}}
+-			{{$name}}watermark{{/name}}
+-			{{$control}}
+-				<input type="checkbox" aria-label="{{R.watermark}} {{R.checkbox}}" data-bind="checked: watermark, event: { keydown: $root.checkUncheckWatermark}"/>  
+-			{{/control}}
+-		{{/row}}
+-		
+-		<div class="subHeader" data-bind="visible: isLive"><span>{{R.broadcastSchedule}}</span></div>
+-		
+-		{{<row}}
+-			{{$name}}occurrenceTime{{/name}}
+-			{{$control}}
+-				<div data-bind="visible: !occurrenceTimeValidation().valid">
+-					<span data-bind="text: occurrenceTimeValidation().message"></span>
++			<div class="gsk-column">
++				<div class="form-row">
++					<div data-bind="foreach: attributeDefinitions">
++						<div class="form-label"><label data-bind="text: displayName"></label></div>
++						<!-- ko if: attributeType == 'freetext' -->
++						<div class="form-control">
++							 <!-- ko with: $root.attrValue(identifier) -->
++							<input type="text" class="customAttr" data-bind="value: value, valueUpdate: 'keyup', event: { keydown: $root.checkEnterKey}"/>
++							<div class="requiredStar" data-bind="visible: $parent.required">*</div>
++							<!-- /ko -->
++						</div>
++						<!-- /ko -->
++						
++						<!-- ko if: attributeType == 'picklist' ||  attributeType == 'pickimagelist' -->
++						<div class="form-control">
++							 <!-- ko with: $root.attrValue(identifier) -->
++							<select class="customAttr" data-bind="value: value, valueUpdate: 'keyup', css: { valRequired: $parent.required }, options: $parent.eventAttributeOptions, optionsText: 'displayText', optionsValue: 'value', optionsCaption: $parent.required ? null : '{{RC.selectAttribute}}' "></select>
++							<div class="requiredStar" data-bind="visible: $parent.required">*</div>
++							<!-- /ko -->
++						</div>
++						<!-- /ko -->
++					</div>
+ 				</div>
+ 				
+-				<div data-dojo-attach-point="dtw" data-dojo-type="mpi/util/DateTimeWidget" data-bind="css:occurrenceTimeValidation().valid?'':'invalid', dijit: { value: occurrenceTime, validationMsg:occurrenceTimeValidation().valid?'':$root.$R.dateInvalid, required: true, disabled: !isLive() }, event: { keydown: $root.checkEnterKey}" data-dojo-props="required: true, context: '{{R.occurrenceTime}}'"></div>
+-			{{/control}}
+-			{{$visible}}isLive(){{/visible}}
+-		{{/row}}
+-				
+-		{{<row}}
+-			{{$name}}duration{{/name}}
+-			{{$control}}
+-				<input class="timeBox" type="text" aria-label="{{R.duration}} {{R.inMinutes}}" data-dojo-type="dijit/form/NumberTextBox" data-dojo-props="constraints:{min:1},rangeMessage:this.R.durationInvalid" data-bind="dijit: { value: durationMinutes, required: true, disabled: !isLive() }, event: { keydown: $root.checkEnterAndSpaceKey}"/> 
+-				<span> {{RC.minutesLabel}}</span><div class="requiredStar">*</div>
+-			{{/control}}
+-			{{$visible}}isLive(){{/visible}}
+-		{{/row}}
+-		
+-		{{<row}}
+-			{{$name}}leadIn{{/name}}
+-			{{$control}}
+-				<input class="timeBox" type="text" aria-label="{{R.leadIn}} {{R.inMinutes}}" data-dojo-type="dijit/form/NumberTextBox" data-dojo-props="constraints:{min:0},rangeMessage:this.R.leadInInvalid" data-bind="dijit: { value: leadInMinutes, required: true, disabled: !isLive() }, event: { keydown: $root.checkEnterAndSpaceKey}"/> 
+-				<span> {{RC.minutesLabel}}</span><div class="requiredStar">*</div> 
+-			{{/control}}
+-			{{$visible}}isLive(){{/visible}}
+-		{{/row}}
+-		
+-		{{<row}}
+-			{{$name}}overrun{{/name}}
+-			{{$control}}
+-				<input class="timeBox" type="text" aria-label="{{R.overrun}} {{R.inMinutes}}" data-dojo-type="dijit/form/NumberTextBox" data-dojo-props="constraints:{min:0},rangeMessage:this.R.overrunInvalid" data-bind="dijit: { value: overrunMinutes, required: true, disabled: !isLive() }, event: { keydown: $root.checkEnterAndSpaceKey}"/>  
+-				<span> {{RC.minutesLabel}}</span><div class="requiredStar">*</div>
+-			{{/control}}
+-			{{$visible}}isLive(){{/visible}}
+-		{{/row}}
+-		
+-		{{<row}}
+-			{{$name}}captureOnly{{/name}}
+-			{{$control}}
+-				<input type="checkbox" aria-label="{{R.captureOnly}} {{R.checkbox}}" data-bind="checked: captureOnly, event: { keydown: $root.checkUncheckCaptureOnly}"/>  
+-			{{/control}}
+-			{{$visible}}isLive() && !captureOnlyLocked() {{/visible}}
+-		{{/row}}	
+-		
+-		<div class="subHeader"><span>{{R.programMedia}}</span></div>
+-		{{<row}}
+-			{{$name}}thumbnailUse{{/name}}
+-			{{$control}}
+-				<div data-bind="visible: canPickThumbUse">
+-					<input type="radio" name="thumbnailUse" data-dojo-attach-point="thumbnailUse_extract" value="EXTRACTED" data-bind="checked: selectThumb"> {{R.extractFromVideo}}
+-				</div>
+-				<div data-bind="visible: canPickThumbUse">
+-					<input type="radio" name="thumbnailUse" data-dojo-attach-point="thumbnailUse_select" value="ASSIGNED" data-bind="checked: selectThumb"> {{R.selectOrUpload}}
+-				</div>
+-				<div data-dojo-type="mpi/ap/ImagePicker" data-bind="visible: selectThumb() == 'ASSIGNED', dijit: { selectedItem: thumbnail }" data-layout="image" data-dojo-attach-point="imagePicker"></div>
+-			{{/control}}
+-		{{/row}}
+-		
+-		<div style="margin-top:12px;">
+-			{{<row}}
+-				{{$name}}downloadableContents{{/name}}
+-				{{$control}}
+-					<div data-dojo-attach-point="_dlPicker" data-dojo-type="mpi/ap/DownloadablesPicker" data-bind="dijit: { selectedItems: downloadableContents }"></div>
+-				{{/control}}
+-				{{$visible}}allowDownloadables(){{/visible}}
++				<div class="subHeader" data-bind="visible: isLive"><span>{{R.broadcastSchedule}}</span></div>
++				
++				{{<row}}
++					{{$name}}occurrenceTime{{/name}}
++					{{$control}}
++						<div data-bind="visible: !occurrenceTimeValidation().valid">
++							<span data-bind="text: occurrenceTimeValidation().message"></span>
++						</div>
++						
++						<div data-dojo-attach-point="dtw" data-dojo-type="mpi/util/DateTimeWidget" data-bind="css:occurrenceTimeValidation().valid?'':'invalid', dijit: { value: occurrenceTime, validationMsg:occurrenceTimeValidation().valid?'':$root.$R.dateInvalid, required: true, disabled: !isLive() }, event: { keydown: $root.checkEnterKey}" data-dojo-props="required: true, context: '{{R.occurrenceTime}}'"></div>
++					{{/control}}
++					{{$visible}}isLive(){{/visible}}
++				{{/row}}
++						
++				{{<row}}
++					{{$name}}duration{{/name}}
++					{{$control}}
++						<input class="timeBox" type="text" aria-label="{{R.duration}} {{R.inMinutes}}" data-dojo-type="dijit/form/NumberTextBox" data-dojo-props="constraints:{min:1},rangeMessage:this.R.durationInvalid" data-bind="dijit: { value: durationMinutes, required: true, disabled: !isLive() }, event: { keydown: $root.checkEnterAndSpaceKey}"  placeholder="{{R.duration}} {{R.inMinutes}}"/> 
++						<span> {{RC.minutesLabel}}</span><div class="requiredStar">*</div>
++					{{/control}}
++					{{$visible}}isLive(){{/visible}}
++				{{/row}}
++				
++				{{<row}}
++					{{$name}}leadIn{{/name}}
++					{{$control}}
++						<input class="timeBox" type="text" aria-label="{{R.leadIn}} {{R.inMinutes}}" data-dojo-type="dijit/form/NumberTextBox" data-dojo-props="constraints:{min:0},rangeMessage:this.R.leadInInvalid" data-bind="dijit: { value: leadInMinutes, required: true, disabled: !isLive() }, event: { keydown: $root.checkEnterAndSpaceKey}" placeholder="{{R.leadIn}} {{R.inMinutes}}" /> 
++						<span> {{RC.minutesLabel}}</span><div class="requiredStar">*</div> 
++					{{/control}}
++					{{$visible}}isLive(){{/visible}}
++				{{/row}}
++				
++				{{<row}}
++					{{$name}}overrun{{/name}}
++					{{$control}}
++						<input class="timeBox" type="text" aria-label="{{R.overrun}} {{R.inMinutes}}" data-dojo-type="dijit/form/NumberTextBox" data-dojo-props="constraints:{min:0},rangeMessage:this.R.overrunInvalid" data-bind="dijit: { value: overrunMinutes, required: true, disabled: !isLive() }, event: { keydown: $root.checkEnterAndSpaceKey}" placeholder="{{R.overrun}} {{R.inMinutes}}"/>  
++						<span> {{RC.minutesLabel}}</span><div class="requiredStar">*</div>
++					{{/control}}
++					{{$visible}}isLive(){{/visible}}
++				{{/row}}
++
++				<div class="form-label">{{R.programMedia}}</div>
++				{{<row}}
++					{{$name}}thumbnailUse{{/name}}
++					{{$control}}
++						<div data-bind="visible: canPickThumbUse">
++							<label class="gsk-radio">
++								<input type="radio" name="thumbnailUse" data-dojo-attach-point="thumbnailUse_extract" value="EXTRACTED" data-bind="checked: selectThumb"> 
++								<span></span>
++							</label>
++							<div class="gsk-label">{{R.extractFromVideo}}</div>
++						</div>
++						<div data-bind="visible: canPickThumbUse">
++							<label class="gsk-radio">
++								<input type="radio" name="thumbnailUse" data-dojo-attach-point="thumbnailUse_select" value="ASSIGNED" data-bind="checked: selectThumb">
++								<span></span>
++							</label>
++							<div class="gsk-label">{{R.selectOrUpload}}</div>
++						</div>
++						<div data-dojo-type="mpi/ap/ImagePicker" data-bind="visible: selectThumb() == 'ASSIGNED', dijit: { selectedItem: thumbnail }" data-layout="image" data-dojo-attach-point="imagePicker"></div>
++					{{/control}}
++				{{/row}}
++
++				{{<row}}
++					{{$control}}
++						<label class="gsk-checkbox">
++							<input type="checkbox" aria-label="{{R.captureOnly}} {{R.checkbox}}" data-bind="checked: captureOnly, event: { keydown: $root.checkUncheckCaptureOnly}"/>  
++							<span></span>
++						</label> 
++						<div class="gsk-label">{{R.commentsEnabled}}</div>
++					{{/control}}
++					{{$name}}captureOnly{{/name}}
++					{{$visible}}isLive() && !captureOnlyLocked() {{/visible}}
++		 		{{/row}}
++
++			<div data-bind="visible: commentsDomainOptionEnabled()">
++				{{<row}}
++					{{$control}}
++						<label class="gsk-checkbox">
++							<input type="checkbox" aria-label="{{R.commentsEnabled}} {{R.checkbox}}" data-bind="checked: commentsEnabled, event: { keydown: $root.checkUncheckEnableComments}"/>
++							<span></span>
++						</label> 
++						<div class="gsk-label">{{R.commentsEnabled}}</div>
++					{{/control}}
++					{{$name}}commentsEnabled{{/name}}
++					{{$visible}}!isLive(){{/visible}}
++		 		{{/row}}
++		 		
++		 		{{<row}}
++		 			{{$control}}
++		 				<label class="gsk-checkbox">
++		 					<input type="checkbox" aria-label="{{R.allowCommentsNotification}} {{R.checkbox}}" data-bind="checked: allowCommentsNotification, event: { keydown: $root.checkUncheckAllowCommentsNotification}"/>
++		 					<span></span>
++						</label> 
++						<div class="gsk-label">{{R.allowCommentsNotification}}</div>
++		 			{{/control}}
++		 			{{$name}}allowCommentsNotification{{/name}}
++		 			{{$visible}}(!isLive() && showCommentsNotification()){{/visible}}
++		 		{{/row}}	
++	 		</div>
++		 		
++	 		{{<row}}
++	 			{{$control}}
++	 				<label class="gsk-checkbox">
++	 					<input type="checkbox" aria-label="{{R.relatedVideosEnabled}} {{R.checkbox}}" data-bind="checked: relatedVideosEnabled, event: { keydown: $root.checkUncheckEnableRelatedVideos}"/>
++	 					<span></span>
++					</label> 
++					<div class="gsk-label">{{R.relatedVideosEnabled}}</div>
++	 			{{/control}}
++	 			{{$name}}relatedVideosEnabled{{/name}}
++	 			{{$visible}}!isLive(){{/visible}}
+ 			{{/row}}
+-		</div>
++  
++			<div data-bind="visible: advancedMode()">
++				<div class="subHeader"><span>{{R.downloadableContents}}</span></div>
++
++				<div>
++					{{<row}}
++						{{$name}}downloadableContents{{/name}}
++						{{$control}}
++							<div data-dojo-attach-point="_dlPicker" data-dojo-type="mpi/ap/DownloadablesPicker" data-bind="dijit: { selectedItems: downloadableContents }"></div>
++						{{/control}}
++						{{$visible}}allowDownloadables(){{/visible}}
++					{{/row}}
++				</div>
++
++				{{<row}}
++					{{$name}}downloadable{{/name}}
++					{{$control}}
++						<label class="gsk-checkbox">
++							<input type="checkbox" aria-label="{{R.downloadable}} {{R.checkbox}}" data-bind="checked: downloadable, event: { keydown: $root.checkUncheckAllowPrimaryMediaDownload}"/>
++							<span></span>
++						</label>
++						<div class="gsk-label">{{R.downloadable}}</div>
++					{{/control}}
++					{{$visible}}!isLive() && !downloadableLocked() {{/visible}}
++				{{/row}}	
++
++				<div class="subHeader" data-bind="visible: isLive()"><span>{{R.slides}}</span></div>
++				{{<row}}
++					{{$name}}slides{{/name}}
++					{{$control}}
++						<div data-dojo-attach-point="slidesPicker" data-dojo-type="mpi/ap/SlidePicker" data-bind="dijit: { selectedItem: slides }" data-layout="slides"></div>  
++					{{/control}}
++					{{$visible}}isLive(){{/visible}}
++				{{/row}}
+ 				
+-		{{<row}}
+-			{{$name}}slides{{/name}}
+-			{{$control}}
+-				<div data-dojo-attach-point="slidesPicker" data-dojo-type="mpi/ap/SlidePicker" data-bind="dijit: { selectedItem: slides }" data-layout="slides"></div>  
+-			{{/control}}
+-			{{$visible}}isLive(){{/visible}}
+-		{{/row}}
+-		
+-		{{<row}}
+-			{{$name}}poll{{/name}}
+-			{{$control}}
+-				<div data-dojo-attach-point="pollPicker" data-dojo-type="mpi/ap/PollPicker" data-bind="dijit: { selectedItem: poll }" data-layout="poll"></div>  
+-			{{/control}}
+-			{{$visible}}isLive(){{/visible}}
+-		{{/row}}
+-		
+-		{{<row}}
+-			{{$name}}survey{{/name}}
+-			{{$control}}
+-				<div data-dojo-attach-point="surveyPicker" data-dojo-type="mpi/ap/PollPicker" data-bind="dijit: { selectedItem: survey }" data-layout="survey"></div>  
+-			{{/control}}
+-			{{$visible}}allowSurvey(){{/visible}}
+-		{{/row}}
+-		
+-		{{<row}}
+-			{{$name}}downloadable{{/name}}
+-			{{$control}}
+-				<input type="checkbox" aria-label="{{R.downloadable}} {{R.checkbox}}" data-bind="checked: downloadable, event: { keydown: $root.checkUncheckAllowPrimaryMediaDownload}"/>  
+-			{{/control}}
+-			{{$visible}}!isLive() && !downloadableLocked() {{/visible}}
+-		{{/row}}		
+-		
+-		
+-		{{<row}}
+-			{{$name}}questionsAllowed{{/name}}
+-			{{$control}}
+-				<select class="textBox" aria-label="{{R.questionsAllowed}}" data-bind="value: questionsAllowed, options: questionOptions, optionsText: 'label', optionsValue: 'value'">
+-				</select>
+-			{{/control}}
+-			{{$visible}}isLive(){{/visible}}
+-		{{/row}}
+-		
+-		{{<row}}
+-			{{$name}}archivingMode{{/name}}
+-			{{$control}}
+-				<select class="timeBox" aria-label="{{R.archivingMode}}" data-bind="value: archivingMode">
+-					<option value="NONE">[R archiveModeNone]</option>
+-					<option value="CONTENT">[R archiveModeContent]</option>
+-					<option value="PROGRAM">[R archiveModeProgram]</option>
+-				</select> 
+-			{{/control}}
+-			{{$visible}}isLive(){{/visible}}
+-		{{/row}}
+-		
+-		<!-- Annotation -->		
+-		<div class="subHeader" data-bind="visible: (allowAnnotation() || (annotations() && annotations().length))"><span>{{R.annotation}}</span></div>
+-		<div data-bind="visible: (allowAnnotation() || (annotations() && annotations().length))">
+-			<div data-dojo-type="mpi/ap/Annotation" data-dojo-attach-point="annotationBlock" data-bind="" data-dojo-props="parent: this"></div>
+-		</div>
+-		
+-		<div class="subHeader" data-bind="visible: !hideAccessControlSettings()"><span>{{R.programAccess}}</span></div>
+-		
+-		{{<row}}
+-			{{$name}}listed{{/name}}
+-			{{$control}}
+-				<input type="checkbox" aria-label="{{R.listed}} {{R.checkbox}}" data-bind="checked: listed, disable: !listedEnabled(), event: { keydown: $root.checkUncheckListed}"/>  
+-			{{/control}}
+-		{{/row}}
+-		
+-		{{<row}}
+-			{{$name}}expirationDate{{/name}}
+-			{{$control}}
+-				<div data-bind="visible: !expirationDateValidation().valid">
+-					<span data-bind="text: expirationDateValidation().message"></span>
++				<div class="subHeader" data-bind="visible: isLive()"><span>{{R.poll}}</span></div>
++				{{<row}}
++					{{$name}}poll{{/name}}
++					{{$control}}
++						<div data-dojo-attach-point="pollPicker" data-dojo-type="mpi/ap/PollPicker" data-bind="dijit: { selectedItem: poll }" data-layout="poll"></div>  
++					{{/control}}
++					{{$visible}}isLive(){{/visible}}
++				{{/row}}
++				
++				<div class="subHeader" data-bind="visible: allowSurvey()"><span>{{R.survey}}</span></div>
++				{{<row}}
++					{{$name}}survey{{/name}}
++					{{$control}}
++						<div data-dojo-attach-point="surveyPicker" data-dojo-type="mpi/ap/PollPicker" data-bind="dijit: { selectedItem: survey }" data-layout="survey"></div>  
++					{{/control}}
++					{{$visible}}allowSurvey(){{/visible}}
++				{{/row}}
++
++
++				<div class="subHeader" data-bind="visible: isLive()"><span>{{R.questionsAllowed}}</span></div>
++				{{<row}}
++					{{$name}}questionsAllowed{{/name}}
++					{{$control}}
++						<select class="textBox" aria-label="{{R.questionsAllowed}}" data-bind="value: questionsAllowed, options: questionOptions, optionsText: 'label', optionsValue: 'value'">
++						</select>
++					{{/control}}
++					{{$visible}}isLive(){{/visible}}
++				{{/row}}
++				
++				<div class="subHeader" data-bind="visible: isLive()"><span>{{R.archivingMode}}</span></div>
++				{{<row}}
++					{{$name}}archivingMode{{/name}}
++					{{$control}}
++						<select class="timeBox" aria-label="{{R.archivingMode}}" data-bind="value: archivingMode">
++							<option value="NONE">[R archiveModeNone]</option>
++							<option value="CONTENT">[R archiveModeContent]</option>
++							<option value="PROGRAM">[R archiveModeProgram]</option>
++						</select> 
++					{{/control}}
++					{{$visible}}isLive(){{/visible}}
++				{{/row}}
++
++				<div class="subHeader" data-bind="visible: !hidePlayerSettings()"><span>{{R.playerSettings}}</span></div>
++				<div class="gsk-inline-checkboxes">
++					{{<row}}
++						{{$name}}playerFullScreenEnabled{{/name}}
++						{{$control}}
++							<label class="gsk-checkbox">
++								<input type="checkbox" aria-label="{{R.playerFullScreenEnabled}} {{R.checkbox}}" data-bind="checked: playerFullScreenEnabled, event: { keydown: $root.checkUncheckFullScreenControls}"/>
++								<span></span>
++							</label>
++							<div class="gsk-label">{{R.playerFullScreenEnabled}}</div>
++						{{/control}}
++					{{/row}}
++					
++					{{<row}}
++						{{$name}}playerCaptioningEnabled{{/name}}
++						{{$control}}
++							<label class="gsk-checkbox">
++								<input type="checkbox" aria-label="{{R.playerCaptioningEnabled}} {{R.checkbox}}" data-bind="checked: playerCaptioningEnabled, event: { keydown: $root.checkUncheckCaptionsControls}"/> 
++								<span></span>
++							</label>
++							<div class="gsk-label">{{R.playerCaptioningEnabled}}</div>
++						{{/control}}
++					{{/row}}
++					
++					{{<row}}
++						{{$name}}playerLayoutControlEnabled{{/name}}
++						{{$control}}
++							<label class="gsk-checkbox">
++								<input type="checkbox" aria-label="{{R.playerLayoutControlEnabled}} {{R.checkbox}}" data-bind="checked: playerLayoutControlEnabled, event: { keydown: $root.checkUncheckLayoutControls}"/>  
++								<span></span>
++							</label>
++							<div class="gsk-label">{{R.playerLayoutControlEnabled}}</div>
++						{{/control}}
++					{{/row}}
++
++					{{<row}}
++						{{$name}}likeEnabled{{/name}}
++						{{$control}}
++							<label class="gsk-checkbox">
++								<input type="checkbox" aria-label="{{R.likeEnabled}} {{R.checkbox}}" data-bind="checked: likeEnabled, event: { keydown: $root.checkUncheckLikes}"/>  
++								<span></span>
++							</label>
++							<div class="gsk-label">{{R.likeEnabled}}</div>
++						{{/control}}
++						{{$visible}}!isLive() && !starRatingType() && isLikesEnabled(){{/visible}}
++					{{/row}}
++					
++					{{<row}}
++						{{$name}}starRatingEnabled{{/name}}
++						{{$control}}
++							<input type="checkbox" aria-label="{{R.starRatingEnabled}} {{R.checkbox}}" data-bind="checked: starRatingEnabled, event: { keydown: $root.checkUncheckStarRatings}"/>  
++						{{/control}}
++						{{$visible}}!isLive() && starRatingType() && isStarRatingsEnabled(){{/visible}}
++	  			{{/row}}
++
++					{{<row}}
++						{{$name}}shareEnabled{{/name}}
++						{{$control}}
++							<label class="gsk-checkbox">
++								<input type="checkbox" aria-label="{{R.shareEnabled}} {{R.checkbox}}" data-bind="checked: shareEnabled, event: { keydown: $root.checkUncheckShare}"/>
++								<span></span>
++							</label>
++							<div class="gsk-label">{{R.shareEnabled}}</div>
++						{{/control}}
++						{{$visible}}!isLive(){{/visible}}
++					{{/row}}
++
++						
++					{{<row}}
++						{{$name}}watermark{{/name}}
++						{{$control}}
++							<label class="gsk-checkbox">
++								<input type="checkbox" aria-label="{{R.watermark}} {{R.checkbox}}" data-bind="checked: watermark, event: { keydown: $root.checkUncheckWatermark}"/> 
++								<span></span>
++							</label> 
++							<div class="gsk-label">{{R.watermark}}</div>
++						{{/control}}
++					{{/row}}
++				</div>
++
++		 		<!-- Annotation -->		
++		 		<div class="subHeader" data-bind="visible: (allowAnnotation() || (annotations() && annotations().length))"><span>{{R.annotation}}</span></div>
++		 		<div data-bind="visible: (allowAnnotation() || (annotations() && annotations().length))">
++		 			<div data-dojo-type="mpi/ap/Annotation" data-dojo-attach-point="annotationBlock" data-bind="" data-dojo-props="parent: this"></div>
++		 		</div>
++		 		
++
++				<div class="subHeader" data-bind="visible: !hideAccessControlSettings()"><span>{{R.programAccess}}</span></div>
++					
++					{{<row}}
++						{{$name}}listed{{/name}}
++						{{$control}}
++							<label class="gsk-checkbox">
++								<input type="checkbox" aria-label="{{R.listed}} {{R.checkbox}}" data-bind="checked: listed, disable: !listedEnabled(), event: { keydown: $root.checkUncheckListed}"/>
++								<span></span>
++							</label>
++							<div class="gsk-label">{{R.listed}}</div>
++						{{/control}}
++					{{/row}}
++					
++					{{<row}}
++						{{$name}}expirationDate{{/name}}
++						{{$control}}
++							<div class="subHeader"><span>Expiration Date</span></div>
++							<div data-bind="visible: !expirationDateValidation().valid">
++								<span data-bind="text: expirationDateValidation().message"></span>
++							</div>
++							<div data-dojo-attach-point="edtw" data-dojo-type="mpi/util/DateTimeWidget" data-bind="css:expirationDateValidation().valid?'':'invalid', dijit: { value: expirationDate, validationMsg:expirationDateValidation().valid?'':$root.$R.expirationDateInvalid}" data-dojo-props="required: false, context: '{{R.expirationDate}}'"></div>
++						{{/control}}
++						{{$visible}}true{{/visible}} <!--  TODO: Change the condition -->
++					{{/row}}
++					
++					{{<row}}
++						{{$name}}loginRequired{{/name}}
++						{{$control}}
++							<label class="gsk-checkbox">
++								<input type="checkbox" aria-label="{{R.loginRequired}} {{R.checkbox}}" data-bind="checked: loginRequired, event: { keydown: $root.checkUncheckLoginRequired}"/>
++								<span></span>
++							</label>
++							<div class="gsk-label">{{R.loginRequired}}</div>
++						{{/control}}
++					{{/row}}
++					
++					<div class="form-row" data-bind="visible: !accessCodeHidden()">
++						<div class="form-label"><label>[R privateProgram]</label></div>
++						<div class="form-control">
++							<label class="gsk-checkbox">
++								<input type="checkbox" aria-label="{{R.privateProgram}} {{R.checkbox}}" data-bind="checked: private, visible: !privateLocked(), event: { keydown: $root.checkUncheckPrivateProgram}"/>
++								<span></span>
++							</label>
++							<div class="gsk-label">{{R.privateProgram}}</div>
++							<span>
++								<input class="textBoxPrivate" type="text" data-dojo-type="dijit/form/ValidationTextBox" intermediateChanges="true" data-bind="disable: !canEnterAccessCode(), dijit: { value: private ? accessCode : '' }, event: { keydown: $root.checkEnterKey}" data-dojo-props="regExp:'^[a-zA-Z0-9]{6,27}$', invalidMessage:'[RE validation.invalidCode.aclData.viewerCode]'" placeholder="enter code here"/> <div class="requiredStar">*</div>
++							</span>
++						</div>
++					</div>
+ 				</div>
+-				<div data-dojo-attach-point="edtw" data-dojo-type="mpi/util/DateTimeWidget" data-bind="css:expirationDateValidation().valid?'':'invalid', dijit: { value: expirationDate, validationMsg:expirationDateValidation().valid?'':$root.$R.expirationDateInvalid}" data-dojo-props="required: false, context: '{{R.expirationDate}}'"></div>
+-			{{/control}}
+-			{{$visible}}true{{/visible}} <!--  TODO: Change the condition -->
+-		{{/row}}
+-		
+-		{{<row}}
+-			{{$name}}loginRequired{{/name}}
+-			{{$control}}
+-				<input type="checkbox" aria-label="{{R.loginRequired}} {{R.checkbox}}" data-bind="checked: loginRequired, event: { keydown: $root.checkUncheckLoginRequired}"/>  
+-			{{/control}}
+-		{{/row}}
+-		
+-		<div class="form-row" data-bind="visible: !accessCodeHidden()">
+-			<div class="form-label"><label>[R privateProgram]</label></div>
+-			<div class="form-control">
+-				<input type="checkbox" aria-label="{{R.privateProgram}} {{R.checkbox}}" data-bind="checked: private, visible: !privateLocked(), event: { keydown: $root.checkUncheckPrivateProgram}"/>
+-				<span>
+-					<input class="textBoxPrivate" type="text" data-dojo-type="dijit/form/ValidationTextBox" intermediateChanges="true" data-bind="disable: !canEnterAccessCode(), dijit: { value: private ? accessCode : '' }, event: { keydown: $root.checkEnterKey}" data-dojo-props="regExp:'^[a-zA-Z0-9]{6,27}$', invalidMessage:'[RE validation.invalidCode.aclData.viewerCode]'"/> <div class="requiredStar">*</div>
+-				</span>
+ 			</div>
+ 		</div>
+-		<div class="subHeader" data-bind="visible: !hideUserAccessSettings()"><span>{{R.userAccess}}</span></div>
+-		
+-		{{<row}}
+-			{{$name}}publisher{{/name}}
+-			{{$control}}
+-				<div data-dojo-type="mpi/ap/SinglePrincipalPicker" data-dojo-props="groupsSelectable: false" data-bind="dijit: { selectedPrincipal: publisher }" data-user="publisher"></div>  
+-			{{/control}}
+-		{{/row}}
+-		 
+-		{{<row}}
+-			{{$name}}publishers{{/name}}
+-			{{$control}}
+-				<div data-dojo-type="mpi/ap/PrincipalPicker" data-bind="dijit: { selectedPrincipals: publishers }" data-user="publishers"></div>  
+-			{{/control}}
+-		{{/row}}
+-		 
+-		{{<row}}
+-			{{$name}}viewers{{/name}}
+-			{{$control}}
+-				<div data-dojo-type="mpi/ap/PrincipalPicker" data-bind="dijit: { selectedPrincipals: viewers }" data-user="viewer"></div>  
+-			{{/control}}
+-		{{/row}}
+-		
+ 	</div>
+ 
+ 	<div class="errorWindow" id="errorbox" data-bind="visible: errorSaving()">

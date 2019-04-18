@@ -1,0 +1,336 @@
+
+@media #{$largeViewport} {
+  .show-sidebar {  
+    #topsection { 
+      margin-left: $gskSidebarWidth - 626px;
+    }
+    #relatedContainer {
+      opacity: 0;
+    }
+    #contentcolumn {
+      margin-left: $gskSidebarWidth / 2 - 626px !important;
+    }
+  }
+}
+
+
+#topsection {	
+  @include transition();
+  background-color: $color_White;
+  border-bottom:1px solid $secondaryBorder;
+  @media #{$largeViewport} {
+    position:relative;
+    border-top:1px solid $secondaryBorder;
+    border-left:1px solid $secondaryBorder;
+    border-right:1px solid $secondaryBorder;
+    @include standardPadding();
+    width: 933px;
+    margin: 15px 0 0 -626px;
+    left: 50%;
+    box-sizing: border-box;
+  }
+  @media #{$mediumViewport} {
+    padding:0;
+    width: 100%;
+  }
+  @media #{$smallViewport} {
+    width: 100%;
+  }	
+}
+
+#relatedContainer {
+  @include transition();
+  .rightShadow, .leftShadow {
+    display: none;
+  }
+  @media #{$largeViewport} {
+    position: absolute;
+    top: $gskHeaderHeight + 21px;
+    left: 50%;
+    margin-left:322px;
+    width: 301px;
+    padding:0;
+    min-height: 300px;
+    .vp_pod {
+      width: auto;
+    }
+    .vp_pod_smallthumb { 
+      .podItem {
+        float: none;
+        display: block;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width:959px) {
+  .qumu-rescalable {
+    #contentcolumn {
+      margin-right:auto; 
+    }
+  }
+}
+
+
+#contentcolumn { 
+  opacity: 1;
+  @include transition();
+  border-top:1px solid $secondaryBorder;
+  border-bottom:1px solid $secondaryBorder;
+  background-color: $color_White;
+  @include standardPadding();
+  @media #{$largeViewport} {
+    position:relative;
+    border-left:1px solid $secondaryBorder;
+    border-right:1px solid $secondaryBorder;
+    width: 933px;
+    margin: 20px 0 0 -626px;
+    left: 50%;
+    box-sizing: border-box;
+  }
+  @media #{$mediumViewport} {
+    border-left:1px solid $secondaryBorder;
+    border-right:1px solid $secondaryBorder;
+    width: 724px;
+    margin:auto;
+    margin-right: auto;
+  }
+  @media #{$smallViewport} {
+    width: 100%;
+    box-sizing: border-box;
+  } 
+}
+@media #{$mediumViewport} {
+  #contentwrapper {
+    position:relative;
+    padding-bottom: 290px;
+    padding-top:10px;
+    #rightcolumn { 
+      position:absolute;
+      bottom:0;
+      left:0;
+      right:0;
+    }
+  }
+
+}
+
+
+.titleView {
+  padding-right: none;
+}
+.qumu-phone {
+  &.dj_safari {
+    .playerCanvas {
+      margin-top:0;
+      height:100%;
+    }
+  }
+}
+
+.vp_player {
+  background-color: transparent;
+  position:relative;
+  .canvas {
+    overflow: hidden;
+  }
+  .media {
+    @media #{$largeViewport} {
+      min-height:508px;
+    } 
+  }
+  .metadata {
+    background-color: $color_White;
+    @include standardPadding();
+    z-index:200;
+    position:relative;
+  }
+  .playerCanvas {
+    height:100%;
+  }
+  .tabsWindow {
+    top: 0;
+    .playerTabs {
+      margin-top:0;
+    }
+  }
+  .controls {
+    height: 40px;
+
+    button.play {
+      background-image: url('../images/gsk/svg/play.svg') !important;
+      &.showPause {
+        background-image: url('../images/gsk/svg/pause.svg') !important;
+      }
+    }
+    button.vol {
+      background-size: 26px 26px;
+      background-image: url('../images/gsk/svg/volume.svg') !important;
+      &.mute {
+        background-image: url('../images/gsk/svg/volume-mute.svg') !important;
+      }
+    }
+    //button.cc {
+    //  background-size: 26px 26px;
+    //  background-image: url('../images/gsk/svg/closed_caption.svg') !important;
+    //  &.ccLanguages {
+    //    background-image: url('../images/gsk/svg/closed_caption.svg') !important;
+    //  }
+    //}
+    button.fs {
+      background-image: url('../images/gsk/svg/fullscreen.svg') !important;
+      background-size: 30px 30px;
+      &.showShrink {
+        background-image: url('../images/gsk/svg/fullscreen-exit.svg') !important;
+      }
+    }
+    button {
+      &.fs, &.vol, &.play {
+        background-position: 50% 50% !important;
+        background-repeat: no-repeat;
+        background-size: 26px 26px;        
+      }
+    }
+    
+    BUTTON {
+      border: none;
+      border-radius: 0;
+    }
+    .transparentOverlay, .buttonSeparator {
+      display: none;
+    }
+    background-color: rgba(0, 0, 0, 0.3);
+    .timeVals {
+      border: none;
+      width: 85px;
+      .vals {
+        font-size:12px;
+      }
+    }
+  }
+}
+
+.titleView {
+  position: absolute;
+  @media #{$smallViewport} {
+    top:7px;
+    right:50px;
+  }
+  top:20px;
+  right:180px;
+  margin-top:56.5%;
+  background: none;
+  border: none;
+  z-index:100;
+  .titleBar {
+    display: none;
+  }
+  .tabTitleRight {
+    .programLikes, button.likeIcon, button.favIcon, .separator {
+      display: none;
+    } 
+    .programFlagCountTitleBar {
+      color: $color_header;
+      top:30px;
+    }
+    button.flagIcon {
+      &.flagged {
+        background-image: url('../images/gsk/svg/flag_red.svg') !important;
+      }
+      @media #{$smallViewport} {
+        width: 23px;
+        height: 23px;
+      }
+      background-color: transparent;
+      background-image: url('../images/gsk/svg/flag.svg') !important;
+      background-position: 50% 50% !important;
+      background-repeat: no-repeat;
+      &:hover, &:active {
+        background-image: url('../images/gsk/svg/flag_active.svg') !important;
+        background-position: 50% 50% !important;
+        background-repeat: no-repeat;
+      }
+    }
+  }
+}
+
+.playerOuterContainer {
+  height:auto !important;
+  margin-bottom: 0;
+}
+
+.innerGloss {
+	z-index: 300;
+  &.top, &.bottom, &.left, &.right {
+    display:none;
+  }
+}
+
+@media #{$mediumViewport} {
+  .qumu-rescalable  {
+    #top-section { 
+      .playerOuterContainer {
+        width:100%;
+        height: auto;
+        .canvas {
+          width:100%;
+          height: auto;
+          .media {
+            @include aspectRatio(903, 508);
+          }
+        }
+      }
+    }
+  }
+}
+
+.qumu-phone  {
+  #top-section { 
+    .titleView {
+      display: block;
+    }
+    .playerOuterContainer {
+      width:100%;
+      height: auto;
+      .canvas {
+        width:100%;
+        height: auto;
+        .media {
+          @include aspectRatio(903, 508);
+        }
+      }
+    }
+  }
+}
+
+
+//Zaire player changes
+#top-section {
+  #topsection {
+    &.hasRelatedVideos {
+      #rightcolumn {
+        display: none;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 961px){
+  #topsection {
+    position: relative;
+    &.hasRelatedVideos {
+      .playerOuterContainer {
+        padding-right: 0;
+      }
+    }
+  }
+  #bottom-section {
+    #contentwrapper {
+      #rightcolumn {
+        display: block;
+      }
+    }
+  }
+}
+
+

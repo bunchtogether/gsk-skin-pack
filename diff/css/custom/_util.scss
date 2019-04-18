@@ -1,0 +1,81 @@
+$largeViewport: "(min-width: 1280px)";
+$mediumViewport: "(min-width: 768px) and (max-width: 1279px)";
+$smallViewport: "(max-width: 767px)";
+
+@mixin transition() {
+  transition: border-color 0.25s, color 0.25s, background-color 0.25s, padding-left 0.25s, padding-right 0.25s, width 0.25s, left 0.25s, opacity 0.25s, margin-left 0.25s;
+}
+
+@mixin fullAbsolutePosition() {
+	position: absolute;
+	display:block;
+	top:0;
+	left:0;
+	bottom:0;
+	right:0;
+	margin:0;
+}
+
+@mixin standardPadding() {
+  @media #{$largeViewport} {
+    padding: 15px 15px 5px 15px;
+  }
+  @media #{$mediumViewport} {
+    padding: 15px 15px 5px 15px;
+  }
+  @media #{$smallViewport} {
+    padding: 10px 10px 0 10px;
+  }
+}
+
+@mixin aspectRatio($width, $height) {
+  position: relative;
+  &:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: ($height / $width) * 100%;
+  }
+  > .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+@mixin flagIcon() {
+  background-image: url('../images/gsk/svg/flag.svg') !important;
+  background-position: 50% 50% !important;
+  background-repeat: no-repeat;
+  float:left;
+  &:hover, &:active {
+    background-image: url('../images/gsk/svg/flag_white_active.svg') !important;
+    background-position: 50% 50% !important;
+    background-repeat: no-repeat;
+  }
+}
+
+@mixin commentIcon() {
+  background-image: url('../images/gsk/svg/comments.svg') !important;
+  background-position: 50% 50% !important;
+  background-repeat: no-repeat;
+  float:left;
+}
+
+@mixin likeIcon() {
+  background-image: url('../images/gsk/svg/likes.svg') !important;
+  background-position: 50% 50% !important;
+  background-repeat: no-repeat;
+  float:left;
+}
+
+@mixin viewIcon() {
+  background-image: url('../images/gsk/svg/views.svg') !important;
+  background-position: 50% 50% !important;
+  background-repeat: no-repeat;
+  float:left;
+}
+
+

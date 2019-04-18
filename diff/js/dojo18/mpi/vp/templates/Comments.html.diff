@@ -1,0 +1,35 @@
+--- ./default/js/dojo18/mpi/vp/templates/Comments.html	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/vp/templates/Comments.html	2017-07-26 00:02:20.000000000 -0400
+@@ -1,16 +1,17 @@
+ <div class="vp-comments">
+-	<div class="commentHeader">
+-		<span class="comments-icon"></span>
+-		<span class="num-comments" data-dojo-attach-point="numberOfComments">{{totalComments}}</span>
+-		<span class="num-comments">&nbsp;{{R.numberOfCommentsLabel}}</span>
+-	</div>
+-	<div class="main-body" data-dojo-attach-point="mainBody">
+-		<ul class="comments-container" data-dojo-attach-point="commentsContainer">
+-		</ul>
+-		<div class="load-more">
+-			<button data-dojo-attach-point="loadMoreButton" data-dojo-attach-event="onclick: loadMore">{{R.getMoreCommentsLabel}}</button>
+-			<div class="load-error" data-dojo-attach-point="loadErrorNode">
+-			</div>
+-		</div>
+-	</div>
++  <a class="twisty" href="#"></a>
++  <div class="commentHeader">
++    <span class="comments-icon"></span>
++    <span class="num-comments">&nbsp;{{R.numberOfCommentsLabel}}</span>  • 
++    <span class="num-comments" data-dojo-attach-point="numberOfComments">{{totalComments}}</span>
++  </div>
++  <div class="main-body" data-dojo-attach-point="mainBody">
++    <ul class="comments-container" data-dojo-attach-point="commentsContainer">
++    </ul>
++    <div class="load-more">
++      <button data-dojo-attach-point="loadMoreButton" data-dojo-attach-event="onclick: loadMore">{{R.getMoreCommentsLabel}}</button>
++      <div class="load-error" data-dojo-attach-point="loadErrorNode">
++      </div>
++    </div>
++  </div>
+ </div>
+\ No newline at end of file

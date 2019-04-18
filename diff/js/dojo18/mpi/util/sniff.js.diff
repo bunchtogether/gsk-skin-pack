@@ -1,0 +1,150 @@
+--- ./default/js/dojo18/mpi/util/sniff.js	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/util/sniff.js	2019-04-18 16:02:34.000000000 -0400
+@@ -1,35 +1,56 @@
+-define(["dojo/has", "dojo/dom-class", "dojo/_base/window", "dojo/sniff"], function(has, domClass, baseWindow){
+-	
+-	//has.add("qumu-phone", true);
+-	//has.add("qumu-phone", true);
+-	
++define(["dojo/has", "dojo/dom-class", "dojo/_base/window", "dojo/window", "dojo/sniff"], function(has, domClass, baseWindow, domWindow){
++
++
++	var html = baseWindow.doc.documentElement;
++	var triggerEvent = function(c,d,b,a){b=document;b.createEvent?(a=new Event(d),c.dispatchEvent(a)):(a=b.createEventObject(),c.fireEvent("on"+d,a))};
+ 	if(has("host-browser")){
+ 		var n = navigator,
+ 			dua = n.userAgent;
+-		
+ 
++		var qumuPhoneTest = function() {
++			var dimensions = domWindow.getBox();
++			if(dimensions.w <= 767) {
++				return true;
++			}
++			return false;
++		};
++
++		has.add("qumu-phone", qumuPhoneTest(), true);
+ 
+-		if(has("ios")) {
+-			var ipad = dua.indexOf("iPad") >= 0;
+-			has.add("qumu-phone", !ipad);
+-			has.add("qumu-tablet", ipad);
+-		} else if(has("android")) {
+-			var mobile = dua.indexOf("Mobile") >= 0;
+-			has.add("qumu-phone", mobile);
+-			has.add("qumu-tablet", !mobile);
+-		} else if(has("webkit")) {
+-			var mobile = dua.indexOf("Mobile") >= 0;
+-			has.add("qumu-phone", mobile);
+-			has.add("qumu-tablet", false);
+-		} else if(dua.indexOf("IEMobile") >= 0) {
+-			has.add("qumu-phone", true);
+-			has.add("qumu-tablet", false);
+-		} else {
+-			has.add("qumu-phone", false);
+-			has.add("qumu-tablet", false);
+-		}
++		var qumuTabletTest = function() {
++			var dimensions = domWindow.getBox();
++			if(dimensions.w > 767 && dimensions.w < 1280) {
++				return true;
++			} else {
++				return false;
++			}
++		};
++		has.add("qumu-tablet", qumuTabletTest, true);
++
++		window.addEventListener("resize", function(){
++			var oldPhoneState = has("qumu-phone");
++			var newPhoneState = qumuPhoneTest();
++			var oldTabletState = has("qumu-tablet");
++			var newTabletState = qumuTabletTest();
++			has.add("qumu-phone", newPhoneState, true, true);
++			has.add("qumu-tablet", newTabletState, true, true);
++			if(oldPhoneState !== newPhoneState || oldTabletState !== newTabletState) {
++				var event = document.createEvent('CustomEvent');
++				if(newPhoneState) {
++					domClass.add(html, "qumu-phone");
++				} else {
++					domClass.remove(html, "qumu-phone");
++				}
++				if(newTabletState) {
++					domClass.add(html, "qumu-tablet");
++				} else {
++					domClass.remove(html, "qumu-tablet");
++				}
++				event.initEvent('UpdateLayout', true, false);
++				window.dispatchEvent(event);
++			}
++		});
+ 
+-		var html = baseWindow.doc.documentElement;
+ 		var classes = [];
+ 		if(has("qumu-phone")) {
+ 			classes.push("qumu-phone");
+@@ -46,34 +67,29 @@
+ 		if(has("android")) {
+ 			classes.push("qumu-android");
+ 		}
+-		
+-		if(!has("mozilla") && !(has("ie") < 10)) {
+-			//CSS flag that we won't support rescaling on
+-			//IE <9 and FF (since it doesn't have zoom
+-			//support)
+-			classes.push("qumu-rescalable");
+-		}
++
++		classes.push("qumu-rescalable");
++
+ 		
+ 		if(!has("ie")) {
+-            var rv = -1;
+-            if (navigator.appName == 'Microsoft Internet Explorer') {
+-            	var ua = navigator.userAgent;
+-            	var re  = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+-            	if (re.exec(ua) != null)
+-            		rv = parseFloat( RegExp.$1 );
+-            } else if (navigator.appName == 'Netscape') {
+-            	var ua = navigator.userAgent;
+-            	var re  = new RegExp("Trident/.*rv:([0-9]{1,}[\.0-9]{0,})");
+-            	if (re.exec(ua) != null)
+-            		rv = parseFloat( RegExp.$1 );
+-            }
+-            
+-            if(rv>-1 && rv==11) {
+-            	classes.push("qumu-rescalable");
+-            	classes.push("mpi_ie");
+-            	classes.push("mpi_ie11");
+-            	has.add("ie11",true);
+-            }
++						var rv = -1;
++						if (navigator.appName == 'Microsoft Internet Explorer') {
++							var ua = navigator.userAgent;
++							var re	= new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
++							if (re.exec(ua) != null)
++								rv = parseFloat( RegExp.$1 );
++						} else if (navigator.appName == 'Netscape') {
++							var ua = navigator.userAgent;
++							var re	= new RegExp("Trident/.*rv:([0-9]{1,}[\.0-9]{0,})");
++							if (re.exec(ua) != null)
++								rv = parseFloat( RegExp.$1 );
++						}
++						
++						if(rv>-1 && rv==11) {
++							classes.push("mpi_ie");
++							classes.push("mpi_ie11");
++							has.add("ie11",true);
++						}
+ 		}
+ 		
+ 		if(!has("ie")) {
+@@ -94,7 +110,7 @@
+ 				|| (canvas.webkitRequestFullScreen && document.webkitFullscreenEnabled && (!(has("chrome") <= 27 && has("android"))) && !has("safari") )) { //chrome 27 and below on android lie about fullscreen support
+ 			has.add("qumu-canvas-fullscreen",true);
+ 			classes.push("qumu-canvas-fullscreen");
+-		}	
++		}	 
+ 
+ 		
+ 		for(var i = 0; i < classes.length; i++) {

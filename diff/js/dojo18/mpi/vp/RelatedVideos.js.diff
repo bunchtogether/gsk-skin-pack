@@ -1,0 +1,95 @@
+--- ./default/js/dojo18/mpi/vp/RelatedVideos.js	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/vp/RelatedVideos.js	2019-04-18 16:02:34.000000000 -0400
+@@ -2,9 +2,11 @@
+ 	"dijit/_WidgetBase", 
+ 	"mpi/mustache/_Templated",
+ 	"mpi/vp/View",
++	"mpi/vp/pods/pod-factory",
+ 	"mpi/vp/pods/ProgramSmallThumbnailItemRenderer",
++	"mpi/vp/pods/SmallThumbnailLayout",
+ 	"mpi/vp/pods/a11y-adapters",
+-	"dojo/_base/declare",  
++	"dojo/_base/declare",	 
+ 	"dojo/_base/array",
+ 	"dojo/_base/lang",
+ 	"dojo/on",
+@@ -18,7 +20,9 @@
+ 	_WidgetBase, 
+ 	_Templated,
+ 	View,
++	PodFactory,
+ 	ProgramSmallThumbnailItemRenderer,
++	SmallThumbnailLayout,
+ 	a11yAdapters,
+ 	declare,
+ 	array,
+@@ -48,50 +52,27 @@
+ 		},
+ 		
+ 		onRelatedProgramsChanged: function() {
+-			var a11yAdapter = a11yAdapters.createAdapter("RelatedPrograms");
+-			var renderer = new ProgramSmallThumbnailItemRenderer(this.controller, a11yAdapter);
+ 			this.destroyDescendants();
+-			var arr = this.model.get("RelatedPrograms");
+-			if(arr.length == 0) {
+-				this.containerNode.parentElement.style.display = "none";
+-				return;
+-			}
+-			array.forEach(arr, function(item) {
+-				renderer.render(item).placeAt(this.containerNode);
+-			}, this);
+-			
++			var pod = PodFactory.createPod(
++				this.model, 
++				this.controller, 
++				null, 
++				"UpcomingBroadcasts", 
++				"RelatedPrograms", 
++				{page: {pageSize: 4, start:0}}, 
++				{
++					viewType: "4up",
++					allowPage: true,
++					rows: 1,
++					showTitle: true,
++					title: R.titleLabel
++				}, 
++				null
++			);
++			pod.placeAt(this.containerNode);
+ 			this.startup();
+-			
+-			if(this.containerNode && this.containerNode.children && this.containerNode.children.length>0) {
+-				var lt = this.containerNode.children[this.containerNode.children.length-1];
+-				if(this.containerNode.offsetWidth > lt.offsetLeft) {
+-					this.leftShadowNode.style.display="none";
+-					this.rightShadowNode.style.display="none";
+-				}				
+-			}
+-			
+-			on(this.containerNode, "scroll", lang.hitch(this, function(e) {
+-				if(this.containerNode && this.containerNode.children && this.containerNode.children.length>0) {
+-					var lt = this.containerNode.children[this.containerNode.children.length-1];
+-					if(this.containerNode.offsetWidth > lt.offsetLeft) {
+-						this.leftShadowNode.style.display="none";
+-						this.rightShadowNode.style.display="none";
+-					}				
+-				}
+-				
+-				var element = e.srcElement || e.target;
+-				if(element.scrollLeft == 0) {
+-					this.leftShadowNode.style.display="none";
+-				} else {
+-					this.leftShadowNode.style.display="block";
+-				}
+-				
+-				if(element.scrollLeft + element.offsetWidth < element.scrollWidth) {
+-					this.rightShadowNode.style.display="block";
+-				} else {
+-					this.rightShadowNode.style.display="none";
+-				}
+-			}));
++			pod.dataSetAdapter.emit("fetched", pod.dataSetAdapter._data);
+ 		}
++
+ 	});
+ });

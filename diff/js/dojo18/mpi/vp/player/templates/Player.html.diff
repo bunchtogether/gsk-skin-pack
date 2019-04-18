@@ -1,0 +1,300 @@
+--- ./default/js/dojo18/mpi/vp/player/templates/Player.html	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/vp/player/templates/Player.html	2019-04-18 16:02:34.000000000 -0400
+@@ -1,125 +1,174 @@
+ <div class="vp_player" data-dojo-attach-point="vp_player_node">
+-	<div data-dojo-attach-point="_canvas" class="canvas">
+-		<div class="media"  data-dojo-attach-point="_mediaNode">
+-			<div class="screen screen_loading" data-dojo-attach-point="_loadingScreen">
+-				<span class="screenMessage">${R.loading}</span>
+-			</div>
+-			<div class="screen screen_buffering" data-dojo-attach-point="_bufferingScreen"></div>
+-			<div class="screen screen_error" data-dojo-attach-point="_errorScreen">
+-				<CENTER>
+-					<div class="buttCont">
+-						<div class="errorContainer">
+-							<span class="errorIcon" title="${R.reportErrorMsg}"></span>
+-							<span class="errorMessage">${R.reportErrorMsg}</span>
+-						</div>
+-						<div class="reportErrorButtonContainer">
+-							<span class="reportErrorButton" data-dojo-attach-point="reportErrorButton" data-dojo-attach-event="ondijitclick: openErrorDialog" aria-label="${R.reportErrorMsg}" tabindex="1000">${RC.report}</span>
+-						</div>
+-					</div>
+-					<!-- <span class="screenMessage">${R.error}</span> -->
+-					<div class="customError" data-dojo-attach-point="_customErrorContainer"></div>
+-				</CENTER>
+-			</div>
+-			<div class="screen displayMessage" data-dojo-attach-point="_messageScreen">
+-				<div class="buttCont">
+-					<CENTER>
+-						<span class="screenMessage" data-dojo-attach-point="_textMessageNode" tabindex="-1" ></span>
+-						<!-- 
+-						<br></br>
+-						<span class="screenMessage" tabindex="1020" style="height:inherit">
+-							<div data-dojo-attach-point="_textMessageExtraContent" style="display:table-cell;position:relative;"></div>
+-						</span>
+-						 -->
+-					</CENTER>
+-				</div>
+-				
+-			</div>
+-			<div class="screen screen_waiting" data-dojo-attach-point="_waitingScreen">
+-				<span class="screenMessage">${R.notYetStarted}</span><BR>
+-				<span data-dojo-attach-point="_scheduledStart"></span>
+-			</div>
+-			<div class="screen screen_waiting" data-dojo-attach-point="_startSoonScreen">
+-				<span class="screenMessage">${R.willStartSoon}</span><BR>
+-			</div>
+-			<div class="screen screen_end" data-dojo-attach-point="_endScreen" data-dojo-attach-event="ondijitclick: _replay">
+-				<div class="buttCont">
+-					<CENTER>
+-						<span class="screenMessage">${R.vodEnded}</span>
+-						<button class="replay" data-dojo-attach-point="_endScreenReplay" tabindex="1000" aria-label="${RC.replay}"></button>
+-						<span data-dojo-attach-point="_endScreenExtraContent" style="display:inline-block;position:relative;vertical-align:top;"></span>
+-					</CENTER>
+-				</div>
+-			</div>
+-			<div class="screen screen_end" data-dojo-attach-point="_endLiveScreen">
+-				<div class="buttCont">
+-					<CENTER>
+-						<span class="screenMessage" data-dojo-attach-point="_endLiveScreenMessage">${R.liveEnded}</span>
+-					</CENTER>
+-				</div>
+-			</div>
+-			<div class="screen screen_clickthru" data-dojo-attach-point="_clickToPlayScreen" data-dojo-attach-event="ondijitclick: _handleClickToPlay">
+-				<div class="buttCont">
+-					<button class="clickToPlay" tabindex="1010" aria-label="${RC.startVideo}"></button>
+-				</div>
+-			</div>
+-			<div class="screen screen_playing" data-dojo-attach-point="_playingScreen">
+-				<div class="playerCanvas" data-dojo-attach-point="_playerCanvas">
+-					<div class="playerWindow layout_sideBySide" data-dojo-attach-point="_playerWindow">
+-						<div class="randomWaterMarking" data-dojo-attach-point="_randomWaterMarking"></div>
+-					</div>
+-				</div>
+-				<div class="captions">
+-					<span data-dojo-attach-point="_captionsNode"></span>
+-				</div>
+-				<div class="bigPlayPauseNode" data-dojo-attach-point="_bigPlayPauseNode" data-dojo-attach-event="ondijitclick: playingScreenClicked">
+-					<div class="transparentOverlay"></div>
+-					<div class="icon"></div>
+-				</div>
+-			</div>
+-		</div>
++  <div data-dojo-attach-point="_canvas" class="canvas">
++    <div class="media"  data-dojo-attach-point="_mediaNode">
++      <div class="screen screen_loading" data-dojo-attach-point="_loadingScreen">
++        <span class="screenMessage">${R.loading}</span>
++      </div>
++      <div class="screen screen_buffering" data-dojo-attach-point="_bufferingScreen"></div>
++      <div class="screen screen_error" data-dojo-attach-point="_errorScreen">
++        <CENTER>
++          <div class="buttCont">
++            <div class="errorContainer">
++              <span class="errorIcon" title="${R.reportErrorMsg}"></span>
++              <span class="errorMessage">${R.reportErrorMsg}</span>
++            </div>
++            <div class="reportErrorButtonContainer">
++              <span class="reportErrorButton" data-dojo-attach-point="reportErrorButton" data-dojo-attach-event="ondijitclick: openErrorDialog" aria-label="${R.reportErrorMsg}" tabindex="1000">${RC.report}</span>
++            </div>
++          </div>
++          <!-- <span class="screenMessage">${R.error}</span> -->
++          <div class="customError" data-dojo-attach-point="_customErrorContainer"></div>
++        </CENTER>
++      </div>
++      <div class="screen displayMessage" data-dojo-attach-point="_messageScreen">
++        <div class="buttCont">
++          <CENTER>
++            <span class="screenMessage" data-dojo-attach-point="_textMessageNode" tabindex="-1" ></span>
++            <!-- 
++            <br></br>
++            <span class="screenMessage" tabindex="1020" style="height:inherit">
++              <div data-dojo-attach-point="_textMessageExtraContent" style="display:table-cell;position:relative;"></div>
++            </span>
++             -->
++          </CENTER>
++        </div>
++      </div>
++      <div class="screen screen_waiting" data-dojo-attach-point="_waitingScreen">
++        <span class="screenMessage">${R.notYetStarted}</span><BR>
++        <span data-dojo-attach-point="_scheduledStart"></span>
++      </div>
++      <div class="screen screen_waiting" data-dojo-attach-point="_startSoonScreen">
++        <span class="screenMessage">${R.willStartSoon}</span><BR>
++      </div>
++      <div class="screen screen_end" data-dojo-attach-point="_endScreen" data-dojo-attach-event="ondijitclick: _replay">
++        <div class="buttCont">
++          <CENTER>
++            <span class="screenMessage">${R.vodEnded}</span>
++            <button class="replay" data-dojo-attach-point="_endScreenReplay" tabindex="1000" aria-label="${RC.replay}"></button>
++            <span data-dojo-attach-point="_endScreenExtraContent" style="display:inline-block;position:relative;vertical-align:top;"></span>
++          </CENTER>
++        </div>
++      </div>
++      <div class="screen screen_end" data-dojo-attach-point="_endLiveScreen">
++        <div class="buttCont">
++          <CENTER>
++            <span class="screenMessage" data-dojo-attach-point="_endLiveScreenMessage">${R.liveEnded}</span>
++          </CENTER>
++        </div>
++      </div>
++      <div class="screen screen_clickthru" data-dojo-attach-point="_clickToPlayScreen" data-dojo-attach-event="ondijitclick: _handleClickToPlay">
++        <div class="buttCont">
++          <button class="clickToPlay" tabindex="1010" aria-label="${RC.startVideo}"></button>
++        </div>
++      </div>
++      <div class="screen screen_playing" data-dojo-attach-point="_playingScreen">
++        <div class="playerCanvas" data-dojo-attach-point="_playerCanvas">
++          <div class="playerWindow layout_sideBySide" data-dojo-attach-point="_playerWindow">
++            <div class="randomWaterMarking" data-dojo-attach-point="_randomWaterMarking"></div>
++          </div>
++        </div>
++        <div class="captions">
++          <span data-dojo-attach-point="_captionsNode"></span>
++        </div>
++        <div class="bigPlayPauseNode" data-dojo-attach-point="_bigPlayPauseNode" data-dojo-attach-event="ondijitclick: playingScreenClicked">
++          <div class="transparentOverlay"></div>
++          <div class="icon"></div>
++        </div>
++      </div>
++    </div>
+ 
+-		<div class="controls" id="controlsId">
+-			<span data-dojo-attach-point="_controlsNode"></span>
+-		</div>
+-		<div class="clickToPlayControlStrip" data-dojo-attach-event="ondijitclick: _handleClickToPlay">
+-			<div class="transparentOverlay"></div>
+-			<div class="icon"><button class="play"></button><div class="borderSeparator"></div></div>
+-			<div class="message">
+-				<div class="clickToPlay" title="${RC.clickToWatch}">${RC.clickToWatch}</div>
+-				<div class="title" data-dojo-attach-point="programName"></div>
+-				<div data-dojo-attach-point="securityClassifierContainer" class="securityClassifierContainer"><img class="securityClassifier" data-dojo-attach-point="securityClassifierImage"/></div>
+-				<div class="duration" data-dojo-attach-point="programDurationOnStrip"></div>
+-			</div>
+-		</div>
+-		<div class="layouts" data-dojo-attach-point="_layoutsNode" aria-label="${RC.chooseLayouts}" style="display: none;">
+-			<div class="layoutsInner">
+-				<button data-dojo-attach-point="_layout_videoOnly" data-dojo-attach-event="onclick: _handleLayoutClick, onkeydown: _handleLayoutKeyPress" data-mpi-layout="videoOnly" class="vo" tabindex="-1" aria-label="${RC.voLayouts}"></button>
+-				<button data-dojo-attach-point="_layout_sideBySideVideoLarge" data-dojo-attach-event="onclick: _handleLayoutClick, onkeydown: _handleLayoutKeyPress" data-mpi-layout="sideBySideVideoLarge" class="bv" tabindex="-1" aria-label="${RC.bvLayouts}"></button>
+-				<button data-dojo-attach-point="_layout_sideBySideEqual" data-dojo-attach-event="onclick: _handleLayoutClick, onkeydown: _handleLayoutKeyPress" data-mpi-layout="sideBySideEqual" class="bal selected" tabindex="-1" aria-label="${RC.balLayouts}"></button>
+-				<button data-dojo-attach-point="_layout_sideBySideSlidesLarge" data-dojo-attach-event="onclick: _handleLayoutClick, onkeydown: _handleLayoutKeyPress" data-mpi-layout="sideBySideSlidesLarge" class="bs" tabindex="-1" aria-label="${RC.bsLayouts}"></button>
+-				<button data-dojo-attach-point="_layout_slidesOnly" data-dojo-attach-event="onclick: _handleLayoutClick, onkeydown: _handleLayoutKeyPress" data-mpi-layout="slidesOnly" class="so" tabindex="-1" aria-label="${RC.soLayouts}"></button>
+-				
+-				<button data-dojo-attach-point="_layout_switchMainContent" data-dojo-attach-event="ondijitclick: _switchMainContentClick, onfocus: handleFocus, onblur: handleBlur" data-mpi-layout="switchMainContent" class="switcheroo" tabindex="1310" title="${RC.layoutSwitcheroo}" aria-label="${RC.layoutSwitcherooAria}"></button>
+-				<button data-dojo-attach-point="_layout_pictureInPicutre" data-dojo-attach-event="ondijitclick: _handleLayoutClick, onfocus: handleFocus, onblur: handleBlur" data-mpi-layout="pictureInPicutre" class="pip" tabindex="1310" title="${RC.layoutPictureInPicture}" aria-label="${RC.layoutPictureInPictureAria}"></button>
+-				<button data-dojo-attach-point="_layout_sideBySide" data-dojo-attach-event="ondijitclick: _handleLayoutClick, onfocus: handleFocus, onblur: handleBlur" data-mpi-layout="sideBySide" style="display:none;" class="sbs" tabindex="-1" title="${RC.layoutSidyBySide}" aria-label="${RC.layoutSidyBySideAria}"></button>
+-				<div class="panelOpenerIconLeft"></div>
+-			</div>	
+-		</div>
+-		
+-		<div class="videoLayout" data-dojo-attach-point="_videoLayoutNode" style="display: none;">
+-			<button class="videoLayoutToggle" data-dojo-attach-point="_videoLayoutToggleNode" title="${RC.toggleView}" tabindex="-1" data-dojo-attach-event="ondijitclick: _toggleVideoLayout"></button>
+-		</div>
+-		
+-		<div class="actions" data-dojo-attach-point="_actionsNode">
+-			<div class="actionsInner">
+-				<button class="expander" title="${R.show}" data-dojo-attach-point="_expanderNode" tabindex="-1" data-dojo-attach-event="ondijitclick: _openTabs" aria-label="${RC.showSupplemental}"></button>
+-				<div style="background:#333; opacity:0.4; width:100%;height:100%;margin-left:4px;"></div>
+-				<div class="panelOpenerIconRight" data-dojo-attach-point="_panelOpenerNode" tabindex="1100"></div>
+-			</div>
+-		</div>
+-		
+-		<div class="surveyNode" data-dojo-attach-point="_pollingNode"></div>
+-		
+-		<div class="annotationsNode" data-dojo-attach-point="annotationsNode"></div>
+-	</div>
++    <div class="controls" id="controlsId">
++      <span data-dojo-attach-point="_controlsNode"></span>
++    </div>
++    <div class="clickToPlayControlStrip" data-dojo-attach-event="ondijitclick: _handleClickToPlay">
++      <div class="transparentOverlay"></div>
++      <div class="icon"><button class="play"></button><div class="borderSeparator"></div></div>
++      <div class="message">
++        <div class="clickToPlay" title="${RC.clickToWatch}">${RC.clickToWatch}</div>
++        <div class="title" data-dojo-attach-point="programName"></div>
++        <div data-dojo-attach-point="securityClassifierContainer" class="securityClassifierContainer"><img class="securityClassifier" data-dojo-attach-point="securityClassifierImage"/></div>
++        <div class="duration" data-dojo-attach-point="programDurationOnStrip"></div>
++      </div>
++    </div>
++    <div class="layouts" data-dojo-attach-point="_layoutsNode" aria-label="${RC.chooseLayouts}" style="display: none;">
++      <div class="layoutsInner">
++        <button data-dojo-attach-point="_layout_videoOnly" data-dojo-attach-event="onclick: _handleLayoutClick, onkeydown: _handleLayoutKeyPress" data-mpi-layout="videoOnly" class="vo" tabindex="-1" aria-label="${RC.voLayouts}"></button>
++        <button data-dojo-attach-point="_layout_sideBySideVideoLarge" data-dojo-attach-event="onclick: _handleLayoutClick, onkeydown: _handleLayoutKeyPress" data-mpi-layout="sideBySideVideoLarge" class="bv" tabindex="-1" aria-label="${RC.bvLayouts}"></button>
++        <button data-dojo-attach-point="_layout_sideBySideEqual" data-dojo-attach-event="onclick: _handleLayoutClick, onkeydown: _handleLayoutKeyPress" data-mpi-layout="sideBySideEqual" class="bal selected" tabindex="-1" aria-label="${RC.balLayouts}"></button>
++        <button data-dojo-attach-point="_layout_sideBySideSlidesLarge" data-dojo-attach-event="onclick: _handleLayoutClick, onkeydown: _handleLayoutKeyPress" data-mpi-layout="sideBySideSlidesLarge" class="bs" tabindex="-1" aria-label="${RC.bsLayouts}"></button>
++        <button data-dojo-attach-point="_layout_slidesOnly" data-dojo-attach-event="onclick: _handleLayoutClick, onkeydown: _handleLayoutKeyPress" data-mpi-layout="slidesOnly" class="so" tabindex="-1" aria-label="${RC.soLayouts}"></button>
++        <button data-dojo-attach-point="_layout_switchMainContent" data-dojo-attach-event="ondijitclick: _switchMainContentClick, onfocus: handleFocus, onblur: handleBlur" data-mpi-layout="switchMainContent" class="switcheroo" tabindex="1310" title="${RC.layoutSwitcheroo}" aria-label="${RC.layoutSwitcherooAria}"></button>
++        <button data-dojo-attach-point="_layout_pictureInPicutre" data-dojo-attach-event="ondijitclick: _handleLayoutClick, onfocus: handleFocus, onblur: handleBlur" data-mpi-layout="pictureInPicutre" class="pip" tabindex="1310" title="${RC.layoutPictureInPicture}" aria-label="${RC.layoutPictureInPictureAria}"></button>
++        <button data-dojo-attach-point="_layout_sideBySide" data-dojo-attach-event="ondijitclick: _handleLayoutClick, onfocus: handleFocus, onblur: handleBlur" data-mpi-layout="sideBySide" style="display:none;" class="sbs" tabindex="-1" title="${RC.layoutSidyBySide}" aria-label="${RC.layoutSidyBySideAria}"></button>
++        <div class="panelOpenerIconLeft"></div>
++      </div>  
++    </div>
++    
++    <div class="videoLayout" data-dojo-attach-point="_videoLayoutNode" style="display: none;">
++      <button class="videoLayoutToggle" data-dojo-attach-point="_videoLayoutToggleNode" title="${RC.toggleView}" tabindex="-1" data-dojo-attach-event="ondijitclick: _toggleVideoLayout"></button>
++    </div>
++    
++    <div class="actions" data-dojo-attach-point="_actionsNode">
++      <div class="actionsInner">
++        <button class="expander" title="${R.show}" data-dojo-attach-point="_expanderNode" tabindex="-1" data-dojo-attach-event="ondijitclick: _openTabs" aria-label="${RC.showSupplemental}"></button>
++        <div style="background:#333; opacity:0.4; width:100%;height:100%;margin-left:4px;"></div>
++        <div class="panelOpenerIconRight" data-dojo-attach-point="_panelOpenerNode" tabindex="1100"></div>
++      </div>
++    </div>
++    
++    <div class="surveyNode" data-dojo-attach-point="_pollingNode"></div>
++    <div class="annotationsNode" data-dojo-attach-point="annotationsNode"></div>
++  </div>
++  <div id="programInformation">
++    <div class="row">
++      <a href="#" class="favorites add">
++        <span>add video<br />to favourites</span>
++      </a>
++      <a href="#" class="favorites remove">
++        <span>remove video<br />from favourites</span>
++      </a>
++      <div class="title">
++        Primary Title
++      </div>
++      <div class="groups">
++      </div>
++    </div>
++    <div class="metadata row">
++      <div class="author">
++        <div class="avatar">
++          JB
++        </div>
++        <div class="posted">Posted by <a href="">Joe Bloggs</a> | <span>01/02/17</span></div>
++      </div>
++      <div class="icons">
++        <div class="views icon">
++          <div class="viewIcon"></div>
++          <span>0</span>
++        </div>
++        <div class="likes icon">
++          <div class="likeIcon"></div>
++          <span>0</span>
++        </div>
++        <div class="comments icon">
++          <div class="commentIcon"></div>
++          <span>0</span>
++        </div>
++      </div>
++    </div>
++    <div class="description">
++      <div class="inner">
++        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt augue scelerisque lorem maximus bibendum. Phasellus porttitor lobortis dignissim. Morbi id accumsan ipsum. Nunc non nisi eu erat pretium semper. Suspendisse vel urna eget est auctor mattis eu nec odio. Donec rutrum ipsum nec suscipit congue. In hac habitasse platea dictumst.
++      </div>
++      <a class="twisty" href="#"></a>
++    </div>
++    <div class="tags">
++      <a href="#" class="show-tags">Show Tags</a>
++      <a href="#" class="hide-tags">Hide Tags</a>
++      <div class="list">
++        <a href="#">Tag A</a>
++        <a href="#">Tag B</a>
++      </div>
++      <a class="twisty" href="#"></a>
++    </div>
++  </div>
+ </div>
+\ No newline at end of file

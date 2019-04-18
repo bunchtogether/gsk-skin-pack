@@ -1,0 +1,13 @@
+--- ./default/js/dojo18/mpi/vp/nls/comments.js	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/vp/nls/comments.js	2019-04-18 16:02:34.000000000 -0400
+@@ -1,8 +1,8 @@
+ define({
+   "root" : {
+-    "addCommentLabel" : "Add Comment",
++    "addCommentLabel" : "Comment",
+     "cancelLabel" : "Cancel",
+-    "commentSubmitted" : "Your comment has been submitted for approval.  It will appear when approved.",
++    "commentSubmitted" : "Your comment has been submitted for approval.   It will appear when approved.",
+     "counterMessageLabel" : " characters remaining",
+     "counterMessageOverLabel" : " characters over limit",
+     "counterWarningMessageLabel" : " [ Comment too large ]",

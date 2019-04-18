@@ -1,0 +1,105 @@
+--- ./default/js/dojo18/mpi/vp/PlayerShareEmbed.js	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/vp/PlayerShareEmbed.js	2019-04-18 16:02:34.000000000 -0400
+@@ -37,7 +37,7 @@
+ 		maxWidth: 4334,
+ 		maxHeight: 2430,
+ 		minWidth:300,
+-		minHeight:225,  
++		minHeight:225,	
+ 		noSuppNotitleNoSlideMinWidth: 300,
+ 		noSuppNotitleNoSlideMinHeight: 225,
+ 		hasSuppNotitleNoSlideMinWidth: 400,
+@@ -137,7 +137,7 @@
+ 					this._validateInput(e);
+ 				})),
+ 				on(this.sizeHeight, "change", lang.hitch(this, function(e) {
+-					this._validateInput(e);	
++					this._validateInput(e); 
+ 				})),
+ 				on(this.autoPlayCheck, "keydown", lang.hitch(this, function(e) {
+ 					if(e.keyCode == 13 || e.which == 13) {
+@@ -155,14 +155,6 @@
+ 						this._update(e);
+ 					}
+ 				})),
+-				on(this.includeTitleCheck, "keydown", lang.hitch(this, function(e) {
+-					if(e.keyCode == 13 || e.which == 13) {
+-						e.preventDefault();
+-						e.stopPropagation();
+-						this.includeTitleCheck.checked = !this.includeTitleCheck.checked;
+-						this._update(e);
+-					}
+-				})),
+ 				on(this.considerAspectRatio, "keydown", lang.hitch(this, function(e) {
+ 					if(e.keyCode == 13 || e.which == 13) {
+ 						e.preventDefault();
+@@ -246,7 +238,7 @@
+ 				this.hasSupp = (this.includeSuppCheck.checked==true)?true:false;
+ 				this.hasSlides = this.mediaStream.hasSlides;
+ 				this.hasSurvey = (this.model._vals.ProgramDetailData.survey!=null)?true:false;
+-				this.hasTitle = this.includeTitleCheck.checked;
++				this.hasTitle = false;
+ 				
+ 				if (this.contentWidth>0 && this.contentHeight>0) {
+ 					this.car = this.contentWidth/this.contentHeight;
+@@ -322,7 +314,7 @@
+ 				mpimisc.setNodeDisabled(this.sizeWidth, true);
+ 				mpimisc.setNodeDisabled(this.sizeHeight, true);
+ 				this._calculateSuggestedDimensions();
+-			} else 	if(this.size=="custom") {
++			} else	if(this.size=="custom") {
+ 				mpimisc.setNodeDisabled(this.sizeWidth, false);
+ 				mpimisc.setNodeDisabled(this.sizeHeight, false);
+ 				width = parseInt(this.sizeWidth.value);
+@@ -446,7 +438,7 @@
+ 					playerWidth = embedDimensions.maxSuggestedWidth;
+ 					if(playerHeight < this.minimumHeight)
+ 						this._calcHeight(embedDimensions.maxSuggestedWidth);
+-				}	
++				} 
+ 			}
+ 			this._updateHeightWidth(playerWidth, playerHeight);
+ 		
+@@ -519,7 +511,6 @@
+ 			var url = this.mediaStream.embedLink;
+ 			if (this.autoPlayCheck.checked) url+= "&autoplay=true";
+ 			if (this.includeSuppCheck.checked) url+= "&supp=true";
+-			if (this.includeTitleCheck.checked) url+= "&titlebar=true";
+ 			var t = "";
+ 			if (this.useScript) t += "<script type='text/javascript' src='" + this.portalBaseUrl + "latestskin/js/qumu-embed-fs.js'></script>";
+ 			t += "<iframe seamless frameborder=0 allowfullscreen webkitallowfullscreen mozallowfullscreen src='" + url + "' width='" + this.sizeWidth.value + "' height='" + this.sizeHeight.value+ "'></iframe>";
+@@ -644,7 +635,7 @@
+ 		},
+ 		
+ 		_toggleClip: function(e) {
+-			if(e)	e.stopPropagation();
++			if(e) e.stopPropagation();
+ 			
+ 			var cc = this.clipCheck.checked;
+ 			
+@@ -793,7 +784,7 @@
+ 			node.value = time.formatTimeInColons(val);
+ 			this.updateClipMarkers(selected);
+ 			if(this.sliding || this.typed) this.player.seek(val);
+-			if(!has("qumu-phone") && !has("touch"))	node.focus();
++			if(!has("qumu-phone") && !has("touch")) node.focus();
+ 		},
+ 		
+ 		reset: function() {
+@@ -862,7 +853,7 @@
+ 			} else {
+ 				this.clipEnd.value = time.formatTimeInColons(this.player.duration);
+ 				this.endTime = this.player.duration-1;
+-			}	
++			} 
+ 			return {
+ 				position: this.endTime / this.player.duration,
+ 				className: "endClip",
+@@ -1010,7 +1001,6 @@
+ 			domAttr.set(this.embedBox, "tabindex",this.tabIndex+1);
+ 			domAttr.set(this.autoPlayCheck, "tabindex",this.tabIndex+1);
+ 			domAttr.set(this.includeSuppCheck, "tabindex",this.tabIndex+1);
+-			domAttr.set(this.includeTitleCheck, "tabindex",this.tabIndex+1);
+ 			domAttr.set(this.sizeSelect, "tabindex",this.tabIndex+1);
+ 			domAttr.set(this.sizeWidth, "tabindex",this.tabIndex+1);
+ 			domAttr.set(this.sizeHeight, "tabindex",this.tabIndex+1);

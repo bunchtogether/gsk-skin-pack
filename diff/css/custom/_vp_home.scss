@@ -1,0 +1,129 @@
+
+.vp_pod {
+  .homePageMenu {
+    display: none;
+  }
+  #posterPodContainer {
+    width: auto;
+    display: block;
+    .vp_pod {
+      width: auto;
+      height: auto;
+      border: none;
+    }
+    .vp_pod_singleitem {
+      width: auto;
+      height: auto;
+    }
+    .vp_pod_program_poster, .vp_pod_phone_program_poster {
+      .programTitle:before {
+        content: "In the spotlight:";
+      }
+    }
+  }
+}
+
+
+#channelHeader {
+  .channelHeaderBackground {
+    background: none;
+  }
+}
+
+@mixin rescalableReponsive() {
+  .qumu-rescalable {
+    #top-section {
+      padding:0;
+    }
+    .vp_pod {
+      &.homePage {
+        position:relative;
+        @include transition();
+        left:0;
+        @media #{$largeViewport} {
+          padding: 15px 15px 20px 15px;
+        }
+        @media #{$mediumViewport} {
+          padding: 15px 15px 20px 15px;
+        }
+        padding: 0;
+      }
+
+      #posterPodContainer {
+        width:auto !important;
+        height: auto;
+        .vp_pod {
+          width:auto !important;
+          height: auto;
+          border: none;
+        }
+        .vp_pod_singleitem {
+          width:auto !important;
+          height: auto;
+        }
+        .vp_pod_program_poster {
+          width:auto !important;
+          .largeThumbnailAndProgramDetails {
+            border: none;
+            .thumbnail {
+              zoom: 1;
+              border-bottom:1px solid $secondaryBorder; 
+            }
+            height: auto;
+            .programDetailsVOD {
+              padding-left: 0;
+              height: auto;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@include rescalableReponsive();
+
+@media only screen and (max-width:959px) and (min-width:768px){
+  @include rescalableReponsive();
+}
+
+@media only screen and (max-width:767px) {
+  @include rescalableReponsive();
+}
+
+@mixin phoneReponsive() {
+  .qumu-phone:not(.embed-page) {    
+    .homePage {
+      #posterPodContainer {
+        .vp_pod {
+          height: auto !important;
+        }
+      }
+    } 
+  }
+}
+
+@include phoneReponsive();
+
+@media only screen and (max-width: 960px) {
+  @include phoneReponsive();
+}
+
+@media only screen and (max-width: 600px) {
+  @include phoneReponsive();
+}
+
+@media only screen and (max-width: 520px) and (min-width: 440px) {
+  @include phoneReponsive();
+}
+
+@media only screen and (max-width: 440px) and (min-width: 340px){
+  @include phoneReponsive();
+}
+
+@media only screen and (max-width: 340px){
+  @include phoneReponsive();
+}
+
+
+

@@ -1,0 +1,233 @@
+--- ./default/js/dojo18/mpi/vp/pods/pod-factory.js	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/vp/pods/pod-factory.js	2019-04-18 16:02:34.000000000 -0400
+@@ -7,8 +7,7 @@
+ 		"./PodSorter",
+ 		"./PodFilterer",
+ 		"./PodLayoutToggler",
+-		"./PodEmbedder",
+-		
++		"./PodEmbedder",		
+ 		"./SmallThumbnailLayout",
+ 		"./SmallCleanThumbnailLayout",
+ 		"./SmallThumbnailAndDetailsLayout",
+@@ -53,7 +52,7 @@
+ 		
+ 		"./CollectionMediumCleanThumbnailItemRenderer",
+ 		"./CollectionSmallThumbnailItemRenderer",
+-		
++	
+ 		"mpi/util/sniff"
+ 		
+ ], function(
+@@ -65,8 +64,7 @@
+ 		PodSorter,
+ 		PodFilterer,
+ 		PodLayoutToggler,
+-		PodEmbedder,
+-		
++		PodEmbedder,		
+ 		SmallThumbnailLayout,
+ 		SmallCleanThumbnailLayout,
+ 		SmallThumbnailAndDetailsLayout,
+@@ -108,36 +106,36 @@
+ 		CategoryMediumThumbnailItemRenderer,
+ 		CategoryMediumCleanThumbnailItemRenderer,
+ 		CategoryFatListItemRenderer,
+-		
++	
+ 		CollectionMediumCleanThumbnailItemRenderer,
+ 		CollectionSmallThumbnailItemRenderer) {
+ 	
+ 	var layoutRenderers = {
+-		"SmallCleanThumbnail" 		: SmallCleanThumbnailLayout,
++		"SmallCleanThumbnail"			: SmallCleanThumbnailLayout,
+ 		"SmallThumbnail"			: SmallThumbnailLayout,
+ 		"SmallThumbnailAndDetails"	: SmallThumbnailAndDetailsLayout,
+-		"MediumCleanThumbnail" 		: MediumCleanThumbnailLayout,
+-		"MediumThumbnail"			: MediumThumbnailLayout
++		"MediumCleanThumbnail"		 : MediumCleanThumbnailLayout,
++		"MediumThumbnail"			 : MediumThumbnailLayout
+ 	}
+ 	
+ 	var itemRenderers = {
+-		"ProgramSmallCleanThumbnail" 		: ProgramSmallCleanThumbnailItemRenderer,
+-		"ProgramSmallThumbnail"				: ProgramSmallThumbnailItemRenderer,
+-		"ProgramSmallThumbnailAndDetails"	: ProgramSmallThumbnailAndDetailsItemRenderer,
+-		"ProgramMediumCleanThumbnail" 		: ProgramMediumCleanThumbnailItemRenderer,
++		"ProgramSmallCleanThumbnail"		 : ProgramSmallCleanThumbnailItemRenderer,
++		"ProgramSmallThumbnail"				 : ProgramSmallThumbnailItemRenderer,
++		"ProgramSmallThumbnailAndDetails"	 : ProgramSmallThumbnailAndDetailsItemRenderer,
++		"ProgramMediumCleanThumbnail"			: ProgramMediumCleanThumbnailItemRenderer,
+ 		"ProgramMediumThumbnail"			: ProgramMediumThumbnailItemRenderer,
+ 		
+-		"ChannelSmallCleanThumbnail" 		: ChannelSmallCleanThumbnailItemRenderer,
+-		"ChannelSmallThumbnail"				: ChannelSmallThumbnailItemRenderer,
+-		"ChannelSmallThumbnailAndDetails"	: ChannelSmallThumbnailAndDetailsItemRenderer,
+-		"ChannelMediumCleanThumbnail" 		: ChannelMediumCleanThumbnailItemRenderer,
++		"ChannelSmallCleanThumbnail"		 : ChannelSmallCleanThumbnailItemRenderer,
++		"ChannelSmallThumbnail"				 : ChannelSmallThumbnailItemRenderer,
++		"ChannelSmallThumbnailAndDetails"	 : ChannelSmallThumbnailAndDetailsItemRenderer,
++		"ChannelMediumCleanThumbnail"			: ChannelMediumCleanThumbnailItemRenderer,
+ 		"ChannelMediumThumbnail"			: ChannelMediumThumbnailItemRenderer,
+ 		
+-		"CategorySmallCleanThumbnail" 		: CategorySmallCleanThumbnailItemRenderer,
++		"CategorySmallCleanThumbnail"			: CategorySmallCleanThumbnailItemRenderer,
+ 		"CategorySmallThumbnail"			: CategorySmallThumbnailItemRenderer,
+ 		"CategorySmallThumbnailAndDetails"	: CategorySmallThumbnailAndDetailsItemRenderer,
+-		"CategoryMediumCleanThumbnail" 		: CategoryMediumCleanThumbnailItemRenderer,
+-		"CategoryMediumThumbnail"			: CategoryMediumThumbnailItemRenderer,
++		"CategoryMediumCleanThumbnail"		 : CategoryMediumCleanThumbnailItemRenderer,
++		"CategoryMediumThumbnail"			 : CategoryMediumThumbnailItemRenderer,
+ 		
+ 		"CollectionMediumCleanThumbnail"	: CollectionMediumCleanThumbnailItemRenderer,
+ 		"CollectionSmallThumbnail"			: CollectionSmallThumbnailItemRenderer
+@@ -188,19 +186,19 @@
+ 		case "CollectionData":
+ 			itemRenderer = new itemRenderers["Collection" + viewType](controller, a11yAdapter);
+ 			break;
+-		case "PopularChannels":
+-			itemRenderer = new itemRenderers["Channel" + viewType](controller, a11yAdapter);
+-			viewToggler = new PodLayoutToggler({
+-					dataSetAdapter: dsAdapter, 
+-					currentView: params.viewType, 
+-					secondaryView: "fatList", 
+-					currentLayout: layoutRenderer, 
+-					currentRenderer: itemRenderer, 
+-					secondaryLayout: new FatListLayout(),
+-					secondaryRenderer: new ChannelFatListItemRenderer(controller, a11yAdapter), 
+-					noOfRows: itemsPerPage, 
+-					secondaryNoOfRows: (params.rows)});
+-			break;
++ 		case "PopularChannels":
++ 			itemRenderer = new itemRenderers["Channel" + viewType](controller, a11yAdapter);
++ 			viewToggler = new PodLayoutToggler({
++ 					dataSetAdapter: dsAdapter, 
++ 					currentView: params.viewType, 
++ 					secondaryView: "fatList", 
++ 					currentLayout: layoutRenderer, 
++ 					currentRenderer: itemRenderer, 
++ 					secondaryLayout: new FatListLayout(),
++ 					secondaryRenderer: new ChannelFatListItemRenderer(controller, a11yAdapter), 
++ 					noOfRows: itemsPerPage, 
++ 					secondaryNoOfRows: (params.rows)});
++ 			break;
+ 		}
+ 		
+ 		return [layoutRenderer, itemRenderer, viewToggler]
+@@ -219,19 +217,16 @@
+ 			var a11yAdapter;
+ 			var embeddable;
+ 			var rssFeed = null;
+-			
+-			if(dataSetName) {
+-				dsAdapter = dsAdapters.createAdapter(model, dataSetName, dataSetInstance, dataSetParameters);
+-				a11yAdapter = a11yAdapters.createAdapter(dataSetName);
+-			} else {
+-				dsAdapter = dsAdapters.createSingleItemAdapter(params.content);
+-			}
+-			
++	
+ 			
+ 			switch(params.viewType) {
+ 			case "4up":
+ 			case "4upClean":
+-				itemsPerPage = 4 * params.rows;
++				if(has("qumu-tablet")) {
++					itemsPerPage = 3 * params.rows;
++				} else {
++					itemsPerPage = 4 * params.rows;
++				}
+ 				break;
+ 			case "3up":
+ 			case "3upClean":
+@@ -245,7 +240,25 @@
+ 				itemsPerPage = params.rows;
+ 				break;
+ 			}
+-			
++
++			if(dataSetName) {
++				if(dataSetParameters.page) {
++					dataSetParameters.page.pageSize = itemsPerPage;
++				}
++				dsAdapter = dsAdapters.createAdapter(model, dataSetName, dataSetInstance, dataSetParameters); 
++				a11yAdapter = a11yAdapters.createAdapter(dataSetName);
++				var getRecords = dsAdapter.getRecords.bind(dsAdapter);
++				dsAdapter.getRecords = (function () {
++					if(this._page) {
++						return getRecords().slice(0, this._page.pageSize);
++					} else {
++						return getRecords();
++					}
++				}).bind(dsAdapter);
++			} else {
++				dsAdapter = dsAdapters.createSingleItemAdapter(params.content);
++			} 
++
+ 			if(params.allowPage) {
+ 				pager = new PodPager({dataSetAdapter: dsAdapter, itemsPerPage: itemsPerPage});
+ 			}
+@@ -256,6 +269,7 @@
+ 			
+ 			if(params.allowSort) {
+ 				sorter = new PodSorter({dataSetAdapter: dsAdapter, sortOptions: params.sortOptions});
++
+ 			}
+ 			
+ 			if(rssFeedLink && params.showTitle) {
+@@ -266,7 +280,7 @@
+ 			if(has("qumu-phone")) {
+ 				console.log("in qumu-phone - change the value in sniff.js");
+ 				switch(params.viewType) {
+-				case "2up":	
++				case "2up":	 
+ 				case "3up":
+ 				case "3upClean":
+ 				case "4up":
+@@ -308,8 +322,7 @@
+ 					}
+ 					break;
+ 				}
+-			} else {
+-				
++			} else {				
+ 				switch(params.viewType) {
+ 				case "4upClean":
+ 					viewData = makeViews("SmallCleanThumbnail", dataSetName, dsAdapter, controller, a11yAdapter, itemsPerPage, params);
+@@ -395,8 +408,8 @@
+ 					showToggle: viewToggler
+ 				});
+ 			}
+-			
+-			return new Pod({
++
++			var pod = new Pod({
+ 				dataSetAdapter: dsAdapter,
+ 				pager: pager,
+ 				filterer: filterer,
+@@ -408,6 +421,25 @@
+ 				embeddable: embeddable,
+ 				rss: rssFeed
+ 			});
++
++			var podFactory = this;
++
++			var layoutListener = function() {
++				if(!pod.vp_podNode) {
++					return;
++				}
++				var container = pod.vp_podNode.parentNode;
++				pod.destroyRecursive();
++				window.removeEventListener("UpdateLayout", layoutListener);
++				var newPod = podFactory.createPod(model, controller, podType, dataSetName, dataSetInstance, dataSetParameters, params, rssFeedLink);
++				newPod.placeAt(container);
++				newPod.startup();
++				newPod.dataSetAdapter.emit("fetched", newPod.dataSetAdapter._data);
++			}
++
++			window.addEventListener("UpdateLayout", layoutListener, false);
++
++			return pod;
+ 		}
+ 	};
+ });

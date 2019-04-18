@@ -1,0 +1,29 @@
+--- ./default/js/dojo18/mpi/vp/pods/PhoneProgramPosterItemRenderer.js	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/vp/pods/PhoneProgramPosterItemRenderer.js	2019-04-18 16:02:34.000000000 -0400
+@@ -34,7 +34,11 @@
+ 			var query = "tags: \"" + e.target.innerHTML + "\"";
+ 			document.location.href = 'search.vp?query=' + encodeURIComponent(query);
+ 		},
+-		
++		_openDescription: function (e) {
++			e.preventDefault();
++			domClass.toggle(document.querySelector(".vp_pod_phone_program_poster .programDescription"), "open");
++			domClass.toggle(document.querySelector(".vp_pod_phone_program_poster .programDetailsVOD"), "open");
++		},
+ 		hasDescription: function() {
+ 			var description = this.description();
+ 			if(description.length>0) 
+@@ -66,12 +70,11 @@
+ 		
+ 	});
+ 	
+-	return  declare([], {
++	return	declare([], {
+ 		constructor: function(controller, a11yAdapter) {
+ 			this.controller = controller;
+ 			this.a11yAdapter = a11yAdapter;
+ 		},
+-		
+ 		render: function(item) {
+ 			return new PhoneProgramPosterItem({item: item, controller: this.controller, a11yAdapter: this.a11yAdapter});
+ 		}

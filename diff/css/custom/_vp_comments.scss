@@ -1,0 +1,177 @@
+
+.vp-comments {
+  position: relative;
+  a.twisty {
+    display: none;    
+  }
+  .comment {
+    position:relative;
+    .avatar {
+      position: absolute;
+      top:0;
+      left:-50px;
+      width:40px;
+      height:40px;
+      font-size:14px;
+      background-color: $color_header_active;
+      color: $color_White;
+      border-radius: 50%;
+      vertical-align: middle;
+      line-height: 40px;
+      text-align: center;
+      margin-right:0px;
+    }
+  }
+
+  .post-body {
+    padding:10px 0 10px 0;
+    font-size:14px;
+    color: $color_header;
+  }
+  .post-details { 
+    li {
+      line-height: 24px;
+      vertical-align: middle;
+      display: inline-block;
+      font-size: 16px;
+      color: $color_header;
+      .author-name {
+        font-weight: bold;
+        color: $color_header_hover;
+      }
+    }
+    li.sep {
+      color: $color_Mid4;
+      font-size: 24px;
+    }
+  }
+  .post-actions {
+    margin-left: -5px;
+    li {
+      line-height: 24px;
+      vertical-align: middle;
+      display: inline-block;
+    }
+    li.expand-thread {
+      display: none;
+    }
+    li.sep {
+      color: $color_Mid4;
+      font-size: 24px;
+    }
+    li.tab {
+      padding: 0 5px 0 5px;
+      font-size: 14px;
+      color: $color_header_hover;
+      &:hover {
+        color: $color_header_active;
+        background-color: transparent;
+      }
+    }
+  }
+  .comments-container {
+    &.collapsed {
+      display: block;
+      height: auto;
+      opacity: 1;
+      overflow: visible;
+    }
+    > li {
+      list-style-type: none;
+    }
+    .comments-container {
+      margin-left: 40px;
+      > li {
+        list-style-type: none;
+      }
+    }
+  }
+
+
+  .post-container {
+    padding-top:0;
+    margin-top:0;
+    border-bottom: none;
+  }
+  .post-details {
+    li.post-flag {
+      button {
+        @include flagIcon();
+        width: 40px;
+        height: 40px;
+        background-size:20px 20px;
+      }
+    }
+
+  }
+  .main-body {
+    border: none;
+    padding:0;
+    margin-top:20px;
+    margin-left: 60px;
+  }
+  .commentHeader {
+    .comments-icon {
+      background-image: url('../images/gsk/svg/comments.svg') !important;
+      background-position: 50% 50% !important;
+      background-repeat: no-repeat;
+      width: 27px;
+      height: 23px;
+      background-size: 27px 23px;
+    }
+    .num-comments {
+      font-weight: bold;
+      font-size:18px;
+    }
+  }
+  .new-post {
+    min-height:44px;
+    width:100%;
+    position:relative;
+    .textarea-wrapper {
+      margin-right: 135px;
+      min-height:44px;
+      textarea {
+        @extend .gsk-input;
+      }
+    }
+    .edit-menu {
+      margin:0;
+      padding:0;
+      position:absolute;
+      top:0;
+      right:0;
+      .addedit-counter {
+        display: none;
+      }
+      button {
+        margin:0;
+        @extend button.genericButton;
+        width: 100px;
+      }
+    }
+  }
+}
+.qumu-phone {
+  .vp-comments {
+    padding:0;
+    a.twisty {
+      top: 15px;
+      display: block;    
+    }
+    .new-post {
+      display: none;
+    }
+    .main-body {
+      display: none;
+    }
+    &.open {
+      .new-post {
+        display: block;
+      }
+      .main-body {
+        display: block;
+      }      
+    }
+  }
+}

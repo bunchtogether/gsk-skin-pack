@@ -1,0 +1,231 @@
+--- ./default/js/dojo18/mpi/vp/ProgramControllerMixin.js	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/vp/ProgramControllerMixin.js	2019-04-18 16:02:34.000000000 -0400
+@@ -1,22 +1,24 @@
+ define([
+-        "dijit/registry",
+-        "mpi/vp/player/MessagePlayer",
+-        "mpi/vp/player/HTML5Player",
+-        "mpi/vp/player/SilverlightPlayer",
+-        "mpi/vp/player/FlashPlayer",
+-        "mpi/vp/player/VLCPlayer",
+-		"mpi/vp/player/VDIPlayer",
+-        "mpi/vp/TitleView",
+-        "mpi/vp/PlayerTabs",
+-        "dojo/dom-class",
+-        "dojo/dom-construct",
+-        "dojo/has",
+-        "mpi/util/sniff",
+-        "i18n!./nls/common"
+-], function(registry, MessagePlayer, HTML5Player, SilverlightPlayer, FlashPlayer, VLCPlayer, VDIPlayer, TitleView, PlayerTabs, domClass, domConstruct, has, sniff, RC) {
++				"dijit/registry",
++				"mpi/vp/player/MessagePlayer",
++				"mpi/vp/player/HTML5Player",
++				"mpi/vp/player/SilverlightPlayer",
++				"mpi/vp/player/FlashPlayer",
++				"mpi/vp/player/VLCPlayer",
++				"mpi/vp/player/VDIPlayer",
++				"mpi/vp/TitleView",
++				"mpi/vp/PlayerTabs",
++				"dojo/dom-class",
++				"dojo/dom-construct",
++				"dojo/_base/lang",
++				"dojo/has",
++				"mpi/util/restXhr",
++				"mpi/util/sniff",
++				"i18n!./nls/common"
++], function(registry, MessagePlayer, HTML5Player, SilverlightPlayer, FlashPlayer, VLCPlayer, VDIPlayer, TitleView, PlayerTabs, domClass, domConstruct, lang, has, restXhr, sniff, RC) {
+ 	var vsIdSuffix = 0;
+ 	var lastEmbedLocation = null;
+-	
++
+ 	function makeContentProviderLinkRelative(url) {
+ 		if(url && url.indexOf("contentprovider.do") > -1) {
+ 			url = url.substr(url.indexOf("contentprovider.do"));
+@@ -35,7 +37,7 @@
+ 		url = href.substring(0, href.lastIndexOf('/')+1) + url;
+ 		return url;
+ 	}
+-	
++
+ 	var checkFlashInstalled = function() {
+ 		if(has("safari") && !has("qumu-phone")) {
+ 			var hasFlash = false;
+@@ -82,7 +84,9 @@
+ 			var tabs = registry.byId("playerTabs");
+ 			if(tabs) {
+ 				tabs.detach();
++
+ 				domClass.remove(tabs._playerTabs,"alwaysOpen");
++
+ 			}
+ 			
+ 			var player = registry.byId("player");
+@@ -116,6 +120,7 @@
+ 					player=new HTML5Player(ip, d,"extension");
+ 				}else if(ca.playerTypeId == "flashembed"
+ 					|| ca.playerTypeId == "flashvideo") {
++
+ 					
+ 					if(!checkFlashInstalled()) {
+ 						extraOpts.endScreenExtraContent = {"flashNotInstalled": true};
+@@ -123,6 +128,7 @@
+ 					} else {
+ 						player = new FlashPlayer(ip, d);
+ 					}
++
+ 				} else if(ca.playerTypeId == "vlc") {
+ 					player = new VLCPlayer(ip, d);
+ 				} else if(ca.playerTypeId == "html5") {
+@@ -132,6 +138,7 @@
+ 					} else {
+ 						player = new HTML5Player(ip, d);
+ 					}
++
+ 				} 
+ 				else if(ca.playerTypeId == "vdi") {
+ 					player = new VDIPlayer(ip, d);
+@@ -177,7 +184,7 @@
+ 					
+ 					player.selectStream(playerParams);
+ 				} else {
+-					//TODO:  Show no player screen.
++					//TODO:	 Show no player screen.
+ 				}
+ 			} else {
+ 				ip.message = RC["noContentAvailable"];
+@@ -187,9 +194,134 @@
+ 				player = new MessagePlayer(ip, d);
+ 				player.noContentAvailable = true;
+ 			}
++			var favoritesAdd = document.querySelector("#programInformation .favorites.add");
++			var favoritesRemove = document.querySelector("#programInformation .favorites.remove");
++			if(program.userFavorite && favoritesRemove) {
++					favoritesRemove.style.display = "inline-block";
++					favoritesAdd.style.display = "none";
++			}
++			if(favoritesAdd && favoritesRemove) {
++				favoritesAdd.addEventListener("click", function(e) {
++					e.preventDefault();
++					restXhr.post("programs/" + program.identifier + "/favorite", {
++						favorite: true,
++						subscribed: false
++					});
++					favoritesRemove.style.display = "inline-block";
++					favoritesAdd.style.display = "none";
++				});
++				favoritesRemove.addEventListener("click", function(e) {
++					e.preventDefault();
++					restXhr.post("programs/" + program.identifier + "/favorite", {
++						favorite: false,
++						subscribed: false
++					});
++					favoritesRemove.style.display = "none";
++					favoritesAdd.style.display = "inline-block";
++				});
++			}
++			var twisties = document.querySelectorAll("#programInformation a.twisty");
++			for(var i = 0; i < twisties.length; i++) {
++				twisties[i].addEventListener("click", function(e) {
++					e.preventDefault();
++					domClass.toggle(this.parentNode, "open");
++				});
++			}
++			var groups = document.querySelector("#programInformation .groups");
++			if(groups) {
++				groups.innerHTML = "<a href='channel.vp?channelId=" + encodeURIComponent(program.channel.identifier) + "'>" + program.channel.name + "</a>";
++			}
++			var title = document.querySelector("#programInformation .title");
++			if(title) {
++				title.innerHTML = program.name;
++			}
++			var description = document.querySelector("#programInformation .description .inner");
++			if(description) {
++				description.innerHTML = program.shortDescription || "";
++			}
++			var author = document.querySelector("#programInformation .posted a");
++			if(author) {
++				author.innerHTML = program.author;
++				author.setAttribute("href", "search.vp?query=author%3A%20\"" + encodeURIComponent(program.author) + "\"")
++			}
++			var availableDate = document.querySelector("#programInformation .posted span");
++			if(availableDate) {
++				availableDate.innerHTML = new Date(program.availableDate).toLocaleDateString();
++			}
++			var avatar = document.querySelector("#programInformation .avatar");
++			if(avatar) {
++				var authorInitials = program.author.split(" ").map(function(s) {
++					return s.slice(0, 1);
++				}).join("");
++				avatar.innerHTML = authorInitials;
++			}
++			var likes = document.querySelector("#programInformation .likes");
++			if(likes) {
++				if(program.userLike === "NO_OPINION") {
++					program._canLike = true;
++					likes.style.cursor = "pointer";
++					likes.addEventListener("click", function(e) {
++						e.preventDefault();
++						if(!program._canLike) {
++							return;
++						}
++						program._canLike = false;
++						restXhr.post("programs/" + program.identifier + "/like", {
++							like: true
++						}).then(lang.hitch(this, function(rd){
++							if(rd.response.status != 204) {
++								program._canLike = true;
++								alert(rd.data.message);
++								return;
++							}
++							var likesSpan = document.querySelector("#programInformation .likes span");
++							var p = parseFloat(likesSpan.innerHTML);
++							p=p+1;
++							likesSpan.innerHTML = p;
++						}), lang.hitch(this, function(e) {
++							program._canLike = true;
++							alert(e.message);
++						}));					
++					});
++				} else {
++					program._canLike = false;
++				}
++			}			 
++			var likesSpan = document.querySelector("#programInformation .likes span");
++			if(likesSpan) {
++				likesSpan.innerHTML = program.likeCount;
++			}
++			var comments = document.querySelector("#programInformation .comments span");
++			if(comments) {
++				comments.innerHTML = program.commentCount;
++			}
++			var views = document.querySelector("#programInformation .views span");
++			if(views) {
++				views.innerHTML = program.viewCount;
++			}
++			var tags = document.querySelector("#programInformation .tags .list");
++			if(tags) {
++				tags.innerHTML = program.tags.map(function(data){
++					return "<a href='search.vp?query=tags%3A%20\"" + encodeURIComponent(data.name) + "\"'>" + data.name + "</a>";
++				}).join("");
++			}
++			var showTags = document.querySelector(".show-tags");
++			if(showTags) {
++				showTags.addEventListener("click", function(e) {
++					e.preventDefault();
++					domClass.add(this.parentNode, "open");
++				});
++			}
++			var hideTags = document.querySelector(".hide-tags");
++			if(hideTags) {
++				hideTags.addEventListener("click", function(e) {
++					e.preventDefault();
++					domClass.remove(this.parentNode, "open");
++				});
++			}
+ 			return player;
+ 		},
+-		
++
+ 		buildPlayerStreamParameters: function(program, ca, soId, testBroadcast, extraOpts) {
+ 			var link = ca.mediaLink;
+ 			if(ca.mediaLinkType == "PLAYLIST") {

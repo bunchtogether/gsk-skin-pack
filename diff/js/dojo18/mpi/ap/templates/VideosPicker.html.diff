@@ -1,0 +1,49 @@
+--- ./default/js/dojo18/mpi/ap/templates/VideosPicker.html	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/ap/templates/VideosPicker.html	2019-04-18 16:02:34.000000000 -0400
+@@ -1,20 +1,21 @@
+ <div>
++	<div class="gsk-button-container">
++		<div class="gsk-inline-label">clear video</div>
++		<button title="[R reset]" aria-label="[R reset] [R videos]" tabindex="0" data-dojo-attach-point="resetPointNode" data-bind="disable: addWidgetIsUploading(), click: $root.resetList, css:'resetButton'"></button>
++		<div class="gsk-inline-label" data-dojo-attach-event="ondijitclick: _showPicker">choose from media</div>
++		<button title="[R select]" aria-label="[R select] {{getAriaLabel}}" tabindex="0" class="selectButton" data-dojo-attach-point="addPointNode" data-dojo-attach-event="ondijitclick: _showPicker" data-bind="disable: selectedItems().length>0 || uploadedItems().length>0 || addWidgetIsUploading()"></button>
++	</div>
+ 	<div data-dojo-attach-point="contentEditorNode"></div>
+-	<table width=100% cellspacing=0 cellpadding=0 style="table-layout:fixed;max-width:364px">
++	<table width=100% cellspacing=0 cellpadding=0 style="table-layout:fixed;">
+ 		<thead>
+ 			<tr class="principalTableHeader">
+-				<th class="add" nowrap>
+-					<button title="[R reset]" aria-label="[R reset] [R videos]" tabindex="0" data-dojo-attach-point="resetPointNode" data-bind="disable: addWidgetIsUploading(), click: $root.resetList, css:'resetButton'"></button>
+-					<button title="[R select]" aria-label="[R select] {{getAriaLabel}}" tabindex="0" class="selectButton" data-dojo-attach-point="addPointNode" data-dojo-attach-event="ondijitclick: _showPicker" data-bind="disable: selectedItems().length>0 || uploadedItems().length>0 || addWidgetIsUploading()"></button>
+-				</th>
+ 				<th width=100% data-bind="visible: selectedItems().length > 0 || uploadedItems().length > 0">[R name]</th>
+ 				<th width=25 data-bind="visible: selectedItems().length > 0 || uploadedItems().length > 0"></th>
+ 			</tr>
+ 		</thead>
+ 		<tbody data-bind="foreach: selectedItems">
+ 			<tr class="principalRow" data-dojo-attach-point="principalRowNode" tabindex="0" data-bind="click: $root.launchMenu, event: { keydown: $root.launchMenu}">
+-				<td class="noBB"></td>
+-				<td style="padding-top:3px;padding-bottom:3px;"><div class="theName" data-bind="text: name, attr: {'title': name}"></div></td>
++				<td><div class="theName" data-bind="text: name, attr: {'title': name}"></div></td>
+ 				<td>
+ 					<button class="menuButton" data-bind="click: $root.launchMenu, event: { keydown: $root.launchMenu}, attr: {'aria-label': $root.ariaLabel($data)}" data-dojo-attach-point="menuButtonNode"></button>
+ 				</td>
+@@ -22,8 +23,7 @@
+ 		</tbody>
+ 		<tbody data-bind="foreach: uploadedItems">
+ 			<tr class="principalRow" data-dojo-attach-point="principalRowNode">
+-				<td class="noBB"></td>
+-				<td style="padding-top:3px;padding-bottom:3px;"><div class="theName" data-bind="text: name, attr: {'title': name}"></div></td>
++				<td><div class="theName" data-bind="text: name, attr: {'title': name}"></div></td>
+ 				<td>
+ 					<button class="menuButton" data-bind="click: $root.launchMenu, event: { keydown: $root.launchMenu}" data-dojo-attach-point="menuButtonNode"></button>
+ 				</td>
+@@ -32,7 +32,6 @@
+ 		
+ 		<tbody data-bind="visible: selectedItems().length==0 && uploadedItems().length==0 && uploadEnabled">
+ 			<tr>
+-				<td class="noBB"></td>
+ 				<td colspan="2">
+ 					<div class="inlineUploader" data-dojo-attach-point="inlineUploader"></div>
+ 				</td>

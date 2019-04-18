@@ -1,0 +1,54 @@
+--- ./default/js/dojo18/mpi/vp/pods/_ProgramPosterItem.js	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/vp/pods/_ProgramPosterItem.js	2019-04-18 16:02:34.000000000 -0400
+@@ -6,11 +6,27 @@
+ 	"dojo/date/locale",
+ 	"mpi/vp/ProgramRatingPanel",
+ 	"mpi/util/time",
++	"mpi/util/date",
+ 	"mpi/util/misc",
+ 	"dojo/date"
+-], function(i18n, declare, lang, domConstruct, dateLocale, ProgramRatingPanel, timeLocale, mpimisc, date) {
+-	
++], function(i18n, declare, lang, domConstruct, dateLocale, ProgramRatingPanel, timeLocale, mpiDate, mpimisc, date) {
++
+ 	var RC = i18n.getLocalization("mpi.vp", "common", i18n.normalizeLocale());
++
++	var twistyListenerAdded = false;
++	function addTwistyListener() {
++		if(twistyListenerAdded) {
++			return;
++		}
++		twistyListenerAdded = true;
++		var twisties = document.querySelectorAll(".vp-comments a.twisty");
++		for(var i = 0; i < twisties.length; i++) {
++			twisties[i].addEventListener("click", function(e) {
++				e.preventDefault();
++				domClass.toggle(this.parentNode, "open");
++			});
++		}		 
++	}
+ 	
+ 	return declare([], {
+ 		item: null,
+@@ -101,11 +117,7 @@
+ 		},
+ 		
+ 		publicationDate: function() {
+-			return dateLocale.format(new Date(this.item.availableDate), {
+-				selector: "date",
+-				formatLength: "long"
+-				//datePattern: "EEE. MMM dd, yyyy"
+-			});
++			return mpiDate.humaneDate(new Date(this.item.availableDate));
+ 		},
+ 		
+ 		duration: function() {
+@@ -198,7 +210,7 @@
+ 		},
+ 		
+ 		accessibilityInfo: function() {
+-			return this.a11yAdapter.getInfo(this.item);				
++			return this.a11yAdapter.getInfo(this.item);				 
+ 		}
+ 		
+ 		

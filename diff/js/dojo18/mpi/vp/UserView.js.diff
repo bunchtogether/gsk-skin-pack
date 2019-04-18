@@ -1,0 +1,491 @@
+--- ./default/js/dojo18/mpi/vp/UserView.js	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/vp/UserView.js	2019-04-18 16:02:34.000000000 -0400
+@@ -40,8 +40,7 @@
+ 						e.preventDefault();
+ 						e.stopPropagation();
+ 					}
+-				}
+-				
++				}		 
+ 				if(typeof(link) == "function") {
+ 					link();
+ 				} else {
+@@ -49,7 +48,7 @@
+ 						document.location.href=link;
+ 					} else {
+ 						var o = window.open(link,target);
+-					}					
++					}					 
+ 				}
+ 				
+ 			});
+@@ -75,6 +74,7 @@
+ 		_menuContentDfd: new Deferred(),
+ 		bottomStart: null,
+ 		topStart: null,
++		name: null,
+ 		
+ 		buildRendering: function() {
+ 			this.inherited(arguments);
+@@ -89,18 +89,20 @@
+ 					}
+ 				} catch (e) {}
+ 			}));
++
+ 			on(window, "resize", lang.hitch(this, this._onWindowResize));
+-			
++
+ 			this.dropDown = new TooltipDialog({});
+-	        this.dialog = this.dropDown;
+-	        this.toolTipContainer.appendChild(this.dialog.domNode);
++					this.dialog = this.dropDown;
++					this.toolTipContainer.appendChild(this.dialog.domNode);
+ 			if(!this.allowLogin) {
+ 				domStyle.set(this.userButton, "display", "none");
+ 			}
+-			
++
+ 			if(this.dropDown.containerNode.parentElement.parentElement) {
+-				domClass.add(this.dropDown.containerNode.parentElement.parentElement,"userMenuDropDown");				
++				domClass.add(this.dropDown.containerNode.parentElement.parentElement,"userMenuDropDown");				 
+ 			}
++
+ 			this._update();
+ 			
+ 			on(this.dropDown, "close", lang.hitch(this, function() {
+@@ -108,11 +110,19 @@
+ 			}));
+ 			
+ 			this.inherited(arguments);
+-			
++
+ 		},
+ 
+ 		onUserDataChanged: function() {
+ 			this.user = this.model.get("UserData");
++
++			if(this.user.loggedIn) {
++				domClass.add(this.domNode, "loggedIn");
++			} else {
++				domClass.remove(this.domNode, "loggedIn");
++			}
++			this.userName.innerHTML = this.user.name;
++
+ 			this._update();
+ 		},
+ 		
+@@ -151,26 +161,26 @@
+ 			}
+ 			
+ 			if(this.user && this.domain) {
+-    			if(this.user.loggedIn) {
+-    				var nd = domConstruct.create("DIV", {"class":"menuItem"}, this.dialog.containerNode, "first");
+-    				nd.appendChild(document.createTextNode(this.user.name));
+-    				domClass.add(nd,"userName");
+-    				domClass.add(nd,"divider");
+-    				
+-    				this.topStart = domConstruct.create("DIV", {"class":"menuItem", "tabindex":"0"}, this.dialog.containerNode, "last");
+-        			this.topStart.appendChild(document.createTextNode(RC.changeLocaleLabel));
+-        			on(this.topStart, "click,keydown", function(e) {
+-        				if(e && e.type == "keydown") {
+-        					if(e.keyCode != 13 && e.keyCode != 32) {
+-        						return;
+-        					} else {
+-        						e.preventDefault();
+-        						e.stopPropagation();
+-        					}
+-        				}
+-        				document.location.href='changeLocale.vp';
++					if(this.user.loggedIn) {
++						var nd = domConstruct.create("DIV", {"class":"menuItem"}, this.dialog.containerNode, "first");
++						nd.appendChild(document.createTextNode(this.user.name));
++						domClass.add(nd,"userName");
++						domClass.add(nd,"divider");
++						
++						this.topStart = domConstruct.create("DIV", {"class":"menuItem", "tabindex":"0"}, this.dialog.containerNode, "last");
++							this.topStart.appendChild(document.createTextNode(RC.changeLocaleLabel));
++							on(this.topStart, "click,keydown", function(e) {
++								if(e && e.type == "keydown") {
++									if(e.keyCode != 13 && e.keyCode != 32) {
++										return;
++									} else {
++										e.preventDefault();
++										e.stopPropagation();
++									}
++								}
++								document.location.href='changeLocale.vp';
+ 					});
+-        			
++							
+         			if(this.domain.areCollectionsEnabled) {
+ 	        			var cd = domConstruct.create("DIV", {"class":"menuItem", "tabindex":"0"}, this.dialog.containerNode, "last");
+ 						cd.appendChild(document.createTextNode(RC.collections));
+@@ -186,180 +196,179 @@
+ 							document.location.href="collections.vp";
+ 						});
+         			}
+-    				if(this.domain.favoritesEnabled) {
+-    					var fd = domConstruct.create("DIV", {"class":"menuItem", "tabindex":"0"}, this.dialog.containerNode, "last");
+-    					fd.appendChild(document.createTextNode(RC.favoritesLabel));
+-    					on(fd, "click,keydown", function(e) {
+-    						if(e && e.type == "keydown") {
+-    							if(e.keyCode != 13 && e.keyCode != 32) {
+-    								return;
+-    							} else {
+-    								e.preventDefault();
+-    								e.stopPropagation();
+-    							}
+-    						}
+-    						document.location.href="myfavorites.vp";
+-    					});
+-    				}
+-    			
+-        			if(this.domain.programCreationEnabled) {
+-        			
+-        				if(this.user.canCreateVodPrograms) {
+-		        			var mp = domConstruct.create("DIV", {"class":"menuItem", "tabindex":"0"}, this.dialog.containerNode, "last");
+-		        			mp.appendChild(document.createTextNode(RC.myProgramsLabel));
+-		        			on(mp, "click,keydown", function(e) {
+-		        				if(e && e.type == "keydown") {
+-		        					if(e.keyCode != 13 && e.keyCode != 32) {
+-		        						return;
+-		        					} else {
+-		        						e.preventDefault();
+-		        						e.stopPropagation();
+-		        					}
+-		        				}
+-		        				document.location.href="myprograms.vp";
++							
++						if(this.domain.favoritesEnabled) {
++							var fd = domConstruct.create("DIV", {"class":"menuItem", "tabindex":"0"}, this.dialog.containerNode, "last");
++							fd.appendChild(document.createTextNode(RC.favoritesLabel));
++							on(fd, "click,keydown", function(e) {
++								if(e && e.type == "keydown") {
++									if(e.keyCode != 13 && e.keyCode != 32) {
++										return;
++									} else {
++										e.preventDefault();
++										e.stopPropagation();
++									}
++								}
++								document.location.href="myfavorites.vp";
+ 							});
+-        				}
+-
+-        				if(this.user.canCreateLivePrograms) {
+-		        			var mw = domConstruct.create("DIV", {"class":"menuItem", "tabindex":"0"}, this.dialog.containerNode, "last");
+-		        			mw.appendChild(document.createTextNode(RC.myWebcastsLabel));
+-		        			on(mw, "click,keydown", function(e) {
+-		        				if(e && e.type == "keydown") {
+-		        					if(e.keyCode != 13 && e.keyCode != 32) {
+-		        						return;
+-		        					} else {
+-		        						e.preventDefault();
+-		        						e.stopPropagation();
+-		        					}
+-		        				}
+-		        				document.location.href="mywebcasts.vp";
++						}
++					
++							if(this.domain.programCreationEnabled) {
++							
++								if(this.user.canCreateVodPrograms) {
++									var mp = domConstruct.create("DIV", {"class":"menuItem", "tabindex":"0"}, this.dialog.containerNode, "last");
++									mp.appendChild(document.createTextNode(RC.myProgramsLabel));
++									on(mp, "click,keydown", function(e) {
++										if(e && e.type == "keydown") {
++											if(e.keyCode != 13 && e.keyCode != 32) {
++												return;
++											} else {
++												e.preventDefault();
++												e.stopPropagation();
++											}
++										}
++										document.location.href="myprograms.vp";
+ 							});
+-        				}
+-        				
+-        				if(this.user.canApprovePrograms) {
+-		        			var mp = domConstruct.create("DIV", {"class":"menuItem", "tabindex":"0"}, this.dialog.containerNode, "last");
+-		        			mp.appendChild(document.createTextNode(RC.myApprovalsLabel));
+-		        			on(mp, "click,keydown", function(e) {
+-		        				if(e && e.type == "keydown") {
+-		        					if(e.keyCode != 13 && e.keyCode != 32) {
+-		        						return;
+-		        					} else {
+-		        						e.preventDefault();
+-		        						e.stopPropagation();
+-		        					}
+-		        				}
+-		        				document.location.href="myapprovals.vp";
++								}
++
++								if(this.user.canCreateLivePrograms) {
++									var mw = domConstruct.create("DIV", {"class":"menuItem", "tabindex":"0"}, this.dialog.containerNode, "last");
++									mw.appendChild(document.createTextNode(RC.myWebcastsLabel));
++									on(mw, "click,keydown", function(e) {
++										if(e && e.type == "keydown") {
++											if(e.keyCode != 13 && e.keyCode != 32) {
++												return;
++											} else {
++												e.preventDefault();
++												e.stopPropagation();
++											}
++										}
++										document.location.href="mywebcasts.vp";
+ 							});
+-        				}
+-        				if(this.domain.areCollectionsEnabled && this.user.canAccessAndManageCollection) {
+-		        			var mp = domConstruct.create("DIV", {"class":"menuItem", "tabindex":"0"}, this.dialog.containerNode, "last");
+-		        			mp.appendChild(document.createTextNode(RC.myCollectionsLabel));
+-		        			on(mp, "click,keydown", function(e) {
+-		        				if(e && e.type == "keydown") {
+-		        					if(e.keyCode != 13 && e.keyCode != 32) {
+-		        						return;
+-		        					} else {
+-		        						e.preventDefault();
+-		        						e.stopPropagation();
+-		        					}
+-		        				}
+-		        				document.location.href="mycollections.vp";
++								}		
++								if(this.user.canApprovePrograms) {
++									var mp = domConstruct.create("DIV", {"class":"menuItem", "tabindex":"0"}, this.dialog.containerNode, "last");
++									mp.appendChild(document.createTextNode(RC.myApprovalsLabel));
++									on(mp, "click,keydown", function(e) {
++										if(e && e.type == "keydown") {
++											if(e.keyCode != 13 && e.keyCode != 32) {
++												return;
++											} else {
++												e.preventDefault();
++												e.stopPropagation();
++											}
++										}
++										document.location.href="myapprovals.vp";
+ 							});
+-        				}
+-        				if(this.domain.areCollectionsEnabled && this.user.canAccessAndManageAllCollections) {
+-		        			var mp = domConstruct.create("DIV", {"class":"menuItem", "tabindex":"0"}, this.dialog.containerNode, "last");
+-		        			mp.appendChild(document.createTextNode(RC.allCollectionsLabel));
+-		        			on(mp, "click,keydown", function(e) {
+-		        				if(e && e.type == "keydown") {
+-		        					if(e.keyCode != 13 && e.keyCode != 32) {
+-		        						return;
+-		        					} else {
+-		        						e.preventDefault();
+-		        						e.stopPropagation();
+-		        					}
+-		        				}
+-		        				document.location.href="allcollections.vp";
++								}
++								
++								if(this.domain.areCollectionsEnabled && this.user.canAccessAndManageCollection) {
++									var mp = domConstruct.create("DIV", {"class":"menuItem", "tabindex":"0"}, this.dialog.containerNode, "last");
++									mp.appendChild(document.createTextNode(RC.myCollectionsLabel));
++									on(mp, "click,keydown", function(e) {
++										if(e && e.type == "keydown") {
++											if(e.keyCode != 13 && e.keyCode != 32) {
++												return;
++											} else {
++												e.preventDefault();
++												e.stopPropagation();
++											}
++										}
++										document.location.href="mycollections.vp";
+ 							});
+-        				}
+-        			}
+-        			
+-    			
+-    			
+-        			var pd = domConstruct.create("DIV", {"class":"menuItem", "tabindex":"0"}, this.dialog.containerNode, "last");
+-        			pd.appendChild(document.createTextNode(RC.myProfileLabel));
+-        			//domClass.add(pd,"divider");
+-        			on(pd, "click,keydown", function(e) {
+-        				if(e && e.type == "keydown") {
+-        					if(e.keyCode != 13 && e.keyCode != 32) {
+-        						return;
+-        					} else {
+-        						e.preventDefault();
+-        						e.stopPropagation();
+-        					}
+-        				}
+-        				document.location.href="showprofile.vp";
++								}
++         				if(this.domain.areCollectionsEnabled && this.user.canAccessAndManageAllCollections) {
++ 		        			var mp = domConstruct.create("DIV", {"class":"menuItem", "tabindex":"0"}, this.dialog.containerNode, "last");
++ 		        			mp.appendChild(document.createTextNode(RC.allCollectionsLabel));
++ 		        			on(mp, "click,keydown", function(e) {
++ 		        				if(e && e.type == "keydown") {
++ 		        					if(e.keyCode != 13 && e.keyCode != 32) {
++ 		        						return;
++ 		        					} else {
++ 		        						e.preventDefault();
++ 		        						e.stopPropagation();
++ 		        					}
++ 		        				}
++ 		        				document.location.href="allcollections.vp";
++ 							});
++         				}
++							}
++					
++					
++							var pd = domConstruct.create("DIV", {"class":"menuItem", "tabindex":"0"}, this.dialog.containerNode, "last");
++							pd.appendChild(document.createTextNode(RC.myProfileLabel));
++							//domClass.add(pd,"divider");
++							on(pd, "click,keydown", function(e) {
++								if(e && e.type == "keydown") {
++									if(e.keyCode != 13 && e.keyCode != 32) {
++										return;
++									} else {
++										e.preventDefault();
++										e.stopPropagation();
++									}
++								}
++								document.location.href="showprofile.vp";
+ 					});
+-        			
+-        			if(this.domain.loginEnabled) {
+-        				this.bottomStart = domConstruct.create("DIV", {"class":"menuItem", "tabindex":"0"}, this.dialog.containerNode, "last");
+-	        			this.bottomStart.appendChild(document.createTextNode(RC.logoutLabel));
+-	        			domClass.add(this.bottomStart,"upDivider");
+-	        			on(this.bottomStart, "click,keydown", function(e) {
+-	        				if(e && e.type == "keydown") {
+-	        					if(e.keyCode != 13 && e.keyCode != 32) {
+-	        						return;
+-	        					} else {
+-	        						e.preventDefault();
+-	        						e.stopPropagation();
+-	        					}
+-	        				}
+-	        				document.location.href="logout.vp";
++							
++							if(this.domain.loginEnabled) {
++								this.bottomStart = domConstruct.create("DIV", {"class":"menuItem", "tabindex":"0"}, this.dialog.containerNode, "last");
++								this.bottomStart.appendChild(document.createTextNode(RC.logoutLabel));
++								domClass.add(this.bottomStart,"upDivider");
++								on(this.bottomStart, "click,keydown", function(e) {
++									if(e && e.type == "keydown") {
++										if(e.keyCode != 13 && e.keyCode != 32) {
++											return;
++										} else {
++											e.preventDefault();
++											e.stopPropagation();
++										}
++									}
++									document.location.href="logout.vp";
+ 						});
+-        			}
+-        			
+-        			if(customLinks.length>0) {
+-        				this.addCustomLinks();
+-        			}
+-        			
+-    			} else {
+-    				domConstruct.empty(this.dialog.containerNode);
+-    				this.topStart = domConstruct.create("DIV", {"class":"menuItem", "tabindex":"0"}, this.dialog.containerNode, "last");
+-        			this.topStart.appendChild(document.createTextNode(RC.changeLocaleLabel));
+-        			on(this.topStart, "click,keydown", function(e) {
+-        				if(e && e.type == "keydown") {
+-        					if(e.keyCode != 13 && e.keyCode != 32) {
+-        						return;
+-        					} else {
+-        						e.preventDefault();
+-        						e.stopPropagation();
+-        					}
+-        				}
+-        				document.location.href='changeLocale.vp';
++							}
++							
++							if(customLinks.length>0) {
++								this.addCustomLinks();
++							}
++							
++					} else {
++						domConstruct.empty(this.dialog.containerNode);
++						this.topStart = domConstruct.create("DIV", {"class":"menuItem", "tabindex":"0"}, this.dialog.containerNode, "last");
++							this.topStart.appendChild(document.createTextNode(RC.changeLocaleLabel));
++							on(this.topStart, "click,keydown", function(e) {
++								if(e && e.type == "keydown") {
++									if(e.keyCode != 13 && e.keyCode != 32) {
++										return;
++									} else {
++										e.preventDefault();
++										e.stopPropagation();
++									}
++								}
++								document.location.href='changeLocale.vp';
+ 					});
+-        			
+-        			if(this.domain.loginEnabled) {
+-	    				this.bottomStart = domConstruct.create("DIV", {"class":"menuItem", "tabindex":"0"}, this.dialog.containerNode, "last");
+-	        			this.bottomStart.appendChild(document.createTextNode(RC.loginLabel));
+-	        			on(this.bottomStart, "click,keydown", function(e) {
+-	        				if(e && e.type == "keydown") {
+-	        					if(e.keyCode != 13 && e.keyCode != 32) {
+-	        						return;
+-	        					} else {
+-	        						e.preventDefault();
+-	        						e.stopPropagation();
+-	        					}
+-	        				}
+-	        				document.location.href='login.vp?redirectUrl=' + encodeURI(document.location.href);
++							
++							if(this.domain.loginEnabled) {
++							this.bottomStart = domConstruct.create("DIV", {"class":"menuItem", "tabindex":"0"}, this.dialog.containerNode, "last");
++								this.bottomStart.appendChild(document.createTextNode(RC.loginLabel));
++								on(this.bottomStart, "click,keydown", function(e) {
++									if(e && e.type == "keydown") {
++										if(e.keyCode != 13 && e.keyCode != 32) {
++											return;
++										} else {
++											e.preventDefault();
++											e.stopPropagation();
++										}
++									}
++									document.location.href='login.vp?redirectUrl=' + encodeURI(document.location.href);
+ 						});
+-        			}
+-        			//console.log(customLinks);
+-        			if(customLinks.length>0) {
+-        				this.addCustomLinks();
+-        			}
+-        			
+-    			}
+-    			this._menuContentDfd.resolve(true);
+-    		}
++							}
++							if(customLinks.length>0) {
++								this.addCustomLinks();
++							}
++							
++					}
++					this._menuContentDfd.resolve(true);
++				}
+ 
+ 		},
+ 		
+@@ -370,10 +379,10 @@
+ 				var position = "before";
+ 						
+ 				var ld = domConstruct.create("DIV", {"class": "menuItem"});
+-    			var aHref = domConstruct.create("a", {"innerHTML":customLinks[i].title, "href": customLinks[i].link});
+-    			domConstruct.create(aHref, { style: {display:"inline-block",width:"100%"} }, ld , "last");
+-    			domConstruct.create(ld, {}, refNode , position);
+-    			
++					var aHref = domConstruct.create("a", {"innerHTML":customLinks[i].title, "href": customLinks[i].link});
++					domConstruct.create(aHref, { style: {display:"inline-block",width:"100%"} }, ld , "last");
++					domConstruct.create(ld, {}, refNode , position);
++					
+ 			}
+ 		},
+ 		
+@@ -391,7 +400,7 @@
+ 						_refNode:refNode,
+ 						_position:position,
+ 						_this:this
+-					});					
++					});					 
+ 				}
+ 			}
+ 		},

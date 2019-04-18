@@ -1,0 +1,48 @@
+
+.qumu-rescalable {
+  .relatedVideoContainer {
+    @media #{$largeViewport} {    
+      .vp_pod {
+        padding-bottom:30px;
+        .titleBar {
+          position: static;
+          .page {
+            position: absolute;
+            bottom: 5px;
+            left:100px;
+          }
+        }
+      }
+      .vp_pod_item_smallthumb {
+        margin: 0;
+        width: 269px;
+        height: 211px;
+        .thumbnail {
+          width: 269px;
+          height: 151px;
+        }
+      }
+    }
+  }
+}
+
+@mixin rescalableReponsiveRelatedVideo() {
+  .qumu-rescalable {
+    &:not(.qumu-phone) {
+      #bottom-section {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+  }
+}
+
+@include rescalableReponsiveRelatedVideo();
+
+@media only screen and (max-width: 767px) {
+  @include rescalableReponsiveRelatedVideo();
+}
+
+@media only screen and (max-width:959px) and (min-width:768px) {
+  @include rescalableReponsiveRelatedVideo();
+}

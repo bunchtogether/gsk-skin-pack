@@ -1,0 +1,31 @@
+{
+  "name": "gsk-branding",
+  "version": "1096",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "extract": "bash ./extract.sh",
+    "package": "rm -rf package && rm -rf tube && gulp revision && gulp package && mv package tube && zip -r tube.1096.zip ./tube && rm -rf tube"
+  },
+  "author": "Bunch Inc",
+  "devDependencies": {
+    "gulp": "gulpjs/gulp.git#4.0",
+    "gulp-changed": "^2.0.0",
+    "gulp-clean": "^0.3.2",
+    "gulp-notify": "^3.0.0",
+    "gulp-sass": "^3.1.0"
+  },
+  "dependencies": {
+    "event-stream": "^3.3.4",
+    "git-rev": "^0.2.1",
+    "gulp-base64-inline": "^1.0.3",
+    "gulp-css-inline-images": "^0.1.1",
+    "gulp-exec": "^2.1.3",
+    "gulp-image-data-uri": "^1.2.2",
+    "gulp-inline-base64": "^0.1.5",
+    "gulp-inline-image": "^1.0.0",
+    "gulp-sourcemaps": "^2.4.1",
+    "gulp-util": "^3.0.8",
+    "gulp-zip": "^4.0.0"
+  }
+}

@@ -1,0 +1,37 @@
+--- ./default/js/dojo18/mpi/ap/ImagePicker.js	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/ap/ImagePicker.js	2019-04-18 16:02:34.000000000 -0400
+@@ -170,14 +170,14 @@
+ 					if (v.displayOrder) {
+ 						w.previewImage.src = 'simplePreview.do?contentId=' + m.selectedItem().identifier + '&index=' + v.displayOrder;
+ 						if(w.toolTip) {
+-							w.toolTip.set("label","<IMG width=300 src='simplePreview.do?contentId=" + m.selectedItem().identifier + '&index=' + v.displayOrder + "'>");
++							w.toolTip.set("label","<IMG src='simplePreview.do?contentId=" + m.selectedItem().identifier + '&index=' + v.displayOrder + "'>");
+ 						}
+ 					}
+ 				}
+ 			});
+ 			
+ 			m.displayItemName = ko.computed(function() {
+-				if (m.selectedItem())  {
++				if (m.selectedItem())	 {
+ 					if(m.displayItem().identifier == defaultItem.identifier) {
+ 						return R.defaultThumbnail;
+ 					}
+@@ -200,7 +200,7 @@
+ 			
+ 			m.displayItem.subscribe(function(v){
+ 				if(v && w.toolTip) {
+-					w.toolTip.set("label","<IMG width=300 src='simplePreview.do?contentId=" + ko.unwrap(v.identifier) + "'>");
++					w.toolTip.set("label","<IMG src='simplePreview.do?contentId=" + ko.unwrap(v.identifier) + "'>");
+ 				}
+ 			});
+ 			
+@@ -251,7 +251,7 @@
+ 		postCreate: function() {
+ 			this.inherited(arguments);
+ 			if(!has("touch")) {
+-				this.toolTip = new toolTip({   
++				this.toolTip = new toolTip({	 
+ 					label: '<IMG src="simplePreview.do?contentId=esc_content:-999">',
+ 					showDelay: 250,
+ 					connectId: this.previewImage,

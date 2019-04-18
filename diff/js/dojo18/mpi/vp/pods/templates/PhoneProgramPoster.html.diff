@@ -1,0 +1,132 @@
+--- ./default/js/dojo18/mpi/vp/pods/templates/PhoneProgramPoster.html	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/vp/pods/templates/PhoneProgramPoster.html	2017-07-25 23:40:37.000000000 -0400
+@@ -1,80 +1,50 @@
+ <div class="vp_pod_phone_program_poster">
+-	<div class="largeThumbnailAndProgramDetails">
+-		<div class="thumbnail" style="width: 500px; height: 333px" data-dojo-attach-point="_imgContainerNode" data-dojo-attach-event="ondijitclick: _click">
+-			<img src="{{{thumbnail}}}" data-dojo-attach-event="onload: _imgLoad"/>
+-			<div class="overlay"></div>
+-			<div class="title" data-dojo-attach-point="titleNode" title="{{title}}">{{title}}</div>
+-			<div class="author" title="{{author}}">{{author}}</div>
+-		</div>
+-		{{^isLive}}
+-			<div class="programDetailsVOD">
+-				<div class="viewsLikesAndComments">
+-					<span class="views">{{viewCount}}<span class="viewIcon"></span></span>
+-					{{#hasLikes}}
+-					<span class="likes"> {{likeCount}}<span class="likeIcon"></span></span>
+-					{{/hasLikes}}
+-					{{#hasRatings}}
+-					<span class="rates dataItem ratingField inRp" title="{{ratingAverage}} {{RC.starsLabel}}" data-dojo-attach-point="ratingFieldNode">
+-						<div class="overlay inRp"></div>
+-						<div class="pod_starContainer inRp">
+-							<div class="starHolder inRp">
+-								<div class="baseStar inRp"></div>
+-								<div class="star inRp" style="width: {{avgRating1}}%"></div>
+-							</div>
+-							<div class="starHolder inRp">
+-								<div class="baseStar inRp"></div>
+-								<div class="star inRp" style="width: {{avgRating2}}%"></div>
+-							</div>
+-							<div class="starHolder inRp">
+-								<div class="baseStar inRp"></div>
+-								<div class="star inRp" style="width: {{avgRating3}}%"></div>
+-							</div>
+-							<div class="starHolder inRp">
+-								<div class="baseStar inRp"></div>
+-								<div class="star inRp" style="width: {{avgRating4}}%"></div>
+-							</div>
+-							<div class="starHolder inRp">
+-								<div class="baseStar inRp"></div>
+-								<div class="star inRp" style="width: {{avgRating5}}%"></div>
+-							</div>
+-							<div class="totalCount inRp">({{totalCount}})</div>
+-						</div>
+-					</span>
+-					{{/hasRatings}}
+-					<span class="comments">{{commentCount}}<span class="commentIcon"></span></span>
+-				</div>
+-				<div class="basic">
+-					<div class="programPublicationDate">Published: {{publicationDate}}</div>
+-					<div class="programDuration">{{duration}}</div>
+-					<div class="programDescription" data-dojo-attach-point="programDescriptionNode">{{description}}</div>
+-					<div class="programTags">
+-						{{#hasTags}}
+-							{{#tags}}	
+-								<span class="tags" data-dojo-attach-event="ondijitclick: _search"><a >{{name}}</a>  </span>
+-							{{/tags}}
+-						{{/hasTags}}
+-					</div>
+-				</div>
+-			</div>
+-		{{/isLive}}
+-		
+-		{{#isLive}}
+-			<div class="programDetailsLIVE">
+-				{{#hasUpcoming}}
+-					<div class="liveSchedule">
+-						<div class="startTime">{{{startTime}}}</div>
+-						<div class="startDay">{{{startDay}}}  {{startDate}}</div>
+-					</div>
+-				{{/hasUpcoming}}
+-				{{^hasUpcoming}}
+-					<div class="liveSchedule">
+-						<div class="startTime">&nbsp;</div>
+-						<BR><div class="startDate noDate">{{RC.noUpcomingBroadcasts}}</div>
+-					</div>
+-				{{/hasUpcoming}}
+-				<div class="programDescription" data-dojo-attach-point="programDescriptionNode">{{description}}</div>
+-			</div>
+-		{{/isLive}}
+-	</div>
+-	<div class="clear"></div>
++  <div class="largeThumbnailAndProgramDetails">
++    <div class="thumbnail" data-dojo-attach-point="_imgContainerNode" data-dojo-attach-event="ondijitclick: _click" style="background-image: url({{{thumbnail}}});">
++      <div class="overlay"></div>
++      <div class="title" data-dojo-attach-point="titleNode" title="{{title}}">{{title}}</div>
++      <div class="author" title="{{author}}">{{author}}</div>
++    </div>
++    
++    {{^isLive}}
++      <div class="programDetailsVOD">
++        <div class="viewsLikesAndComments">
++          <span class="views">{{viewCount}}<span class="viewIcon"></span></span>
++          <span class="likes"> {{likeCount}}<span class="likeIcon"></span></span>
++          <span class="comments">{{commentCount}}<span class="commentIcon"></span></span>
++          <div class="programPublicationDate">{{publicationDate}}</div>
++        </div>
++        <h2 class="programTitle"><div class="title" data-dojo-attach-point="titleNode" title="{{title}}">{{title}}</div></h2>        
++        <div class="programDuration">{{duration}}</div>
++        <div class="programDescription" data-dojo-attach-point="programDescriptionNode"><div class="inner">{{description}}</div></div>
++        <div class="programTags">
++          {{#hasTags}}
++            {{#tags}}  
++              <span class="tags" data-dojo-attach-event="ondijitclick: _search"><a >{{name}}</a>  </span>
++            {{/tags}}
++          {{/hasTags}}
++        </div>
++        <a class="twisty" href="#" data-dojo-attach-event="ondijitclick: _openDescription"></a>
++      </div>
++    {{/isLive}}
++    
++    {{#isLive}}
++      <div class="programDetailsLIVE">
++        {{#hasUpcoming}}
++          <div class="liveSchedule">
++            <div class="startTime">{{{startTime}}}</div>
++            <div class="startDay">{{{startDay}}}  {{startDate}}</div>
++          </div>
++        {{/hasUpcoming}}
++        {{^hasUpcoming}}
++          <div class="liveSchedule">
++            <div class="startTime">&nbsp;</div>
++            <BR><div class="startDate noDate">{{RC.noUpcomingBroadcasts}}</div>
++          </div>
++        {{/hasUpcoming}}
++        <div class="programDescription" data-dojo-attach-point="programDescriptionNode">{{description}}</div>
++      </div>
++    {{/isLive}}
++  </div>
++  <div class="clear"></div>
+ </div>
+\ No newline at end of file

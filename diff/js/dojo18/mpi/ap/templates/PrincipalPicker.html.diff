@@ -1,0 +1,29 @@
+--- ./default/js/dojo18/mpi/ap/templates/PrincipalPicker.html	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/ap/templates/PrincipalPicker.html	2017-07-25 23:40:37.000000000 -0400
+@@ -1,11 +1,13 @@
+ <div>
+-	<table width=100% cellspacing=0 cellpadding=0 style="table-layout:fixed;max-width:364px">
++	<div class="gsk-button-container">
++		<div class="gsk-inline-label" data-dojo-attach-event="ondijitclick: _resetList">[R reset] [R users]</div>
++		<button title="[R reset]" aria-label="[R reset] [R users]" data-bind="css:  'resetButton'" data-dojo-attach-event="ondijitclick: _resetList"></button>
++		<div class="gsk-inline-label" data-dojo-attach-event="ondijitclick: _showPicker">[R add] [R users]</div>
++		<button title="[R add]" aria-label="[R reset] [R users]" class="selectButton" data-dojo-attach-point="addPointNode" data-dojo-attach-event="ondijitclick: _showPicker"></button>
++	</div>
++	<table width=100% cellspacing=0 cellpadding=0 style="table-layout:fixed;">
+ 		<thead>
+ 			<tr class="principalTableHeader">
+-				<th class="add">
+-					<button title="[R reset]" aria-label="[R reset] {{getAriaLabel}}" data-bind="css:  'resetButton'" data-dojo-attach-event="ondijitclick: _resetList"></button>
+-					<button title="[R add]" aria-label="[R add] {{getAriaLabel}}" class="selectButton" data-dojo-attach-point="addPointNode" data-dojo-attach-event="ondijitclick: _showPicker"></button>
+-				</th>
+ 				<th width=102>[R name]</th>
+ 				<th width=142>[R email]</th>
+ 				<th width=30>[R type]</th>
+@@ -14,7 +16,6 @@
+ 		</thead>
+ 		<tbody data-bind="foreach: selectedPrincipals">
+ 			<tr class="principalRow" data-dojo-attach-point="principalRowNode" tabindex="0" data-bind="event: {click: $root.launchMenu, keydown: $root.launchMenu}">
+-				<td class="noBB"></td>
+ 				<td data-bind="text: name, attr: { title: name }"></td>
+ 				<td data-bind="text: email, attr: { title: email }"></td>
+ 				<td><div data-bind="css: $root.iconType($data)"></div></td>

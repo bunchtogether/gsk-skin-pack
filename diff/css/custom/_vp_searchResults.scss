@@ -1,0 +1,278 @@
+.vp_pod {
+  .titleBar {
+    .title {
+      .searchSuggestionCount {
+        .searchResultCount {
+          display: inline-block;
+        }
+        display: block !important;
+        font-weight: normal;
+        font-size: 18px;
+        width: calc(100% - 310px);
+        @media #{$smallViewport} {
+          width: 100%;
+        }
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        .query {
+          font-weight: bold;
+        }        
+      }
+    }
+  }
+}
+
+.qumu-rescalable {
+  .vp_pod_search_complete {
+    .searchResults {
+      .searchItem {
+        .search_result_item {
+          .thumbAndBasic {
+            .basic {
+              width: 340px !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.qumu-phone {
+  .vp_pod_search_complete {
+    padding-left: 15px;
+    .searchResults {
+      .searchItem {
+        overflow: hidden;
+        .search_result_item {
+
+          width: auto !important;
+          .thumbAndBasic {
+            height: auto;
+            .thumbnail {
+              zoom: 1 !important;
+              background-size: cover;
+              width: 142px;
+              height: 80px;
+            }
+            .basic {
+              cursor: pointer;
+              float: left;
+              height: auto;
+              box-sizing: border-box;
+              padding-left:10px;
+              margin: 0;
+              width: calc(100% - 150px) !important;
+            }              
+          }
+        }
+      }
+    }
+  }
+}
+
+.qumu-phone {
+  .vp_pod {
+    .actionBar {
+      padding-bottom: 10px;
+      height: auto;
+    }
+  }
+  .vp_pod_search_complete {
+    .searchResults {
+      .searchItem {
+        .search_result_item {
+          padding-top: 0;
+          padding-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+.vp_pod_search_complete {
+  box-sizing: border-box;
+  .facetList {
+    .publishedDateNode {
+      .filterByDate {
+        .selectRange {
+          .outerBox {
+            text-align: right;
+            .betweenEndText {
+              width: 25%
+            }
+            .startDate, .endDate {
+              width: 70%
+            }
+            .select {
+              @extend button.genericButton;
+            }
+          }
+        }
+      }
+    }
+  }
+  .searchResults {
+    box-sizing: border-box;
+    overflow:hidden;
+    @media #{$largeViewport} {
+      width:500px;
+    }
+    @media #{$mediumViewport} {
+      width:532px;
+    }
+    .searchItem {
+      padding-bottom: 15px;
+      border-bottom: none;
+      .search_result_item {
+        .thumbAndBasic {
+          .thumbnail {
+            position:relative;
+            width: 231px;
+            height: 130px;
+            border: 1px solid $secondaryBorder;
+            background-size: cover;
+            .duration {
+              color: $color_White;
+              background-color: rgba(84, 79, 64, 0.8);
+              position:absolute;
+              bottom:0;
+              right:0;
+              padding:4px;
+              font-size:12px;
+              z-index:202;
+            } 
+          }
+          .basic {
+            cursor: pointer;
+            .author {
+              display: inline-block;
+              text-decoration: none;
+              color: $color_header;
+            }
+            .publicationDate {
+              display: inline-block;
+            }
+            .titleAuthorDurPub {
+              .title {
+                font-size: 16px;
+                font-weight: bold;
+                color: $color_header_hover;
+                margin-bottom:4px;
+              }              
+            }
+
+            .programDescription {
+              .description {
+                height: auto;
+                margin-bottom: 10px;
+              }
+            }
+          }
+        }
+        .views, .likes, .commentCount {
+          color: $color_header;
+          font-size:10px;
+          height: 14px; 
+          line-height: 14px;
+          vertical-align: middle;
+          display: inline-block;
+          float: none;  
+          margin-right:10px;
+          .viewIcon, .likeIcon, .commentIcon  {
+            width: 18px;
+            height: 14px;
+            background-size: 18px 14px;
+            margin-right: 4px;
+            margin-top:-1px;
+          }       
+        }
+        .viewLikeComment {
+          margin-top:15px;
+          margin-bottom: 10px;
+          .likes {
+            .likeIcon {
+              @include likeIcon();
+            }
+          }
+          .views {
+            .viewIcon {
+              @include viewIcon();
+            }
+          }
+          .commentCount {
+            .commentIcon {
+              @include commentIcon();
+            }
+          }
+        }
+        .selectionBar {
+          display: none;
+        }
+      }
+    }
+  }
+  .facetList { 
+    @media #{$smallViewport} {
+      display: none;
+    }
+    .facet { 
+      .facetName {
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: bold;
+        padding-top: 0;
+        margin-top:10px;
+        color: $color_header;
+      }
+      .publishedDateNode {
+        font-size: 14px;
+        line-height: 24px;
+        .filterByDate {
+          .selectRange {
+            .outerBox {
+              border: none;
+            }
+          }
+        }
+      }
+      .facetSubCategories {
+        padding-left: 10px;
+        .facetSubItem {
+          padding: 0;
+          line-height: 24px;
+          .facetResultCount {
+            font-size: 14px;
+          }
+          .facetItemName {
+            font-size: 14px;
+          }
+
+        }
+        .seeLess, .seeMore {
+          font-size: 14px;
+          line-height: 24px;
+        }
+      }
+    }
+  }
+}
+
+#extraPodsContainer {
+  .vp_pod:last-child {
+    border-bottom: 1px solid $secondaryBorder !important;
+  }
+}
+
+@media only screen and (max-width: 960px) and (min-width: 768px) {
+  .qumu-rescalable {
+    .vp_pod_search_complete {
+      .facetList {
+        width: 187px;
+      }
+    }
+  }
+}
+
+  

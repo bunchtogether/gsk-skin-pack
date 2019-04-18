@@ -1,0 +1,774 @@
+--- ./default/js/dojo18/mpi/vp/egc/MyPrograms.js	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/vp/egc/MyPrograms.js	2019-04-18 16:02:34.000000000 -0400
+@@ -1,5 +1,6 @@
+ define([
+ 	"dojo/Stateful",
++	"dojo/ready",
+ 	"mpi/rpc/JsonRestStore",
+ 	"mpi/rpc/JSONService",
+ 	"mpi/ap/ProgramEditor",
+@@ -42,6 +43,7 @@
+ 	"dojo/dom-class",
+ 	"dojo/dom-attr",
+ 	"dojo/query",
++	"dojo/io-query",
+ 	"dojo/promise/all",
+ 	"dojo/json",
+ 	"dijit/TooltipDialog",
+@@ -60,24 +62,64 @@
+ 	"mpi/ap/SimpleContentCreator",
+ 	"mpi/ap/VideosPicker"
+ ], function(
+-		Stateful, 
+-		JsonRestStore, 
+-		JSONService, ProgramEditor, ContentEditor,
+-		FlaggedProgramEditor, Dialog,
+-		Widget, OnDijitClickMixin,
+-		WidgetsInTemplateMixin, Menu, MenuItem, 
+-		CheckedMenuItem, MenuSeparator, 
+-		PopuploadsMenuItem,registry, DijitTextBox, 
+-		DijitValidationTextBox, DijitDateTextBox, 
+-		DijitNumberTextBox, DijitSelect, 
+-		DateTimeWidget, string, misc, i18n, Templated, 
+-		KnockoutMixin, ko, som, declare, lang, array, 
+-		Deferred, html, event, eventHandling, 
+-		baseUnload, locale, domConstruct, dom, 
+-		domClass, domAttr, query, all, json, 
+-		TooltipDialog, popup, on, has, template,
+-		addDialogTemplate, ProgramEditContextFactory, 
+-		ContextBoundContentCreator, R, RC) {
++	Stateful, 
++	ready, 
++	JsonRestStore, 
++	JSONService, 
++	ProgramEditor, 
++	ContentEditor,
++	FlaggedProgramEditor, 
++	Dialog, 
++	Widget, 
++	OnDijitClickMixin, 
++	WidgetsInTemplateMixin, 
++	Menu, 
++	MenuItem, 
++	CheckedMenuItem, 
++	MenuSeparator, 
++	PopuploadsMenuItem,
++	registry, 
++	DijitTextBox, 
++	DijitValidationTextBox, 
++	DijitDateTextBox, 
++	DijitNumberTextBox, 
++	DijitSelect, 
++	DateTimeWidget, 
++	string, 
++	misc, 
++	i18n, 
++	Templated, 
++	KnockoutMixin, 
++	ko, 
++	som, 
++	declare, 
++	lang, 
++	array, 
++	Deferred, 
++	html, 
++	event, 
++	eventHandling, 
++	baseUnload, 
++	locale, 
++	domConstruct, 
++	dom, 
++	domClass, 
++	domAttr, 
++	query, 
++	ioQuery, 
++	all, 
++	json, 
++	TooltipDialog, 
++	popup, 
++	on, 
++	has,
++	template, 
++	addDialogTemplate, 
++	ProgramEditContextFactory, 
++	ContextBoundContentCreator, 
++	R, 
++	RC
++	) {
+ 
+ 	var flagsMenu;
+ 	var uploadsMenu;
+@@ -100,12 +142,12 @@
+ 	var templateStore = new JsonRestStore({
+ 		idProperty: "identifier",
+ 		target: "/adminportal/services/rest/" + (window["com.mpi.settings"] ? window["com.mpi.settings"].domainId : 'defaultdomain') + "/programtemplates/"
+-	});	
++	}); 
+ 	
+ 	var contentJobsStore = new JsonRestStore({
+ 		idProperty: "identifier",
+ 		target: "/adminportal/services/rest/" + (window["com.mpi.settings"] ? window["com.mpi.settings"].domainId : 'defaultdomain') + "/contentjobs/"
+-	});	
++	}); 
+ 	
+ 	var attributesStore = new JsonRestStore({
+ 		idProperty: "identifier",
+@@ -115,7 +157,7 @@
+ 	var xppMappingsStore = new JsonRestStore({
+ 		idProperty: "identifier",
+ 		target: "/adminportal/services/rest/" + (window["com.mpi.settings"] ? window["com.mpi.settings"].domainId : 'defaultdomain') + "/xppmappings/"
+-	});	
++	}); 
+ 	
+ 	function addExtraRowProperties(ary) {
+ 		array.forEach(ary, function(i) {
+@@ -123,7 +165,11 @@
+ 		});
+ 		return ary;
+ 	}
+-	
++
++
++	var queryObject = ioQuery.queryToObject(window.location.search.slice(1));
++	var uploadMode = queryObject.upload;
++
+ 	var _this = this;
+ 	
+ 	var MetadataWidget = declare([Widget, OnDijitClickMixin], {
+@@ -159,11 +205,11 @@
+ 						"name": d.title, "value": value, "required": d.required
+ 					}, domConstruct.create("div", {}, div , "last"));
+ 					this.metadata.value = value;
+-					if (!d.editable)  {
++					if (!d.editable)	{
+ 						inp.set("disabled", true);	
+ 						inp.set("title", d.helpText + "\n" + R.notEditable);
+ 					} else {
+-					 	inp.set("title", d.helpText);
++						inp.set("title", d.helpText);
+ 					}
+ 					break;
+ 				case "TAGS":
+@@ -171,22 +217,22 @@
+ 						"name": d.title, "value": value, "required": d.required
+ 					}, domConstruct.create("div", {}, div , "last"));
+ 					this.metadata.value = value;
+-					if (!d.editable)  {
++					if (!d.editable)	{
+ 						inp.set("disabled", true);	
+ 						inp.set("title", d.helpText + "\n" + R.notEditable);
+ 					} else {
+-					 	inp.set("title", d.helpText);
++						inp.set("title", d.helpText);
+ 					}
+ 					break;
+ 				case "LARGE_TEXT":
+ 					inp = node = domConstruct.create("textarea", {"value": value, "required": d.required, "maxlength": 255 }, div , "last");
+ 					this.metadata.value = value;
+-					if (!d.editable)  {
++					if (!d.editable)	{
+ 						inp.disabled = true;
+ 						domClass.add(inp,"disabled");
+ 						inp.title = d.helpText + "\n" + R.notEditable;
+ 					} else {
+-					 	inp.title = d.helpText;
++						inp.title = d.helpText;
+ 					}
+ 					break;
+ 				case "MULTI_SELECT":
+@@ -195,11 +241,11 @@
+ 						domConstruct.create("option", {"value": d.options[0].id, "innerHTML": d.options[j].value}, inp , "last");
+ 					}
+ 					this.metadata.selectedOptions = [];
+-					if (!d.editable)  {
++					if (!d.editable)	{
+ 						inp.set("disabled", true);	
+ 						inp.set("title", d.helpText + "\n" + R.notEditable);
+ 					} else {
+-					 	inp.set("title", d.helpText);
++						inp.set("title", d.helpText);
+ 					}
+ 					break;
+ 				case "SELECT":
+@@ -213,7 +259,7 @@
+ 						"name": d.title, "required": d.required, options : selOpts, "style": "width:225px !important"
+ 					}, domConstruct.create("div", {}, div , "last"));
+ 
+-					if (!d.editable)  {
++					if (!d.editable)	{
+ 						//inp.set("value", value);
+ 						inp.set("disabled", true);	
+ 						inp.set("title", d.helpText + "\n" + R.notEditable);
+@@ -232,7 +278,7 @@
+ 					inp = new DijitSelect({
+ 						"name": d.title, "required": d.required, options : selOpts, "style": "width:225px !important"
+ 					}, domConstruct.create("div", {}, div , "last"));
+-					if (!d.editable)  {
++					if (!d.editable)	{
+ 						inp.set("value", "", true);
+ 						inp.set("disabled", true);	
+ 						inp.set("title", d.helpText + "\n" + R.notEditable);
+@@ -249,11 +295,11 @@
+ 						name: d.title, value: value, required: d.required
+ 					}, domConstruct.create("div", {}, div , "last"));
+ 					this.metadata.value = value;
+-					if (!d.editable)  {
++					if (!d.editable)	{
+ 						inp.set("disabled", true);	
+ 						inp.set("title", d.helpText + "\n" + R.notEditable);
+ 					} else {
+-					 	inp.set("title", d.helpText);
++						inp.set("title", d.helpText);
+ 					}
+ 					inp.focus();
+ 					break;
+@@ -288,11 +334,11 @@
+ 						name: d.title, value: value, required: d.required
+ 					}, domConstruct.create("div", {}, div , "last"));
+ 					this.metadata.value = value;
+-					if (!d.editable)  {
++					if (!d.editable)	{
+ 						inp.set("disabled", true);	
+ 						inp.set("title", d.helpText + "\n" + R.notEditable);
+ 					} else {
+-					 	inp.set("title", d.helpText);
++						inp.set("title", d.helpText);
+ 					}
+ 					break;
+ 				default:
+@@ -311,7 +357,7 @@
+ 						inp.set("value", u);
+ 						this.metadata.value = u;
+ 						inp.focus();
+-					} else if(d.type=="DATE" || d.type=="DATE_TIME"  ) {
++					} else if(d.type=="DATE" || d.type=="DATE_TIME"	 ) {
+ 						inp.set("value", new Date(this.pData[b].v));
+ 						this.metadata.value = locale.format(new Date(this.pData[b].v), {datePattern: "EEE, d MMM yyyy HH:mm:ss Z", selector: "date"});
+ 						inp.focus();
+@@ -423,7 +469,7 @@
+ 			
+ 			if (!d.showInCreator) this.position.parentNode.style.display="none";
+ 			
+-			if (isMatched)  {
++			if (isMatched)	{
+ 				domClass.add(div,"preFilled");
+ 			}
+ 			
+@@ -539,7 +585,7 @@
+ 				} else {
+ 					domConstruct.create("div", {"class":"requiredStar spacer", "innerHTML": "*"}, div , "last");
+ 				}
+-			}	
++			} 
+ 			
+ 			if(d.editable) {
+ 				var moreData = domConstruct.create("div", {"class":"moreData"}, div , "last");
+@@ -613,6 +659,7 @@
+ 		_setTemplate: function() {
+ 			var w = this;
+ 			var m = this.viewModel;
++		
+ 			m.loading(true);
+ 			var newValue = m.selectedTemplate();
+ 			
+@@ -679,7 +726,8 @@
+ 				templateSelected: false,
+ 				screen: "pickTemplate",
+ 				permittedExtensions:[],
+-				initializing:true
++				initializing:true,
++				tocAgreed: false
+ 			};
+ 		},
+ 		
+@@ -690,7 +738,11 @@
+ 			
+ 			m.$R = R;
+ 			m.$RC = RC;
+-			
++
++			m.checkTocAgreed = function() {
++				m.tocAgreed(true);
++			};
++
+ 			m.selectedChannel.subscribe(function(newValue) {
+ 				if(newValue) {
+ 					m.channelSelected(true);
+@@ -699,7 +751,6 @@
+ 					m.vodProgramTemplates([]);
+ 				}
+ 			});
+-			
+ 			m.loadChannels = function() {
+ 				m.loading(true);
+ 				m.availableChannels([]);
+@@ -831,7 +882,9 @@
+ 		},
+ 		
+ 		initializeViewModel: function(m) {
+-			
++
++
++
+ 			m.inEditMode = ko.observable(false);
+ 			m.inOtherEditMode = ko.observable(false);
+ 			
+@@ -905,7 +958,7 @@
+ 				if (data.approvalState=="REJECTED") return "rejected";
+ 				if (data.approvalState=="FLAGGED") return "flagged";
+ 				var t = new Date();
+-				if (data.expirationDate && data.expirationDate <  t) return "expired";
++				if (data.expirationDate && data.expirationDate <	t) return "expired";
+ 				if (data.inactiveReasons.length==0) return "active";
+ 				return "suspended";
+ 			};
+@@ -919,11 +972,11 @@
+ 				if (data.approvalState=="FLAGGED") return R["status_flagged"];
+ 				var t = new Date();
+ 				if (data.expirationDate && data.expirationDate <  t) return R["status_expired"];
+-				if(data.inactiveReasons.length==0) {
+-					return R["status_active"];
++ 				if(data.inactiveReasons.length==0) {
++ 					return R["status_active"];
+ 				}
+ 				return R["status_suspended"];
+-			};	
++			};
+ 			
+ 			m.flagStatusIcon = function(data) {
+ 				var statusIcon = m.statusIcon(data);
+@@ -952,7 +1005,7 @@
+ 			
+ 			m.statusLabelUpl = function(data) {
+ 				if(data.status) {
+-					if (data.status=="ERROR") return  R["status_failed"];
++					if (data.status=="ERROR") return	R["status_failed"];
+ 					if (data.currentState=="TRANSCODING") return R["status_transcoding"];
+ 					if (data.currentState=="INGESTION") return R["status_ingesting"];
+ 				}
+@@ -981,7 +1034,7 @@
+ 				m.editorOpen(true);
+ 				var pe = new ProgramEditor({});
+ 				w.progEditor = pe;
+-				if(e.type=="click")	{
++				if(e.type=="click") {
+ 					event.fix(e);
+ 					var target = e.target || e.srcElement;
+ 					var pr = query(target).parents("tr")[0];
+@@ -1095,7 +1148,7 @@
+ 				}
+ 				m.inEditMode(true);
+ 				m.editorOpen(true);
+-//				
++				
+ 				if(e.type=="click")	{
+ 					event.fix(e);
+ 					var target = e.target || e.srcElement;
+@@ -1154,7 +1207,7 @@
+ 				m.inEditMode(true);
+ 				m.inOtherEditMode(true);
+ 				var p = ko.unwrap(item.identifier);
+-				if(e.type=="click")	{
++				if(e.type=="click") {
+ 					event.fix(e);
+ 					var target = e.target || e.srcElement;
+ 					var pr = query(target).parents("tr")[0];
+@@ -1280,7 +1333,7 @@
+ 				return true;
+ 			};
+ 			
+-			m.setSort =  function(item, e) {
++			m.setSort =	 function(item, e) {
+ 				eventHandling.handleActionKey(e, [0,13,32], ["click", "keydown"], function() {
+ 				if(m.inEditMode() || m.loading()) {
+ 					return;
+@@ -1621,9 +1674,9 @@
+ 							var g = null;
+ 							console.log("_m.viewModel.quickCapture2Enabled: " + _m.viewModel.quickCapture2Enabled);
+ 							if (_m.viewModel.quickCapture2Enabled()) {
+-								g = window.open("/som/QumuQuickCapture2UserGuide.pdf");
++								g = window.open("https://wb.gsk.com/som/QumuQuickCapture2UserGuide.pdf");
+ 							} else {
+-								g = window.open("/som/QumuQuickCaptureUserGuide.pdf");
++								g = window.open("https://wb.gsk.com/som/QumuQuickCapture2UserGuide.pdf");
+ 							}
+ 							popup.close(this.dialog);
+ 								}));
+@@ -1775,7 +1828,7 @@
+ 		
+ 		_initialiseMoreData: function() {
+ 			var ne;
+-			dojo.empty(this.pData);	
++			dojo.empty(this.pData); 
+ 				
+ 			this.pMenu = new Menu({refocus: false, "class":"pMenu"});
+ 			
+@@ -1800,7 +1853,7 @@
+ 					"d":"shortDescription", 
+ 					"v":this.toPublishItem.shortDescription
+ 				};	
+-			this.pData.splice(99999,0, ne);	
++			this.pData.splice(99999,0, ne); 
+ 			
+ 			if(this.toPublishItem.longDescription) {
+ 				this.pMenu.addChild(this._buildPMenuItem(RC.longDescription, this.toPublishItem.longDescription));
+@@ -1809,7 +1862,7 @@
+ 					"d":"longDescription", 
+ 					"v":this.toPublishItem.longDescription
+ 				};	
+-			this.pData.splice(99999,0, ne);	
++			this.pData.splice(99999,0, ne); 
+ 			
+ 			if(this.toPublishItem.keywords) {
+ 				this.pMenu.addChild(this._buildPMenuItem(RC.keywords, this.toPublishItem.keywords));
+@@ -1818,7 +1871,7 @@
+ 					"d":"keywords", 
+ 					"v":this.toPublishItem.keywords
+ 				};	
+-			this.pData.splice(99999,0, ne);	
++			this.pData.splice(99999,0, ne); 
+ 			
+ 			if(this.toPublishItem.duration) {
+ 				this.pMenu.addChild(this._buildPMenuItem(RC.durationLabel, this.toPublishItem.duration));
+@@ -1827,7 +1880,7 @@
+ 					"d":"duration", 
+ 					"v":this.toPublishItem.duration
+ 				};	
+-			this.pData.splice(99999,0, ne);	
++			this.pData.splice(99999,0, ne); 
+ 			
+ 			if(this.toPublishItem.availableDate) {
+ 				this.pMenu.addChild(this._buildPMenuItem(RC.availableDateLabel, new Date(this.toPublishItem.availableDate), false , this.toPublishItem.availableDate));
+@@ -1836,7 +1889,7 @@
+ 					"d":"availableDate", 
+ 					"v":this.toPublishItem.availableDate
+ 				};	
+-			this.pData.splice(99999,0, ne);	
++			this.pData.splice(99999,0, ne); 
+ 			
+ 			if(this.toPublishItem.recordedDate) {
+ 				this.pMenu.addChild(this._buildPMenuItem(RC.recordedDateLabel, new Date(this.toPublishItem.recordedDate), false , this.toPublishItem.recordedDate));
+@@ -1845,7 +1898,7 @@
+ 					"d":"recordedDate", 
+ 					"v":this.toPublishItem.recordedDate
+ 				};	
+-			this.pData.splice(99999,0, ne);	
++			this.pData.splice(99999,0, ne); 
+ 			
+ 			if(this.toPublishItem.publisher) {
+ 				this.pMenu.addChild(this._buildPMenuItem(RC.ownerEmail, this.toPublishItem.publisher.email));
+@@ -1854,7 +1907,7 @@
+ 					"d":"publisher.email", 
+ 					"v":this.toPublishItem.publisher.email
+ 				};	
+-			this.pData.splice(99999,0, ne);	
++			this.pData.splice(99999,0, ne); 
+ 			
+ 			if(this.toPublishItem.channel) {
+ 				this.pMenu.addChild(this._buildPMenuItem(RC.channel, this.toPublishItem.channel.name));
+@@ -1874,7 +1927,7 @@
+ 					"v":this.toPublishItem.featuredDisplayOrder
+ 				};	
+ 
+-			this.pData.splice(99999,0, ne);	
++			this.pData.splice(99999,0, ne); 
+ 			
+ 			if(this.toPublishItem.featuredHeadline) {
+ 				this.pMenu.addChild(this._buildPMenuItem(RC.featuredHeadline, this.toPublishItem.featuredHeadline));
+@@ -1884,7 +1937,7 @@
+ 					"v":this.toPublishItem.featuredHeadline
+ 				};	
+ 
+-			this.pData.splice(99999,0, ne);	
++			this.pData.splice(99999,0, ne); 
+ 						
+ 			if(this.toPublishItem.copyright) {
+ 				this.pMenu.addChild(this._buildPMenuItem(RC.copyrightLabel, this.toPublishItem.copyright));
+@@ -1893,7 +1946,7 @@
+ 					"d":"copyright", 
+ 					"v":this.toPublishItem.copyright
+ 				};	
+-			this.pData.splice(99999,0, ne);	
++			this.pData.splice(99999,0, ne); 
+ 			
+ 			if(this.toPublishItem.tags) {
+ 				this.pMenu.addChild(this._buildPMenuItem(RC.tagsLabel, this.toPublishItem.tags, true));
+@@ -2220,45 +2273,45 @@
+ 			this._hidePublishDialog();
+ 		},
+ 		
+-		_createDraftKulu: function() {		
+-		   if(this.toPublishItem != "undefined") {
+-			   programName = this.toPublishItem.name;
+-		   } else {
+-			   programName = "";// Default presentation after redirection
+-		   }
+-			var draft = {
+-				"kulu" : {
+-				  "title" : programName,
+-				  "metadata" : [],
+-				  "type" : {
+-					  "id" : this.selectedPresentationType.id
+-				  }
+-				}
+-			};
+-			
+-			var _this = this;
+-			require([
+-					"dojo/request",
+-					"dojo/json",
+-					"dojo/_base/array"
+-				], function (request, json, arrayUtil) {
+-				
+-				arrayUtil.forEach(_this.metadataFields, function(item,i) {
+-					var metadataValue;
+-					metadataValue = item.metadata.value;
+-					
+-					if(item.params.metadata.type=="BOOLEAN") {
+-						if (metadataValue == "true") {
+-							metadataValue = true;
+-						} else if (metadataValue == "false") {
+-							metadataValue = false;
+-						} else {
+-							metadataValue = "";
+-						}
+-					} else {
+-						if (!metadataValue) {
+-							try {
+-								if (item.metadata.selectedOptions) {
++ 		_createDraftKulu: function() {		
++ 		   if(this.toPublishItem != "undefined") {
++ 			   programName = this.toPublishItem.name;
++ 		   } else {
++ 			   programName = "";// Default presentation after redirection
++ 		   }
++ 			var draft = {
++ 				"kulu" : {
++ 				  "title" : programName,
++ 				  "metadata" : [],
++ 				  "type" : {
++ 					  "id" : this.selectedPresentationType.id
++ 				  }
++ 				}
++ 			};
++ 			
++ 			var _this = this;
++ 			require([
++ 					"dojo/request",
++ 					"dojo/json",
++ 					"dojo/_base/array"
++ 				], function (request, json, arrayUtil) {
++ 				
++ 				arrayUtil.forEach(_this.metadataFields, function(item,i) {
++ 					var metadataValue;
++ 					metadataValue = item.metadata.value;
++ 					
++ 					if(item.params.metadata.type=="BOOLEAN") {
++ 						if (metadataValue == "true") {
++ 							metadataValue = true;
++ 						} else if (metadataValue == "false") {
++  							metadataValue = false;
++  						} else {
++  							metadataValue = "";
++  						}
++  					} else {
++  						if (!metadataValue) {
++  							try {
++  								if (item.metadata.selectedOptions) {
+ 									if (isNaN(item.metadata.selectedOptions[0].id)) {
+ 										metadataValue = null;
+ 									} else {
+@@ -2269,76 +2322,76 @@
+ 						}
+ 					}
+ 					
+-					if (metadataValue) {
+-						draft.kulu.metadata[draft.kulu.metadata.length] = {
+-						  "value" : (item.params.metadata.type=="DATE_TIME" || item.params.metadata.type=="DATE")?item.metadata.value:metadataValue,
+-						  "id" : item.metadata.id,
+-						  "title" : item.metadata.title
+-						};
+-					}
+-				});
+-				
+-				if(_this.selectedPresentationType.metadata.length == 0) {// Default Presentation type
+-					draft.kulu.metadata = [];
+-					if(draft.kulu.title == "") {
+-						programsStore.get(pid, "").then(lang.hitch(this, function(d) {
+-							draft.kulu.title = d.name;
+-							var call = getQcAuthenticationService().postKuluProxiedByToken(json.stringify(draft), getTokenFromQuery());
+-							call.addCallback(function(data) {
+-									data = json.parse(data);
+-									console.log("Created new draft with ID of: " + data.kulu.guid);
+-									_this._uploadProgramFiles(data.kulu.guid, d.identifier);
+-								}		
+-							);
+-							call.addErrback(function(error) {
+-								console.log("Error creating kulu: " + JSON.stringify(error));
+-								alert("Error creating kulu:" + JSON.stringify(error));
+-								
+-							});
+-						}));
+-					} else {//Default Presentation type but not empty title
+-						var call = getQcAuthenticationService().postKuluProxiedByToken(json.stringify(draft), getTokenFromQuery());
+-						call.addCallback(function(data){
+-								data = json.parse(data);
+-								console.log("Created new draft with ID of: " + data.kulu.guid);
+-								_this._uploadProgramFiles(data.kulu.guid, pid);
+-							}		
+-						);
+-						call.addErrback(function(error) {
+-							console.log("Error creating kulu: " + JSON.stringify(error));
+-							alert("Error creating kulu:" + JSON.stringify(error));
+-							
+-						});
+-					}
+-				} else {//None default presentation types
+-					var call = getQcAuthenticationService().postKuluProxiedByToken(json.stringify(draft), getTokenFromQuery());
+-					call.addCallback(function(data) {
+-						data = json.parse(data);
+-						console.log("Created new draft with ID of: " + data.kulu.guid);
+-						_this._uploadProgramFiles(data.kulu.guid, pid);
+-					});
+-					call.addErrback(function(error) {
+-						console.log("Error creating kulu: " + JSON.stringify(error));
+-						alert("Error creating kulu:" + JSON.stringify(error));
+-					});
+-				}//else
+-			});//require
+-		},
+-		
+-		_uploadProgramFiles: function(kuluGuid, identifier){
+-			console.log("telling vcc to upload Program files to presentation " + kuluGuid );
+-			
+-			var uploadUri = "pushToQumuCloud.vp?";
+-			uploadUri += "programId=" + identifier;
+-			uploadUri += "&presentationGuid=" + kuluGuid;
+-			console.log("uploadUri is " + uploadUri);
+-			
+-			require([
+-				"dojo/request",
+-				"dojo/json"
+-			], function (request, json) {
+-				// Request the JSON data from the server
+-				request.get(uploadUri, {
++ 					if (metadataValue) {
++ 						draft.kulu.metadata[draft.kulu.metadata.length] = {
++ 						  "value" : (item.params.metadata.type=="DATE_TIME" || item.params.metadata.type=="DATE")?item.metadata.value:metadataValue,
++ 						  "id" : item.metadata.id,
++ 						  "title" : item.metadata.title
++ 						};
++ 					}
++ 				});
++ 				
++ 				if(_this.selectedPresentationType.metadata.length == 0) {// Default Presentation type
++ 					draft.kulu.metadata = [];
++ 					if(draft.kulu.title == "") {
++ 						programsStore.get(pid, "").then(lang.hitch(this, function(d) {
++ 							draft.kulu.title = d.name;
++ 							var call = getQcAuthenticationService().postKuluProxiedByToken(json.stringify(draft), getTokenFromQuery());
++ 							call.addCallback(function(data) {
++ 									data = json.parse(data);
++ 									console.log("Created new draft with ID of: " + data.kulu.guid);
++ 									_this._uploadProgramFiles(data.kulu.guid, d.identifier);
++ 								}		
++ 							);
++ 							call.addErrback(function(error) {
++ 								console.log("Error creating kulu: " + JSON.stringify(error));
++ 								alert("Error creating kulu:" + JSON.stringify(error));
++ 								
++ 							});
++ 						}));
++ 					} else {//Default Presentation type but not empty title
++ 						var call = getQcAuthenticationService().postKuluProxiedByToken(json.stringify(draft), getTokenFromQuery());
++ 						call.addCallback(function(data){
++ 								data = json.parse(data);
++ 								console.log("Created new draft with ID of: " + data.kulu.guid);
++ 								_this._uploadProgramFiles(data.kulu.guid, pid);
++ 							}		
++ 						);
++ 						call.addErrback(function(error) {
++ 							console.log("Error creating kulu: " + JSON.stringify(error));
++ 							alert("Error creating kulu:" + JSON.stringify(error));
++ 							
++ 						});
++ 					}
++ 				} else {//None default presentation types
++ 					var call = getQcAuthenticationService().postKuluProxiedByToken(json.stringify(draft), getTokenFromQuery());
++ 					call.addCallback(function(data) {
++ 						data = json.parse(data);
++ 						console.log("Created new draft with ID of: " + data.kulu.guid);
++ 						_this._uploadProgramFiles(data.kulu.guid, pid);
++ 					});
++ 					call.addErrback(function(error) {
++ 						console.log("Error creating kulu: " + JSON.stringify(error));
++ 						alert("Error creating kulu:" + JSON.stringify(error));
++ 					});
++ 				}//else
++ 			});//require
++ 		},
++ 		
++ 		_uploadProgramFiles: function(kuluGuid, identifier){
++ 			console.log("telling vcc to upload Program files to presentation " + kuluGuid );
++ 			
++ 			var uploadUri = "pushToQumuCloud.vp?";
++ 			uploadUri += "programId=" + identifier;
++ 			uploadUri += "&presentationGuid=" + kuluGuid;
++ 			console.log("uploadUri is " + uploadUri);
++ 			
++ 			require([
++ 				"dojo/request",
++ 				"dojo/json"
++  			], function (request, json) {
++  				// Request the JSON data from the server
++  				request.get(uploadUri, {
+ 					// Parse data from JSON to a JavaScript object
+ 					handleAs: "text"
+ 				}).then(function(data){
+@@ -2417,7 +2470,20 @@
+ 		
+ 		startup: function() {
+ 			this.inherited(arguments);
+-			 autoResizeFrame();
++			autoResizeFrame();
++			if(uploadMode) {
++				var that = this;
++				var waitForLoad = function(){
++					if(that.viewModel.loading() || !document.getElementById("upload-subnavigation")) {
++						setTimeout(waitForLoad, 500);
++					} else {
++						var evt = document.createEvent("Event");
++						evt.initEvent("custom", true, false);
++						that._openAddDialog(evt, false);					
++					}					
++				}
++				waitForLoad();
++			}
+ 		},
+ 		
+ 		cancel: function() {
+@@ -2463,7 +2529,7 @@
+ 			domClass.add(table,"locked");
+ 			
+ 			var w= this;
+-			
++			domClass.add(document.getElementById("upload-subnavigation"),"active");
+ 			domClass.add(document.getElementById("bottom-section"),"editMode");
+ 			var ad = new AddDialog({
+ 				forQC: forQC,
+@@ -2473,6 +2539,7 @@
+ 				ad._programEditor.destroy();
+ 				ad.destroy();
+ 				this.addDialogUpdate(row, table);
++				domClass.remove(document.getElementById("upload-subnavigation"), "active");
+ 			}));
+ 			ad.on("cancelled", lang.hitch(this, function() {
+ 				//alert("ad cancelled");
+@@ -2486,6 +2553,7 @@
+ 				*/
+ 				ad.destroy();
+ 				this.addDialogUpdate(row, table);
++				domClass.remove(document.getElementById("upload-subnavigation"), "active");
+ 			}));
+ 			
+ 			var row = domConstruct.create("TR", {}, this.theBody, "first");

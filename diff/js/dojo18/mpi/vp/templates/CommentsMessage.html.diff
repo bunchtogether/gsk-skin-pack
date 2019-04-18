@@ -1,0 +1,118 @@
+--- ./default/js/dojo18/mpi/vp/templates/CommentsMessage.html	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/vp/templates/CommentsMessage.html	2017-07-25 23:40:37.000000000 -0400
+@@ -1,58 +1,60 @@
+ <li class="comment">
+-	<div class="post-container {{#flagged}}flagged{{/flagged}}" data-dojo-attach-point="postNode">
+-		<ul class="post-details"> 
+-			<li><span class="author-name">{{reviewerName}}</span></li> 
+-			<li><span class="dot">&bull;</span></li> 
+-			<li><span class="time-ago" dojo-data-attach-point="postTime" title="{{postDate}}" data-mpi-postdate="{{postDateMillis}}">{{postDateRelative}}</span></li>
+-			
+-			{{#canFlag}} 
+-			<li class="post-flag">
+-				<button type="button" tabindex="4010" title="{{R.flagLabel}}" data-dojo-attach-event='ondijitclick: flagMessage' data-dojo-attach-point="flagNode" class="flag"></button>
+-			</li> 
+-			{{/canFlag}}
+-		</ul>
+-		
+-		{{^flagged}} 
+-		<div class="post-body" data-dojo-attach-point="bodyNode">{{body}}</div>
+-		{{/flagged}}
+-		
+-		{{#flagged}} 
+-		<div class="post-body" data-dojo-attach-point="bodyNode">{{R.messageFlagged}}</div>
+-		{{/flagged}}
+-		 
+-		<ul class="post-actions" data-dojo-attach-point="actionMenu">  
+-			{{#children.length}}
+-			<li class="expand-thread {{#collapsed}}collapsed{{/collapsed}}" tabindex="4010" title="{{R.expandThreadLabel}}" data-dojo-attach-event='ondijitclick: expandThread' data-dojo-attach-point="expandNode">
+-				<span class="icon"></span><span class="reply-count" data-dojo-attach-point="replyCountNode">{{replyCount}}</span>
+-			</li>
+-			{{/children.length}}
+-			
+-			{{#canReply}}
+-	       	<li class="reply-tab tab" tabindex="4010" title="{{R.replyLabel}}" data-dojo-attach-event='ondijitclick: addReply' data-dojo-attach-point="replyNode">
+-	       		{{R.replyLabel}}
+-	       	</li> 
+-	       	{{/canReply}}
+-			
+-			{{#canEdit}}
+-				{{#canReply}}
+-					<li class="sep">&bull;</li>
+-				{{/canReply}} 
+-	       	<li class="edit-tab tab" tabindex="4010" title="{{R.editLabel}}" data-dojo-attach-event='ondijitclick: editPost' data-dojo-attach-point="editNode">
+-	       		{{R.editLabel}}
+-	       	</li> 
+-	       	{{/canEdit}}
+-	       	
+-	       	{{#canDelete}}
+-	       		{{#canEdit}}
+-	        		<li class="sep">&bull;</li> 
+-	        	{{/canEdit}}
+-	        <li class="delete-tab tab" tabindex="4010" title="{{R.deleteLabel}}" data-dojo-attach-event='ondijitclick: deletePost'>
+-	        	{{R.deleteLabel}}
+-	        </li>
+-	        {{/canDelete}} 
+-		</ul>
+-	</div>
+-	<ul class="comments-container {{#collapsed}}collapsed{{/collapsed}}" data-dojo-attach-point="commentsContainer">
+-	</ul>
++  <div class="post-container {{#flagged}}flagged{{/flagged}}" data-dojo-attach-point="postNode">
++    <div class="avatar">{{reviewerInitials}}</div>
++    <ul class="post-details"> 
++      <li><span class="author-name">{{reviewerName}}</span></li> 
++      <li><span class="dot">|</span></li> 
++
++      <li><span class="time-ago" dojo-data-attach-point="postTime" title="{{postDate}}" data-mpi-postdate="{{postDateMillis}}">{{postDateRelative}}</span></li>
++      
++      {{#canFlag}} 
++      <li class="post-flag">
++        <button type="button" tabindex="4010" title="{{R.flagLabel}}" data-dojo-attach-event='ondijitclick: flagMessage' data-dojo-attach-point="flagNode" class="flag"></button>
++      </li> 
++      {{/canFlag}}
++    </ul>
++    
++    {{^flagged}} 
++    <div class="post-body" data-dojo-attach-point="bodyNode">{{body}}</div>
++    {{/flagged}}
++    
++    {{#flagged}} 
++    <div class="post-body" data-dojo-attach-point="bodyNode">{{R.messageFlagged}}</div>
++    {{/flagged}}
++     
++    <ul class="post-actions" data-dojo-attach-point="actionMenu">  
++      {{#children.length}}
++      <li class="expand-thread {{#collapsed}}collapsed{{/collapsed}}" tabindex="4010" title="{{R.expandThreadLabel}}" data-dojo-attach-event='ondijitclick: expandThread' data-dojo-attach-point="expandNode">
++        <span class="icon"></span><span class="reply-count" data-dojo-attach-point="replyCountNode">{{replyCount}}</span>
++      </li>
++      {{/children.length}}
++      
++      {{#canReply}}
++           <li class="reply-tab tab" tabindex="4010" title="{{R.replyLabel}}" data-dojo-attach-event='ondijitclick: addReply' data-dojo-attach-point="replyNode">
++             {{R.replyLabel}}
++           </li> 
++           {{/canReply}}
++      
++      {{#canEdit}}
++        {{#canReply}}
++          <li class="sep">|</li>
++        {{/canReply}} 
++           <li class="edit-tab tab" tabindex="4010" title="{{R.editLabel}}" data-dojo-attach-event='ondijitclick: editPost' data-dojo-attach-point="editNode">
++             {{R.editLabel}}
++           </li> 
++           {{/canEdit}}
++           
++           {{#canDelete}}
++             {{#canEdit}}
++              <li class="sep">|</li> 
++            {{/canEdit}}
++          <li class="delete-tab tab" tabindex="4010" title="{{R.deleteLabel}}" data-dojo-attach-event='ondijitclick: deletePost'>
++            {{R.deleteLabel}}
++          </li>
++          {{/canDelete}} 
++    </ul>
++  </div>
++  <ul class="comments-container {{#collapsed}}collapsed{{/collapsed}}" data-dojo-attach-point="commentsContainer">
++  </ul>
+ </li>    
+ 

@@ -1,0 +1,54 @@
+--- ./default/js/dojo18/mpi/ap/templates/ContextContentCreator.html	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/ap/templates/ContextContentCreator.html	2019-04-18 16:02:34.000000000 -0400
+@@ -1,15 +1,9 @@
+ <div>
+-	<div>
+-		<form data-dojo-attach-point="_fileForm" enctype="multipart/form-data" method="POST">
+-			<div class="uploadNotice" data-dojo-attach-point="uploadNotice" data-bind="visible: showTips(), css:(showWarn())?'warn':''" tabindex="0"></div>
+-			<input class="fileInput" type="file" tabindex="0" data-dojo-attach-point="_fileInput" data-dojo-attach-event="onkeydown: _fileInputKeydown" data-bind="value: fileName, disable: disabled() || uploading() || uploaded()">
+-		</form>
+-	</div>
+-	<div data-bind="visible: (!uploading() && !uploaded() && ask360Video())">
+-		<br/>
+-		<input type="checkbox" style="" data-bind="checked: is360Video, disable: (uploading() || uploaded()), event: { keydown: $root.checkUncheck360}"/>
+-		<span>[R upload360VideoConfirmationDialog]</span>
+-	</div>
++ 	<div data-bind="visible: (!uploading() && !uploaded() && ask360Video())">
++ 		<br/>
++ 		<input type="checkbox" style="" data-bind="checked: is360Video, disable: (uploading() || uploaded()), event: { keydown: $root.checkUncheck360}"/>
++ 		<span>[R upload360VideoConfirmationDialog]</span>
++ 	</div>
+ 	<div data-bind="visible: uploading">
+ 		<div 
+ 			data-dojo-type="dijit/ProgressBar" 
+@@ -17,8 +11,25 @@
+ 			data-bind="dijit: { value: uploadProgress, label: uploadLabel }">
+ 		</div>
+ 	</div>
+-	<div class="submitButtons"  data-bind="visible: !uploaded()">
+-		<button class="genericButton" tabindex="0" data-bind="css: (!processing() && !uploading() && !uploaded() && isValidExtension() && isValidFile())?'': 'disabled', enable: !processing() && !uploading() && !uploaded() && isValidExtension() && isValidFile(), html: '[R upload]'" data-dojo-attach-event="ondijitclick: _upload"></button>
+-		<button class="genericButton" tabindex="0" data-bind="css: (uploading())?'': 'disabled', enable: uploading(), visible: allowCancel" data-dojo-attach-event="ondijitclick: _cancel">[R cancel]</button>
+-	</div>
++	<table class="gsk-upload-file-container"> 
++		<tr>
++			<td class="upload">
++				<form data-dojo-attach-point="_fileForm" enctype="multipart/form-data" method="POST">
++					<div class="uploadNotice" data-dojo-attach-point="uploadNotice" data-bind="visible: showTips(), css:(showWarn())?'warn':''" tabindex="0"></div>
++					<label class="gsk-file-container">
++					    <span data-dojo-attach-point="_chosenFileName">Browse for files</span>
++					    <input type="file" tabindex="0" data-dojo-attach-point="_fileInput" data-dojo-attach-event="onkeydown: _fileInputKeydown, onchange:_fileInputChange" data-bind="value: fileName, disable: disabled() || uploading() || uploaded()">
++					</label>
++				</form>
++			</td>
++			<td data-bind="visible: !uploaded()" data-bind="css: (!processing() && !uploading() && !uploaded() && isValidExtension() && isValidFile())?'': 'disabled', enable: !processing() && !uploading() && !uploaded() && isValidExtension() && isValidFile()">
++				<button class="genericButton" tabindex="0" data-bind="css: (!processing() && !uploading() && !uploaded() && isValidExtension() && isValidFile())?'': 'disabled', enable: !processing() && !uploading() && !uploaded() && isValidExtension() && isValidFile(), html: '[R upload]'" data-dojo-attach-event="ondijitclick: _upload"></button>
++			</td>
++			<td data-bind="visible: !uploaded()" data-bind="css: (uploading())?'': 'disabled', enable: uploading(), visible: allowCancel">
++				<button class="genericButton cancel" tabindex="0" data-bind="css: (uploading())?'': 'disabled', enable: uploading(), visible: allowCancel" data-dojo-attach-event="ondijitclick: _cancel">[R cancel]</button>
++			</td>
++		</tr>
++	</table>
++
++
+ </div>
+\ No newline at end of file

@@ -1,0 +1,1221 @@
+
+
+/* =============================
+/* 
+/* Layout
+/* 
+/* ============================= */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+  margin: 0 0 160px; /* bottom = footer height */
+  @media #{$smallViewport} {
+    margin: 0; /* bottom = footer height */
+  }
+}
+
+
+input, textarea, keygen, select, button {
+  font-family: $siteFont;
+}
+
+#top-section {
+	@include transition();
+  padding: 0;
+  .vp_pod {
+    border-bottom: none;
+  }
+}
+
+#bottom-section {
+	@include transition();
+  padding: 0;
+}
+
+@mixin phoneReponsive() {
+  .qumu-phone:not(.embed-page) {
+    &.qumu-rescalable, &.qumu-rescalable BODY {
+      min-width: 0 !important;
+      width:auto !important;
+    }
+    body {
+      #top-section {
+        width:auto !important;
+      }
+      .pageContainer {
+
+        .containerInner {
+          margin-top:0;
+          width:auto;
+          .titleBar {
+            .title {
+              font-size: 18px;
+            }
+          }
+        }
+      }      
+    }
+  }
+}
+
+@media only screen and (max-width: 330px) {
+  @include phoneReponsive();
+}
+
+@media only screen and (max-width: 380px) {
+  @include phoneReponsive();
+}
+
+@media only screen and (max-width: 510px) {
+  @include phoneReponsive();
+}
+
+@media only screen and (max-width: 600px) {
+  @include phoneReponsive();
+}
+
+body {
+  .pageContainer {
+    .containerInner {
+      A {
+        text-decoration: none;
+        font-weight: normal;
+      }
+      background-color: $color_White;
+      border: 1px solid $secondaryBorder;
+      .form {
+        INPUT[type=checkbox] {
+          margin-right:10px;
+        }
+        .bodyText {
+          color: $color_header;
+        }
+        INPUT[type=text], INPUT[type=password] {
+          @extend .gsk-input;
+          width:300px;
+        }
+        td.label {
+          color: $color_header_hover;
+          font-weight:normal;
+          font-size:18px;  
+          line-height: 24px;
+          margin-top:0;
+        }
+      }
+      .titleBar {
+        color: $color_header;
+        font-weight:bold;
+      }
+      .nav {
+        margin:0 0 15px 0;
+        color: $color_header;
+        font-size:14px; 
+      }
+      @include standardPadding();
+      .titleSubBar {
+        color: $color_header;
+        font-weight:bold;
+        font-size:18px;  
+        line-height: 24px;
+        margin-top:0;
+      }
+      @media #{$largeViewport} {
+        width: 970px;
+        padding-bottom:20px;
+        .titleBar {
+          .title {
+            font-size: 32px;
+            margin-bottom:20px;
+          }
+        }
+      }
+      @media #{$mediumViewport} {
+        width: 724px;
+        padding-bottom:15px;
+        .titleBar {
+          .title {
+            font-size: 32px;
+            margin-bottom:15px;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* =============================
+/* 
+/* Header
+/* 
+/* ============================= */
+
+#gskSubNavigation {
+	a {
+		> div {
+			display: inline-block;
+			background-repeat: no-repeat;
+			background-position: 0 50%;			
+		}
+		&.home {	
+			> div {
+				background-image: url('../images/gsk/svg/home.svg');	
+			}
+			&:hover {
+				> div {
+					background-image: url('../images/gsk/svg/home_hover.svg');	
+				}
+			}
+			&:active, &.active {
+				> div {
+					background-image: url('../images/gsk/svg/home_active.svg');	
+				}
+			}
+		}
+		&.favourites {
+			> div {
+				background-image: url('../images/gsk/svg/favourites.svg');	
+			}
+			&:hover {
+				> div {
+					background-image: url('../images/gsk/svg/favourites_hover.svg');	
+				}
+			}
+			&:active, &.active  {
+				> div {
+					background-image: url('../images/gsk/svg/favourites_active.svg');	
+				}
+			}
+		}
+		&.broadcasts {
+			> div {
+				background-image: url('../images/gsk/svg/web_broadcasts.svg');	
+			}
+			&:hover {
+				> div {
+					background-image: url('../images/gsk/svg/web_broadcasts_hover.svg');	
+				}
+			}
+			&:active, &.active  {
+				> div {
+					background-image: url('../images/gsk/svg/web_broadcasts_active.svg');	
+				}
+			}
+		}
+		&.upload {
+			> div {
+				background-image: url('../images/gsk/svg/upload.svg');	
+			}
+			&:hover {
+				> div {
+					background-image: url('../images/gsk/svg/upload_hover.svg');
+				}	
+			}
+			&:active, &.active  {
+				> div {
+					background-image: url('../images/gsk/svg/upload_active.svg');	
+				}
+			}
+		}
+		&.support {
+			> div {
+				background-image: url('../images/gsk/svg/support.svg');	
+			}
+			&:hover {
+				> div {
+					background-image: url('../images/gsk/svg/support_hover.svg');	
+				}
+			}
+			&:active, &.active  {
+				> div {
+					background-image: url('../images/gsk/svg/support_active.svg');	
+				}
+			}
+		}
+	}
+}
+
+.open {
+  a.twisty {
+    -moz-transform: scaleY(-1);
+    -o-transform: scaleY(-1);
+    -webkit-transform: scaleY(-1);
+    -ms-transform: scaleY(-1);
+    transform: scaleY(-1);
+    -ms-filter: "FlipV";
+    filter: FlipV;
+  }
+}
+
+a.twisty {
+  position:absolute;
+  right: 0;
+  top:50%;
+  margin-top: -8px;
+  background-image: url('../images/gsk/svg/down_arrow.svg');
+  background-position:50% 50%;
+  @media #{$smallViewport} {
+    background-size:16px 16px;
+    width:16px;
+    height:16px;
+  }
+  @media #{$mediumViewport} {
+    background-size:24px 24px;
+    width:24px;
+    height:24px;
+  }
+  @media #{$largeViewport} {
+    background-size:24px 24px;
+    width:24px;
+    height:24px;
+  }
+  display: block;
+  &:active {
+    background-image: url('../images/gsk/svg/down_arrow_active.svg');
+  }
+  &:hover {
+    background-image: url('../images/gsk/svg/down_arrow_hover.svg');
+  }
+}
+
+.qumu-phone {
+  body {
+    #top-section {
+      #header {
+        BUTTON {
+          background-image: none !important;
+          background-color: transparent; 
+          border: none;
+          &:hover,
+          &:focus,
+          &:active,
+          &.active,
+          &.selected {
+            background-color: transparent;
+            color: transparent;
+            border: none;
+          }
+          &.disabled:hover {
+            background-color:transparent !important; 
+          }
+        }
+        height: $gskMobileHeaderHeight + $gskMobileSubNavigationHeight;
+        position: relative;
+        #logoContainer {
+          z-index: 401;
+          display: block;
+          position:absolute;
+          top:0;
+          right:0;
+          left:auto;
+          margin-left:auto;
+          width: $mobileLogoWidth;
+          height: $gskMobileHeaderHeight;
+          .mainLogo {
+            position:absolute;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
+            background-size: 28px 24px;
+            cursor:pointer;
+          }    
+        }
+        #menusContainer {
+          z-index: 402;
+          display: block;
+          position:absolute;
+          top:0;
+          right: $mobileLogoWidth;
+          width: $mobileLogoWidth;
+          height: $gskMobileHeaderHeight;
+          .menuView {
+            @include fullAbsolutePosition();
+            button.menuButton {
+              position:absolute;
+              top:0;
+              left:0;
+              background-position: 50% 50%;
+              background-size: 23px 23px;
+              background-repeat: no-repeat;
+              background-image: url('../images/gsk/svg/profile.svg') !important;
+              width:100%;
+              height:100%;
+              cursor:pointer;
+              &:hover {
+                background-image: url('../images/gsk/svg/profile_hover.svg') !important;
+              }
+              &:active, &.selected {
+                background-position: 50% 50% !important;
+                background-image: url('../images/gsk/svg/profile_active.svg') !important;
+                background-color: transparent !important;
+                color: transparent !important;
+                border: none !important;                
+              }
+            }
+          }
+        }
+        &.headChange {
+          height: 2 * $gskMobileHeaderHeight + $gskMobileSubNavigationHeight !important;
+          #searchContainer {
+            height: 2 * $gskMobileHeaderHeight + $gskMobileSubNavigationHeight;
+            #searchBoxWrapper {
+              .searchView {
+                #gskSubNavigation {
+                  margin-top: $gskMobileHeaderHeight;
+                }
+                form {
+                  button.submitButton {
+                    background-color: $color_background_hover;
+                  }
+                }
+              }
+            }
+          }
+        }
+        .phoneSearchBox {
+          z-index: 401;
+          position: absolute;
+          top:$gskMobileHeaderHeight;
+          left: 0;
+          right: 0;
+          height: $gskMobileHeaderHeight;
+          background-color: $color_background_hover;
+          width: auto;
+          box-sizing: border-box;
+          padding:3px 0 5px 2.5%;
+          border-top: 1px solid $secondaryBorder;
+          margin-left: 0;
+          .facetSelected {
+            display: none;
+          }
+          .searchText {
+            width:97.5%;
+            height:100%;
+            border: 1px solid $color_header_active;
+            font-size:14px;
+            color: $color_header;
+            box-sizing: border-box;
+          }
+          .searchItButton {
+            position:absolute;
+            top:4px;
+            right:2.5%;
+            height: $gskMobileHeaderHeight - 10px;
+            width: $gskMobileHeaderHeight - 10px;
+            float:none;
+            display: block;
+            background-color: $color_header_active;
+            background-position: 50% 50%;
+            background-size: 18px 18px;
+            background-repeat: no-repeat;
+            background-image: url('../images/gsk/svg/search_white.svg') !important;
+          }
+        }
+        #searchContainer {
+          z-index: 400;
+          display: block;
+          position:absolute;
+          top:0;
+          left:0;
+          right: 0;
+          height: $gskMobileHeaderHeight + $gskMobileSubNavigationHeight;
+          width:auto !important;
+          float: none;
+          display: block !important;
+          #searchBoxWrapper {
+            @include fullAbsolutePosition();
+            .searchView {
+              background-color:$color_White;
+              @include fullAbsolutePosition();
+              #gskHamburger {
+                position:absolute;
+                top:0;
+                left:0;
+                width: $mobileLogoWidth;
+                height: $gskMobileHeaderHeight;
+                background-position: 50% 50%;
+                background-size: 22px 18px;
+                background-repeat: no-repeat;
+                background-image: url('../images/gsk/svg/category_menu_icon.svg');
+                cursor:pointer;
+                &:active, &.active {
+                  background-image: url('../images/gsk/svg/category_menu_icon_active.svg');
+                }          
+              }
+              #gskTitle {
+                cursor: pointer;
+                position:absolute;
+                top:0;
+                left:$mobileLogoWidth;
+                text-align:left;
+                width: $gskMobileTitleWidth;
+                color:$color_header_active;
+                height: $gskMobileHeaderHeight;         
+                font-weight: bold;
+                font-size: 18px;
+                line-height: $gskMobileHeaderHeight;
+                vertical-align: middle;
+              }
+              #gskSidebar {
+                z-index: 402;
+                margin-left: -1 * $gskSidebarWidth;
+                overflow: hidden;
+                @include transition();
+                top: $gskMobileHeaderHeight;
+                background-color:$color_White;
+                border-right: 1px solid $secondaryBorder;
+                border-top: 1px solid $secondaryBorder;
+                border-bottom: 1px solid $secondaryBorder;
+                opacity: 0;
+                height: auto;
+                position:absolute;
+                width: $gskSidebarWidth;
+                box-sizing: border-box;
+                padding: 15px 0 20px 0;
+                box-shadow: 4px 0px 3px rgba(0, 0, 0, 0.15);
+                @media #{$largeViewport} {
+                  display: none;
+                  box-shadow: none;
+                  width: 0;
+                  opacity: 1;
+                  border-bottom: none;
+                  height: calc(100vh - #{$gskMobileHeaderHeight});
+                  display:block;
+                  box-sizing: border-box;
+                  padding-left: 0;
+                  padding-right: 0;
+                }
+                h3 {
+                  height: 44px;
+                  line-height: 44px;
+                  margin:0;
+                  padding:0 15px 0 10px;
+                  font-size: 18px;
+                  color: $color_header;
+                }
+                a {
+                  @include transition();
+                  height: 44px;
+                  display:block;
+                  text-decoration: none;
+                  > div {
+                    display:inline-block;
+                    font-size:14px;
+                    line-height: 44px;
+                    height: 44px;
+                    vertical-align: middle;
+                  }
+                }
+                .categories {
+                  a {
+
+                    position: relative;
+                    &:before {
+                      position:absolute;
+                      top:0px;
+                      left:15px;
+                      width:8px;
+                      content: "";
+                      background-image: url('../images/gsk/svg/link_arrow_standard.svg');
+                      background-size: 7px 12px;
+                      background-position: 50% 50%;
+                      background-repeat: no-repeat;
+                      height: 44px;
+                    }
+                    padding-left: 36px;
+                    padding-right: 10px;
+                    color: $color_header;
+                    &:hover {
+                      background-color: $color_background_hover;
+                    }
+                    &:active {
+                      &:before {
+                        background-image: url('../images/gsk/svg/link_arrow_standard_white.svg');
+                      }
+                      color: $color_White;
+                      background-color: $color_header_active;
+                    }
+                  }
+                }
+                a.browseAll {
+                  padding-left: 15px;
+                  padding-right: 10px;
+                  color: $color_header_hover;
+                  &:hover, &:active {
+                    color: $color_header_active;
+                  }
+                }
+                .revision {
+                  text-transform: uppercase;
+                  height: 44px;
+                  line-height: 44px;
+                  vertical-align: middle;
+                  display:block;
+                  text-decoration: none;
+                  padding-left: 15px;
+                  padding-right: 10px;
+                  span {
+                    color: $color_header_hover;
+                  }
+                  font-size:12px;
+                  opacity: 0.75;
+                }
+              }
+              #gskSubNavigation {
+                z-index: 403;
+                @include transition();
+                position:absolute;
+                background-color:$color_White;
+                top: $gskMobileHeaderHeight;
+                left:0;
+                right:0;
+                height: $gskMobileSubNavigationHeight;
+                border-top: 1px solid $secondaryBorder;
+                border-bottom: 1px solid $secondaryBorder;
+                text-align:center;
+                a {
+                  position: relative;
+                  @include transition();
+                  > div {
+                    @include fullAbsolutePosition();
+                    background-position: 50% 50%;
+                    background-size: 23px 23px;
+                    > span {
+                      display:none;
+                    } 
+                  }
+                  display:inline-block;
+                  width:75px;
+                  height:$gskMobileSubNavigationHeight;
+                  color: $color_header;
+                  box-sizing: border-box;
+                  border-bottom: none;
+                  &:hover {
+                    color: $color_header_hover;
+                  }
+                  &:active, &.active {
+                    color: $color_header_active;
+                  }
+                }
+              }
+              form {
+                position:absolute;
+                top:0;
+                left: auto;
+                right: $mobileLogoWidth * 2;
+                width: $mobileLogoWidth * 2;
+                button.submitButton {
+                  position:absolute;
+                  top:0;
+                  right:0;
+                  width: $mobileLogoWidth;
+                  height: $gskMobileHeaderHeight;
+                  padding:0;
+                  background-position: 50% 50%;
+                  background-size: 22px 22px;
+                  background-repeat: no-repeat;
+                  cursor:pointer;
+                  background-image: url('../images/gsk/svg/search.svg') !important;
+                  &:hover {
+                    background-image: url('../images/gsk/svg/search_hover.svg') !important;
+                  }
+                  &:active {
+                    background-image: url('../images/gsk/svg/search_active.svg') !important;
+                  }
+                }
+                button.accessButton {
+                  display:none;
+                }
+                .searchInput {
+                  display:none;
+                }
+              }
+            }
+          }
+        }  
+
+      }
+    }
+  }
+}
+
+body.show-sidebar {  
+  #top-section {
+    #header {
+      #searchContainer {
+        #searchBoxWrapper {
+          .searchView {
+            #gskSidebar {
+              z-index: 404;
+              opacity: 1;
+              margin-left: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+  @media #{$largeViewport} {
+    #top-section {
+      .vp_pod.homePage {
+        left: $gskSidebarWidth / 2;
+      }
+      #header {
+        #searchContainer {
+          #searchBoxWrapper {
+            .searchView {
+              #gskSidebar {
+                padding: 15px 0 20px 0;
+              	width: $gskSidebarWidth;
+              }
+              #gskSubNavigation {
+                left: $gskSidebarWidth + 1;
+              }
+            }
+          }
+        }
+      }
+    }
+    #bottom-section {
+      padding-left: $gskSidebarWidth + 1 !important;
+    }
+  }
+}
+
+
+@mixin rescalableReponsiveCommon() {
+  body {
+    #top-section {
+      
+      #header {
+        display: block;
+        position:absolute;
+        top:0;
+        left:0;
+        right: 0;
+        height: $gskHeaderHeight + $gskSubNavigationHeight;
+        width:auto;
+        margin-bottom: 0;
+        @media #{$largeViewport} {
+          margin-bottom: 20px;
+        }
+        BUTTON {
+          background-image: none !important;
+          background-color: transparent; 
+          border: none;
+          &:hover,
+          &:focus,
+          &:active,
+          &.active,
+          &.selected {
+            background-color: transparent;
+            color: transparent;
+            border: none;
+          }
+          &.disabled:hover {
+            background-color:transparent !important; 
+          }
+        }
+        height: $gskHeaderHeight + $gskSubNavigationHeight;
+        position: relative;
+        #logoContainer {
+          z-index: 401;
+          display: block;
+          position:absolute;
+          top:0;
+          right:0;
+          width: $logoWidth;
+          height: $gskHeaderHeight;
+          .mainLogo {
+            position:absolute;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
+            background-size: 37px 32px;
+            cursor:pointer;
+          }    
+        }
+        #menusContainer {
+          z-index: 402;
+          display: block;
+          position:absolute;
+          top:0;
+          right: $logoWidth;
+          width:auto;
+          height: $gskHeaderHeight;
+          .userView { 
+            height: $gskHeaderHeight;
+            padding-top: ($gskHeaderHeight - 30px) / 2;
+            vertical-align:middle;
+            .greeting {
+              float:right;
+              > span {
+                @media #{$smallViewport} {
+                  display: none;
+                }
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: calc(50vw - 300px);
+                margin-right: 0px;
+                display: block;
+              }
+            }
+            > span {
+              display: none;
+            }
+            &.loggedIn {
+              > span {
+                position:relative;
+                top:4px;
+                left:-2px;
+                color: $color_header;
+                text-align:left;
+                display:inline-block;
+                font-size:12px;
+                @media #{$smallViewport} {
+                  display: none;
+                }
+                > span {
+                  font-weight:bold;
+                  font-size:14px;
+                  display:block;
+ 
+                }
+              }          
+            }
+            > div {
+              float:left;
+              button.userButton {
+                @media #{$smallViewport} {
+                  position:absolute;
+                  top:0;
+                  left:0;
+                  right: auto;
+                  background-position: 50% 50%;
+                  background-size: 23px 23px;
+                  background-repeat: no-repeat;
+                  background-image: url('../images/gsk/svg/profile.svg') !important;
+                  width:100%;
+                  height:100%;
+                  cursor:pointer;
+                }
+                display:inline-block;
+                background-position: 50% 50%;
+                background-size: 30px 30px;
+                background-repeat: no-repeat;
+                background-image: url('../images/gsk/svg/profile.svg') !important;
+                right: $logoWidth;
+                width: $logoWidth;
+                cursor:pointer;
+                &:hover {
+                  background-image: url('../images/gsk/svg/profile_hover.svg') !important;
+                }
+                &:active {
+                  background-image: url('../images/gsk/svg/profile_active.svg') !important;
+                }
+              }
+            }
+            &.dijitHasDropDownOpen {
+              button.userButton {
+                background-position: 50% 50% !important;
+                background-image: url('../images/gsk/svg/profile_active.svg') !important;
+                background-color: transparent !important;
+                color: transparent !important;
+                border: none !important;
+              }
+            }
+          }
+        }
+        #searchContainer {
+          z-index: 400;
+          display: block;
+          position:absolute;
+          top:0;
+          left:0;
+          right: 0;
+          height: $gskHeaderHeight + $gskSubNavigationHeight;
+          width:auto;
+          #searchBoxWrapper {
+            @include fullAbsolutePosition();
+            .searchView {
+            	background-color:$color_White;
+              @include fullAbsolutePosition();
+              #gskHamburger {
+                position:absolute;
+                top:0;
+                left:0;
+          			width: $logoWidth;
+          			height: $logoHeight;
+                background-position: 50% 50%;
+                background-size: 30px 24px;
+                background-repeat: no-repeat;
+                background-image: url('../images/gsk/svg/category_menu_icon.svg');
+                cursor:pointer;
+                &:active, &.active {
+                  background-image: url('../images/gsk/svg/category_menu_icon_active.svg');
+                }          	
+              }
+              #gskTitle {
+                @include transition();
+                position:absolute;
+                top:0;
+                left:$logoWidth;
+                text-align:left;
+                width:$gskTitleWidth;
+                color:$color_header_active;
+                height: $gskHeaderHeight;       	
+                font-weight: bold;
+                font-size: 32px;
+                @media #{$mediumViewport} {
+                  font-size: 24px;
+                }
+                line-height: $gskHeaderHeight;
+                vertical-align: middle;
+                cursor: pointer;
+                &:hover {
+                  color:$color_header_hover;
+                }
+              }
+              #gskSidebar {
+                z-index: 402;
+                overflow: hidden;
+              	@include transition();
+                margin-left: -1 * $gskSidebarWidth;
+                top: $gskHeaderHeight;
+                background-color:$color_White;
+                border-right: 1px solid $secondaryBorder;
+                border-top: 1px solid $secondaryBorder;
+                border-bottom: 1px solid $secondaryBorder;
+                opacity: 0;
+                height: auto;
+                position:absolute;
+                width: $gskSidebarWidth;
+                box-sizing: border-box;
+                padding: 15px 0 20px 0;
+                box-shadow: 4px 0px 3px rgba(0, 0, 0, 0.15);
+                @media #{$largeViewport} {
+                  margin-left: 0;
+                  display: none;
+                  box-shadow: none;
+                	width: 0;
+                  opacity: 1;
+                  border-bottom: none;
+                  height: calc(100vh - #{$gskHeaderHeight});
+                  display:block;
+                  box-sizing: border-box;
+                  padding-left: 0;
+                  padding-right: 0;
+                }
+                h3 {
+                  height: 44px;
+                  line-height: 44px;
+                  margin:0;
+                  padding:0 10px 0 20px;
+                  font-size: 18px;
+                  color: $color_header;
+                }
+                a {
+                  @include transition();
+                  height: 44px;
+                  display:block;
+                  text-decoration: none;
+                  > div {
+                    display:inline-block;
+                    font-size:14px;
+                    line-height: 44px;
+                    height: 44px;
+                    vertical-align: middle;
+                  }
+                }
+                .categories {
+                  a {
+                    position: relative;
+                    &:before {
+                      position:absolute;
+                      top:0px;
+                      left:20px;
+                      width:8px;
+                      content: "";
+                      background-image: url('../images/gsk/svg/link_arrow_standard.svg');
+                      background-size: 7px 12px;
+                      background-position: 50% 50%;
+                      background-repeat: no-repeat;
+                      height: 44px;
+                    }
+                    padding-left: 36px;
+                    padding-right: 10px;
+                    color: $color_header;
+                    &:hover {
+                      background-color: $color_background_hover;
+                    }
+                    &:active {
+                      &:before {
+                        background-image: url('../images/gsk/svg/link_arrow_standard_white.svg');
+                      }
+                      color: $color_White;
+                      background-color: $color_header_active;
+                    }
+                  }
+                }
+                a.browseAll {
+                  padding-left: 20px;
+                  padding-right: 10px;
+                  color: $color_header_hover;
+                  &:hover, &:active {
+                    color: $color_header_active;
+                  }
+                }
+                .revision {
+                  text-transform: uppercase;
+                  height: 44px;
+                  line-height: 44px;
+                  vertical-align: middle;
+                  display:block;
+                  text-decoration: none;
+                  padding-left: 20px;
+                  padding-right: 10px;
+                  span {
+                    color: $color_header_hover;
+                  }
+                  font-size:12px;
+                  opacity: 0.75;
+                }
+              }
+              #gskSubNavigation {
+              	@include transition();
+                position:absolute;
+                background-color:$color_White;
+                top: $gskHeaderHeight;
+                left:0;
+                right:0;
+                height: $gskSubNavigationHeight;
+                border-top: 1px solid $secondaryBorder;
+                border-bottom: 1px solid $secondaryBorder;
+                text-align:center;
+                a {
+                  &.upload {
+                    display: none;
+                    @media #{$largeViewport} {
+                       display:inline-block;
+                    }
+                  }
+                	@include transition();
+                	> div {
+                		padding-left: 28px;
+                		background-size: 18px 18px;	
+                	}
+                  display:inline-block;
+                  width:144px;
+                  height:$gskSubNavigationHeight;
+                  line-height: $gskSubNavigationHeight;
+                  vertical-align: middle;
+                  text-decoration: none;
+                  font-size:14px;
+                  font-weight:bold;
+                  color: $color_header;
+                  box-sizing: border-box;
+                  border-bottom: 5px solid $color_White;
+                  &:hover {
+                    color: $color_header_hover;
+                    border-bottom: 5px solid $color_header_hover;
+                  }
+                  &:active, &.active {
+                    color: $color_header_active;
+                    border-bottom: 5px solid $color_header_active;
+                  }
+                }
+              }
+              form {
+                position:absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                button.submitButton {
+                  position:absolute;
+                  top:10px;
+                  left:50%;
+                  @media #{$largeViewport} {
+                    margin-left:350px;
+                  }
+                  @media #{$mediumViewport} {
+                    margin-left:140px;
+                  }         
+                  width:44px;
+                  height:44px;
+                  padding:0;
+                  background-position: 50% 50%;
+                  background-size: 29px 29px;
+                  background-repeat: no-repeat;
+                  cursor:pointer;
+                  background-image: url('../images/gsk/svg/search.svg') !important;
+                  &:hover {
+                    background-image: url('../images/gsk/svg/search_hover.svg') !important;
+                  }
+                  &:active {
+                    background-image: url('../images/gsk/svg/search_active.svg') !important;
+                  }
+                }
+                button.accessButton {
+                  display:none;
+                }
+                .searchInput {
+                  border: 1px solid $color_header;
+                  position:absolute;
+                  top:10px;
+                  left:50%;
+                  box-sizing: border-box;
+                  max-width: none;
+                  font-size: 14px;
+                  height:44px !important;
+                  padding: 0 10px 0 10px;
+                  @media #{$largeViewport} {
+                    margin-left: -394px;
+                    width: 788px;
+                  }
+                  @media #{$mediumViewport} {
+                    margin-left: -184px;
+                    width: 369px;
+                  }
+                }
+              }
+            }
+          }
+        }  
+      }
+    }
+  }
+}
+
+@include rescalableReponsiveCommon();
+
+@media only screen and (max-width:959px) and (min-width:768px){
+  @include rescalableReponsiveCommon();
+}
+
+@media only screen and (max-width:767px) {
+  @include rescalableReponsiveCommon();
+}
+
+/* =============================
+/* 
+/* UI Elements
+/* 
+/* ============================= */
+
+.vp_podpager, .vp_podfilterer, .vp_podsorter, .vp_pager, .vp_podViewToggler {
+  color: $color_header;
+  BUTTON.prevButton {
+    margin:0;
+    right:-6px;
+    top:2px;
+    position:relative;
+  }
+  BUTTON.nextButton {
+    margin:0;
+    left:-8px;
+    top:2px;
+    position:relative;
+  }
+}
+
+
+
+.vp_podpager {
+  .of-label, .pages-label {
+    height:25px;
+    vertical-align:middle;
+    line-height: 25px;    
+    width: 11px !important;
+    display:inline-block;
+  }
+  .pages-label {
+    margin-right:10px;
+  }
+  BUTTON {
+    margin-top:5px;
+  }
+  form {
+    width: 15px !important;
+    INPUT {
+      text-align: right;
+      width: 15px !important;
+      border: none;
+      color: $color_header_active;
+      height:25px;
+      vertical-align:middle;
+      line-height: 25px;  
+      display:inline-block;
+    }    
+  }
+
+}
+
+.vp_pod {
+  .titleBar { 
+    .viewToggle {
+      display: none;
+    }
+  }
+}
+
+.hide-subnavigation {
+  #bottom-section {
+    margin-top: -1px;
+  }
+  #top-section {
+    #header {
+      @media #{$smallViewport} {
+        height: $gskMobileHeaderHeight;
+      }
+      height: $gskHeaderHeight;
+      border-bottom:1px solid $secondaryBorder;
+      #searchContainer {
+        height: $gskHeaderHeight;
+        @media #{$smallViewport} {
+          height: $gskMobileHeaderHeight;
+        }
+        #searchBoxWrapper {
+          .searchView { 
+            #gskSubNavigation {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.qumu-phone {
+  .hide-subnavigation {
+    #top-section {
+      #header {
+        &.headChange {
+          height: 2 * $gskMobileHeaderHeight !important;
+          #searchContainer {
+            height: 2 * $gskMobileHeaderHeight;
+          }
+        }
+        height: $gskMobileHeaderHeight;
+        #searchContainer {
+          height: $gskMobileHeaderHeight;
+        }
+      }
+    }
+  }
+}
+
+
+
+

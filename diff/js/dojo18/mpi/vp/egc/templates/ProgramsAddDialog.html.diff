@@ -1,0 +1,90 @@
+--- ./default/js/dojo18/mpi/vp/egc/templates/ProgramsAddDialog.html	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/vp/egc/templates/ProgramsAddDialog.html	2019-04-18 16:02:34.000000000 -0400
+@@ -1,33 +1,53 @@
+-<div style="min-height:130px">	
+-	<div class="subHeader"><span>{{RC.newProgram}}</span></div>
+-	<div class="instructions" data-bind="visible: !initializing()">{{RC.noteUpload}}</div>
+-	<div class="instructions" data-bind="visible: initializing() || (loading() && !templateSelected())"><div style="display:inline-block;" class="loadingIcon"></div><span>{{RC.loadingMessageShort}}</span></div>
+-	<div data-bind="visible: availableChannels().length == 0 && !loading()">
+-		<span>{{RC.noChannels}}</span>
+-	</div>
+-	<div class="form-row" data-bind="visible: screen() == 'pickTemplate' && availableChannels().length > 1">
+-		<div class="form-label">{{RC.channel}}</div>
+-		<div class="form-control">
+-			<select data-dojo-attach-point="_channelSelect" data-bind="disable: loading() || channelSaved(), options: availableChannels, optionsCaption: $root.$RC.selectSelect, optionsText: 'name', value: selectedChannel, event: { keydown: $root.checkEnterKey}"></select>
++<div style="min-height:130px" class="programs-add-dialog">
++	<div data-bind="visible: screen() != 'editProgram' && screen() != 'editVideo'">
++		<div class="left-column">
++			<h2>Step 1 of 2:</h2>
++			<div class="instructions" data-bind="visible: !initializing()">First, select the channel you wish to add your video to</div>
++			<div class="instructions" data-bind="visible: initializing() || (loading() && !templateSelected())"><div style="display:inline-block;" class="loadingIcon"></div><span>{{RC.loadingMessageShort}}</span></div>
++			<div data-bind="visible: availableChannels().length == 0 && !loading()">
++				<span>{{RC.noChannels}}</span>
++			</div>
++			<div class="form-row" data-bind="visible: screen() == 'pickTemplate' && availableChannels().length > 1">
++				<div class="form-control">
++					<select data-dojo-attach-point="_channelSelect" data-bind="disable: loading() || channelSaved(), options: availableChannels, optionsCaption: $root.$RC.selectSelect, optionsText: 'name', value: selectedChannel, event: { keydown: $root.checkEnterKey}"></select>
++				</div>
++			</div>
++			<div class="form-row" data-bind="visible: screen() == 'editProgram' || screen() == 'editVideo'">
++				<div class="form-label">{{RC.channel}}</div><div class="form-control text" data-bind="text: selectedChannel() && selectedChannel().name"></div>
++			</div>
++			<div class="instructions" data-bind="visible: screen() == 'pickTemplate' && selectedChannel() && vodProgramTemplates().length > 1">Please choose a program template:</div>			
++			<div class="form-row" data-bind="visible: screen() == 'pickTemplate' && selectedChannel() && vodProgramTemplates().length > 1">
++				<div class="form-control">
++					<select data-bind="disable: loading() || templateSaved(), options: vodProgramTemplates, optionsCaption: $root.$RC.selectSelect, optionsText: 'name', value: selectedTemplate"></select>
++				</div>
++			</div>
++			<div class="form-row" data-bind="visible: screen() == 'editProgram' || screen() == 'editVideo'">
++				<div class="form-label">{{RC.template}}</div><div class="form-control text" data-bind="text: selectedTemplate() && selectedTemplate().name"></div>
++			</div>
++			<div class="gsk-toc-checkbox">
++				<label class="gsk-checkbox">
++					<input type="checkbox" data-bind="checked: tocAgreed, event: { keydown: checkTocAgreed}" />
++					<span></span>
++				</label> 
++				<div class="gsk-label">I have read and agree to <a href="https://cbshelp.gsk.com/Pages/GSKTube-Terms-and-Conditions.aspx">GSKTube terms and conditions</a> and <a href="https://myconnect.gsk.com/sites/cGSKAssets/pages/UseAndAccessPolicies.aspx">Your Responsibilities Online</a>.</div>
++			</div>
++			<div class="submitButtons" data-bind="visible:screen() != 'editProgram'">
++				<button class="genericButton next" tabindex="0" data-bind="visible: screen() == 'pickTemplate' && availableChannels().length > 1 && !channelSaved(), disable: (!channelSelected() || !tocAgreed())" data-dojo-attach-event="ondijitclick: _setChannel">[RC next]</button>
++				<button class="genericButton next" tabindex="0" data-bind="visible: screen() == 'pickTemplate' && vodProgramTemplates().length > 1 && !templateSaved(), disable: (!templateSelected() || !tocAgreed())" data-dojo-attach-event="ondijitclick: _setTemplate">[RC next]</button>
++				<button class="genericButton cancel" tabindex="0" data-bind="" data-dojo-attach-event="ondijitclick: _cancelAdd">[R cancel]</button>
++			</div>
+ 		</div>
+-	</div>
+-	<div class="form-row" data-bind="visible: screen() == 'editProgram' || screen() == 'editVideo'">
+-		<div class="form-label">{{RC.channel}}</div><div class="form-control text" data-bind="text: selectedChannel() && selectedChannel().name"></div>
+-	</div>
+-	<div class="form-row" data-bind="visible: screen() == 'pickTemplate' && selectedChannel() && vodProgramTemplates().length > 1">
+-		<div class="form-label">{{RC.template}}</div>
+-		<div class="form-control">
+-			<select data-bind="disable: loading() || templateSaved(), options: vodProgramTemplates, optionsCaption: $root.$RC.selectSelect, optionsText: 'name', value: selectedTemplate"></select>
++		<div class="right-column">
++			<div class="gsk-instructions">
++				<h3>Only upload videos that comply with:</h3>
++				<div>1. Comply with GSK's <a href="https://cbshelp.gsk.com/Pages/GSKTube-Terms-and-Conditions.aspx">GSKTube terms and conditions</a></div>
++				<div>2. <a href="https://myconnect.gsk.com/sites/cGSKAssets/pages/UseAndAccessPolicies.aspx">Your Responsibilities Online</a></div>
++				<div>3. GSK established security standards and policies.</div>
++				<h4>Unsure what to do?</h4>
++				<div>Check out <a href="https://cbshelp.gsk.com/Pages/Uploading-videos-to-GSKTube.aspx">Getting started with Uploading</a></div>
++			</div>
+ 		</div>
+ 	</div>
+-	<div class="form-row" data-bind="visible: screen() == 'editProgram' || screen() == 'editVideo'">
+-		<div class="form-label">{{RC.template}}</div><div class="form-control text" data-bind="text: selectedTemplate() && selectedTemplate().name"></div>
+-	</div>
+-	<div class="submitButtons" data-bind="visible:screen() != 'editProgram'">
+-		<button class="genericButton" tabindex="0" data-bind="visible: screen() == 'pickTemplate' && availableChannels().length > 1 && !channelSaved(), disable: !channelSelected()" data-dojo-attach-event="ondijitclick: _setChannel">[RC next]</button>
+-		<button class="genericButton" tabindex="0" data-bind="visible: screen() == 'pickTemplate' && vodProgramTemplates().length > 1 && !templateSaved(), disable: !templateSelected()" data-dojo-attach-event="ondijitclick: _setTemplate">[RC next]</button>
+-		<button class="genericButton" tabindex="0" data-bind="" data-dojo-attach-event="ondijitclick: _cancelAdd">[R cancel]</button>
+-	</div>
+ 	<div data-bind="visible: screen() == 'editProgram' || screen() == 'editVideo'">
+ 		<div data-dojo-attach-point="_programEditor" data-dojo-type="mpi/ap/ProgramEditor" data-dojo-props="defaults: { egc: true, programTypeName:'esc_program.type.1' }" data-bind="
+ 			dijitEvent: {
+@@ -35,4 +55,4 @@
+ 			}">
+ 		</div>
+ 	</div>
+-</div>
+\ No newline at end of file
++</div>

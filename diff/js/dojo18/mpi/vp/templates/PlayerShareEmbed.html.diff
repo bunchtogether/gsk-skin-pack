@@ -1,0 +1,13 @@
+--- ./default/js/dojo18/mpi/vp/templates/PlayerShareEmbed.html	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/vp/templates/PlayerShareEmbed.html	2019-04-18 16:02:34.000000000 -0400
+@@ -67,10 +67,6 @@
+ 				<div class="checkBox">
+ 					<input type="checkbox" data-dojo-attach-point="includeSuppCheck" data-dojo-attach-event="ondijitclick:_update"> ${R.showSupp}
+ 				</div>
+-				<div class="checkBox">
+-					<input type="checkbox" data-dojo-attach-point="includeTitleCheck" data-dojo-attach-event="ondijitclick:_update"> ${R.showTitle} 
+-				</div>	
+-				
+ 				<div style="margin: 3px 0px;">
+ 					<select class="sizeSelect" data-dojo-attach-point="sizeSelect" data-dojo-attach-event="onchange: _update">
+ 						<option value="default">${R.suggestedSize}</option>

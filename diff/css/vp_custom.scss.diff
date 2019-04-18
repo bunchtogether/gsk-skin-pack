@@ -1,0 +1,31 @@
+--- ./default/css/vp_custom.scss	2019-04-18 16:02:34.000000000 -0400
++++ ./custom/css/vp_custom.scss	2019-04-18 16:02:34.000000000 -0400
+@@ -1 +1,26 @@
+-/* Copy this file to your skin override directory and add skin customization overrides to it */
+\ No newline at end of file
++/* Copy this file to your skin override directory and add skin customization overrides to it */
++
++@import "colors";
++@import "customColors";
++@import "branding";
++@import "customBranding";
++@import "custom/dijit";
++@import "custom/util";
++@import "custom/favorites";
++@import "custom/form";
++@import "custom/program_information";
++@import "custom/support_custom_html";
++@import "custom/vp_comments";
++@import "custom/vp_common";
++@import "custom/vp_egc";
++@import "custom/vp_home";
++@import "custom/vp_player";
++@import "custom/vp_scrubber";
++@import "custom/vp_playerTabs";
++@import "custom/vp_pods";
++@import "custom/vp_program";
++@import "custom/vp_relatedVideo";
++@import "custom/vp_searchResults";
++@import "custom/vp_volumeSlider";
++@import "custom/footer";
++

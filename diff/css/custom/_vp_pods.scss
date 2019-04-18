@@ -1,0 +1,776 @@
+.channelList {
+  border-bottom: none;
+}
+
+.channelList {
+  .vp_pod_channel_header {
+    .channelThumbnailAndInformation {
+      margin:5px 0 10px 0 !important;
+    }
+  }
+}
+
+.qumu-phone {
+  .speechSearch {
+    margin: 10px 0 10px 12px; 
+    .speechSearchLabel {
+      font-size:14px;
+    }
+    .speechSearchOnOff {
+      border: none;
+    }
+  }
+  .vp_pod {
+    .titleBar {
+      .title {
+        height: 24px;
+        .searchSuggestionCount {
+          font-size: 16px;
+          line-height: 24px;
+        }        
+      }
+    }
+    .actionBar {
+      div.sort {
+        display: block;
+        width: 100%;
+        overflow:hidden;
+        text-align: right;
+        select {
+          width: calc(100% - 80px);
+        }
+      }
+    }
+  }  
+}
+
+.vp_pod.has-ssCount {
+  .vp_podsorter {
+    &:before {
+      content: "Sort by:";
+      line-height: 44px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+}
+
+.vp_pod {
+  .hasBottomTitlebar {
+    border-top: none;
+  }
+  .speechSearch {
+    .speechSearchLabel {
+      font-size:16px;
+    }
+    .speechSearchOnOff {
+      border: none;
+    }
+  }
+  .actionBar {
+    div.sort {
+      @media #{$largeViewport} {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+      }
+      @media #{$mediumViewport} {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+      }
+      float: none;
+      max-width: none;
+    }
+  }
+  .noItemsNode {
+    @include standardPadding();
+  }
+  .vp_podsorter {
+    select {
+      margin-left:10px;
+      width: 200px;
+      @extend select.genericSelect;
+    }
+    .sorter {
+      display: none !important;
+    }
+  }
+
+  @include transition();
+  overflow: visible;
+  position:relative;
+  
+  @include standardPadding();
+  
+  border-bottom: none;
+  background-color: $color_White;
+  color: $color_header;
+
+  @media #{$largeViewport}, #{$mediumViewport} {
+    border-top:1px solid $secondaryBorder;
+    border-left:1px solid $secondaryBorder;
+    border-right:1px solid $secondaryBorder;
+  }
+
+  &:last-child {
+    border-bottom:1px solid $secondaryBorder;
+  }
+  
+  .titleBar {
+    .rss {
+      background-position: 50% 50%;
+      background-repeat: no-repeat;
+      background-size:20px 20px;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      background-image: url('../images/gsk/svg/rss.svg') !important;
+      &:hover, &:active {
+        background-image: url('../images/gsk/svg/rss_active.svg') !important;
+      }
+    }
+    &.hasViewChange {
+      .page {
+        right: 0;
+      }      
+    }
+    .page {
+      right: 0;
+    }
+    margin-top:0;
+    .title {
+      &::first-letter {
+        text-transform: uppercase;
+      }
+      text-transform: lowercase;
+      width: calc(100% - 35px);
+      font-size:24px;
+      font-weight: bold;      
+    }
+  }
+}
+.qumu-phone {
+  .favorites {
+    .vp_pod_item_smallthumb {
+      .subscribeBar {
+        display: inline !important;
+        float: none;
+      }
+    }
+  }  
+}
+
+
+.favorites {
+  .vp_pod_item_smallthumb {
+    .subscribeBar {
+      .unSubscribeButton, .subscribeButton {
+        margin-top: 3px;
+        background-position: 0% 50%;
+        background-repeat: no-repeat;
+        background-size:20px 20px;
+        width: 20px;
+        height: 20px;
+      }
+      .unSubscribeButton {
+        background-image: url('../images/gsk/svg/unsubscribe.svg') !important;
+      }
+      .subscribeButton {
+        background-image: url('../images/gsk/svg/subscribe.svg') !important;
+      }
+      .removeFile {
+        margin-right: -2px;
+        @extend button.removeButton;
+        background-image: url('../images/gsk/svg/remove.svg') !important; 
+        width: 22px !important;
+        height: 20px !important;
+        background-size:20px 20px !important;
+        margin-top:-2px;
+      }
+    }
+  }
+}
+
+.vp_pod_item_smallthumb {
+  .programLikesViewsPublicationComment {
+    .likesViews {
+      .viewIcon {
+        @include viewIcon();
+      }
+      .likes {
+        .likeIcon {
+          @include likeIcon();
+        }
+      }
+    }
+    .commentCount {
+      .commentIcon {
+        @include commentIcon();
+      }
+    }
+  }
+}
+
+
+
+.vp_pod_smallthumb {
+  overflow: hidden;
+  margin-left: -15px;
+  .podItem {
+    float:left;
+    &.c1, &.c2, &.c3, &.c4 {
+      margin-left: 15px;
+      margin-bottom: 15px;
+    }
+  }
+}
+
+
+
+@mixin rescalableReponsive() {
+  .qumu-rescalable {
+    .vp_pod {
+      width: auto;
+    }
+    .vp_pod_item_smallthumb {
+
+      width: 231px;
+      position: relative;
+      height: 190px;
+      overflow: hidden;
+
+      .thumbnail {
+        width: 231px;
+        height: 130px;
+        border:1px solid $secondaryBorder; 
+        box-sizing: border-box;
+        background-size:cover;
+        z-index:201;
+        background-position: center center;
+        float: none;
+        .duration {
+          color: $color_White;
+          background-color: rgba(84, 79, 64, 0.8);
+          position:absolute;
+          bottom:0;
+          right:0;
+          padding:4px;
+          font-size:12px;
+          z-index:202;
+        }  
+      }
+
+      h3.title {
+        cursor: pointer;
+        padding-left: 0;
+        padding-right: 0;
+        margin-top:8px;
+        font-size: 14px;
+        line-height: 16px;
+        font-weight: bold;
+        color: $color_header_hover;
+        max-height: 42px;
+        overflow: hidden;
+      }
+
+      .programLikesViewsPublicationComment {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        height: auto;
+        .views, .likes, .commentCount, .publicationDate {
+          color: $color_header;
+          font-size:11px;
+          height: 14px; 
+          line-height: 14px;
+          vertical-align: middle;
+          display: inline-block;
+          float: none;  
+          padding-top: 0;
+
+          .viewIcon, .likeIcon, .commentIcon  {
+            width: 18px;
+            height: 14px;
+            background-size: 18px 14px;
+            margin-right: 4px;
+            margin-top:-1px;
+          }       
+        }
+      }
+
+      .views {
+        padding-right:10px;
+        .viewIcon {
+          @include viewIcon();
+        }          
+      }
+      .likes {
+        padding-right:10px;
+        .likeIcon {
+          @include likeIcon();
+        }
+      }
+      .commentCount {
+        padding-right:10px;
+        .commentIcon {
+          @include commentIcon();
+        }
+      }
+    }
+    .vp_pod_program_poster {
+      width: 100%;
+      height: 203px;
+      @media #{$largeViewport} {
+        height: 270px;
+      }
+      position: relative;
+      .largeThumbnailAndProgramDetails {
+        border: none;
+        height: auto;
+        @include fullAbsolutePosition();
+        .thumbnail {
+          width: 360px;
+          height: 203px;
+          @media #{$largeViewport} {
+            width: 480px;
+            height: 270px;
+          }
+          border:1px solid $secondaryBorder; 
+          box-sizing: border-box;
+          background-size:cover;
+          z-index:201;
+          background-position: center center;
+          zoom:1;
+        }
+        .programDetailsVOD {
+          z-index:202;
+          top:0;
+          bottom:0;
+          @media #{$largeViewport} {
+            left: 480px;
+          }
+          left: 360px;
+          right:0;
+          width: auto;
+          height: auto;
+          padding-left:0px;
+          padding-top:0px;
+          float:none;
+          background-color: transparent;
+          overflow: visible;
+          .programDuration {
+            color: $color_White;
+            background-color: rgba(84, 79, 64, 0.8);
+            position:absolute;
+            right:100%;
+            bottom:0;
+            padding:4px;
+            font-size:12px;
+          }
+          .programTitle {
+            &:before {
+              font-size: 18px;
+              color: $color_header;
+            }
+            padding-left:10px;
+            padding-right: 0;
+            margin-top:0;
+            font-size: 24px;
+            @media #{$largeViewport} {
+              font-size: 28px;
+            }
+            font-weight: bold;
+            color: $color_header_hover;
+          }
+          .programDescription {
+            padding-left:10px;
+            padding-right: 0;
+            margin-top:0;
+            font-size: 14px;
+            @media #{$largeViewport} {
+              font-size: 14px;
+              line-height: 20px;
+            }
+            color: $color_header;        
+          }
+          .programAuthor {
+            display: none;
+          }
+          .programTags {
+            display: none;
+          }
+          .channelName {
+            display: none;
+          }
+          .viewsLikesAndComments {
+            position: absolute;
+            bottom: 0px;
+            left: 0;
+            right: 0;
+            height:23px;
+            padding-left:10px;
+            padding-right: 10px;
+            .views, .likes, .comments, .programPublicationDate {
+              height: 23px; 
+              line-height: 23px;
+              vertical-align: middle;
+              display: inline-block;
+              float: none;  
+              color: $color_header;
+              font-size: 14px;
+              margin-top: 0;
+              .viewIcon, .likeIcon, .commentIcon  {
+                width: 31px;
+                height: 23px;
+                background-size: 31px 23px;
+                margin-right: 10px;
+                margin-top:-1px;
+              }       
+            }
+            .views {
+              .viewIcon {
+                @include viewIcon();
+              }          
+            }
+            .likes {
+              padding-left:10px;
+              .likeIcon {
+                @include likeIcon();
+              }
+            }
+            .comments {
+              padding-left:10px;
+              .commentIcon {
+                @include commentIcon();
+              }
+            }
+          }
+        }
+      }
+    }
+    .vp_pod_smallthumb {
+      .podItem {
+        zoom: 1;
+      }
+    }
+    .vp_pod {
+      #posterPodContainer {
+        .vp_pod {
+          height: auto;
+        }
+      }
+    }
+  }
+}
+
+@include rescalableReponsive();
+
+@media only screen and (max-width: 767px) {
+  @include rescalableReponsive();
+}
+
+@media only screen and (max-width:959px) and (min-width:768px) {
+  @include rescalableReponsive();
+}
+
+@media #{$largeViewport} {
+  .qumu-rescalable {
+    .vp_pod {
+      width: 970px;
+    }
+  }
+}
+
+@media #{$mediumViewport} {
+  .qumu-rescalable {
+    .vp_pod {
+      width: 724px;
+    }
+  }
+}
+
+@mixin phoneReponsive() {
+  .qumu-phone:not(.embed-page) {
+    .titleBar {
+      @include standardPadding();
+    }
+    #extraPodsContainer {
+      .vp_pod {
+        border-bottom:1px solid $secondaryBorder; 
+      }
+    }
+    #posterPodContainer {
+      .vp_pod {
+        padding:0;
+      }
+    }
+    .vp_pod_item_smallthumb {
+      margin:0 !important;
+      width: 100%;
+      box-sizing: border-box;
+      position: relative;
+      height: 90px;
+      overflow: hidden;
+      @include standardPadding();
+      .thumbnail {
+        float:left;
+        width: 142px;
+        height: 80px;
+        border:1px solid $secondaryBorder; 
+        box-sizing: border-box;
+        background-size:cover;
+        z-index:201;
+        background-position: center center;
+        margin-right:10px;
+        .duration {
+          color: $color_White;
+          background-color: rgba(84, 79, 64, 0.8);
+          position:absolute;
+          bottom:0;
+          right:0;
+          padding:4px;
+          font-size:12px;
+          z-index:202;
+        }  
+      }
+
+      h3.title {
+        cursor: pointer;
+        padding-left: 0;
+        padding-right: 0;
+        margin-top:8px;
+        margin-bottom:4px;
+        font-size: 14px;
+        line-height: 16px;
+        font-weight: bold;
+        color: $color_header_hover;
+        max-height: 42px;
+        overflow: hidden;
+      }
+
+      .programLikesViewsPublicationComment {
+        position:relative;
+        display:inline-block;
+        height: auto;
+        width:auto;
+        .views, .likes, .commentCount, .publicationDate {
+          color: $color_header;
+          font-size:11px;
+          height: 14px; 
+          line-height: 14px;
+          vertical-align: middle;
+          display: inline-block;
+          float: none;  
+          padding-top: 0;
+          .viewIcon, .likeIcon, .commentIcon  {
+            width: 18px;
+            height: 14px;
+            background-size: 18px 14px;
+            margin-right: 4px;
+            margin-top:-1px;
+          }       
+        }
+      }
+      .views {
+        padding-right:10px;
+        .viewIcon {
+          @include viewIcon();
+        }          
+      }
+      .likes {
+        padding-right:10px;
+        .likeIcon {
+          @include likeIcon();
+        }
+      }
+      .commentCount {
+        padding-right:10px;
+        .commentIcon {
+          @include commentIcon();
+        }
+      }
+    }
+    .vp_pod_phone_program_poster {
+      width:100%;
+      padding:0;
+      margin-top:0;
+      position: relative;
+      .largeThumbnailAndProgramDetails {
+        height: auto;
+        border: none;
+        width:100% !important;
+        height: auto;
+        position:relative;
+        float: none;
+        .thumbnail {
+          float: none;
+          border-left:none;
+          border-right:none;
+          border-top:none;
+          overflow:hidden;
+          zoom: 1;
+          width:100% !important;
+          height:auto !important;
+          @include aspectRatio(360, 203);
+          box-sizing: border-box;
+          background-size:cover;
+          z-index:201;
+          background-position: center center;
+          border-bottom:1px solid $secondaryBorder;
+          .author, .overlay, .title {
+            display: none;
+          }
+        }
+        .programDetailsVOD {
+          margin:0;
+          width:auto;
+          height: auto;
+          overflow: visible;
+          z-index:202;
+          width: auto;
+          height: auto;
+          float:none;
+          background-color: transparent;
+          border-bottom: 1px solid $secondaryBorder;
+          padding-bottom: 54px;
+          padding-top:10px;
+          .programTitle {
+            &:before {
+              line-height:32px;
+              color: $color_header;
+            }
+            padding-left:10px;
+            padding-right: 0;
+            margin-top:0;
+            font-size: 18px;
+            font-weight: bold;
+            color: $color_header_hover;
+          }  
+          .programDescription {
+            padding-left:10px;
+            padding-right: 0;
+            margin-top:0;
+            font-size: 14px;
+            color: $color_header;
+            position:relative;
+            overflow: hidden;
+            &.open {
+              .inner {
+                display: block;
+                max-height: none;
+              }
+            }
+            .inner {
+              float:left;
+              width: calc(100% - 40px);
+              overflow: hidden;
+              text-overflow: ellipsis;
+              display: -webkit-box;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 2;
+              line-height: 16px;
+              max-height: 32px;        
+            }       
+          }  
+          a.twisty {
+            right: 10px;
+          }
+          .programDuration {
+            color: $color_White;
+            background-color: rgba(84, 79, 64, 0.8);
+            position:absolute;
+            bottom:100%;
+            right:0;
+            padding:4px;
+            font-size:12px;
+            margin-top:-20px;
+          }
+          .programTags {
+            display: none;
+          }  
+          .viewsLikesAndComments {
+            position: absolute;
+            bottom: 20px;
+            left: 10px;
+            right: 0;
+            height:11px;
+            padding-left:0px;
+            padding-right: 15px;
+            .views, .likes, .comments, .programPublicationDate {
+              height: 11px; 
+              line-height: 11px;
+              vertical-align: middle;
+              display: inline-block;
+              float: none;  
+              color: $color_header;
+              font-size: 11px;
+              margin-top: 0;
+              padding-left:0;
+              padding-right: 10px;
+              .viewIcon, .likeIcon, .commentIcon  {
+                width: 16px;
+                height: 11px;
+                background-size: 16px 11px;
+                margin-right: 5px;
+                margin-top:-1px;
+              }       
+            }
+            .views {
+              .viewIcon {
+                @include viewIcon();
+              }          
+            }
+            .likes {
+              .likeIcon {
+                @include likeIcon();
+              }
+            }
+            .comments {
+              padding-right:20px;
+              .commentIcon {
+                @include commentIcon();
+              }
+            }
+          }
+        }
+      }
+    }
+    width: auto;
+    .vp_pod {
+      padding:0;
+      width:100% !important;
+    }
+    .vp_pod_phone_smallthumb {
+      .podItem {
+        width: 100%;
+        zoom: 1;
+      }
+    }
+  }
+}
+
+
+@include phoneReponsive();
+
+@media only screen and (max-width: 960px)  {
+  @include phoneReponsive();
+}
+
+@media only screen and (max-width: 600px) {
+  @include phoneReponsive();
+}
+
+@media only screen and (max-width: 520px) and (min-width: 440px) {
+  @include phoneReponsive();
+}
+
+@media only screen and (max-width: 440px) and (min-width: 340px) {
+  @include phoneReponsive();
+}
+
+@media only screen and (max-width: 345px)  {
+  @include phoneReponsive();
+}
+

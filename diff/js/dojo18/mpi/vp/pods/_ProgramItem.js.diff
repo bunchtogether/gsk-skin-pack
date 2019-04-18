@@ -1,0 +1,75 @@
+--- ./default/js/dojo18/mpi/vp/pods/_ProgramItem.js	2019-04-18 16:02:36.000000000 -0400
++++ ./custom/js/dojo18/mpi/vp/pods/_ProgramItem.js	2019-04-18 16:02:34.000000000 -0400
+@@ -1,21 +1,22 @@
+ define([
+-	"dojo/i18n",
+-	"dojo/dom-class",
+-	"dojo/dom-construct",
+-	"dojo/has",
+-	"dojo/_base/declare",
+-	"dojo/_base/lang",
+-	"dojo/_base/event",
+-	"dojo/date/locale",
+-	"mpi/vp/ProgramRatingPanel",
+-	"mpi/util/time",
+-	"mpi/util/misc",
+-	"mpi/util/restXhr",
+-	"i18n!mpi/vp/nls/common",
+-	"i18n!mpi/vp/nls/MyFavorites",
+-	"dojo/sniff"
+-], function(i18n, domClass, domConstruct, has, declare, lang, event, dateLocale, ProgramRatingPanel, timeLocale, mpimisc, restXhr, RC, RF) {
+-	
++ 	"dojo/i18n",
++ 	"dojo/dom-class",
++ 	"dojo/dom-construct",
++ 	"dojo/has",
++ 	"dojo/_base/declare",
++ 	"dojo/_base/lang",
++ 	"dojo/_base/event",
++ 	"dojo/date/locale",
++ 	"mpi/vp/ProgramRatingPanel",
++ 	"mpi/util/time",
++ 	"mpi/util/date",
++ 	"mpi/util/misc",
++ 	"mpi/util/restXhr",
++ 	"i18n!mpi/vp/nls/common",
++ 	"i18n!mpi/vp/nls/MyFavorites",
++ 	"dojo/sniff"
++], function(i18n, domClass, domConstruct, has, declare, lang, event, dateLocale, ProgramRatingPanel, timeLocale, mpiDate, mpimisc, restXhr, RC, RF) {
++
+ 	return declare([], {
+ 		item: null,
+ 		controller: null,
+@@ -148,14 +149,12 @@
+ 		},
+ 		
+ 		publicationDate: function() {
+-			return dateLocale.format(new Date(this.item.availableDate), {
+-				selector: "date",
+-				formatLength: "short"
+-			});
++			return mpiDate.humaneDate(new Date(this.item.availableDate));
+ 		},
+ 		
+ 		duration: function() {
+-			return timeLocale.formatDuration(this.item.duration);
++			var duration = this.item.duration ? this.item.duration : this.item.creationDate || new Date().getTime();
++			return timeLocale.formatDuration(duration);
+ 		},
+ 		
+ 		author: function() {
+@@ -231,12 +230,12 @@
+ 			});
+ 		},
+ 		
+-		hasUpcoming:  function() {
++		hasUpcoming:	function() {
+ 			return !!this.item.occurrence;
+ 		},
+ 		
+ 		accessibilityInfo: function() {
+-			return this.a11yAdapter.getInfo(this.item);				
++			return this.a11yAdapter.getInfo(this.item);				 
+ 		},
+ 		
+ 		_imgLoad: function(e) {
