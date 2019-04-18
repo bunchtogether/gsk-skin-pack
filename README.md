@@ -15,4 +15,4 @@ Using a Linux or Mac device:
   yarn package
   ```
 
-The compiled skin pack will be available at ```tube.1096.zip```
+The compiled skin pack will be available at ```devtube.1096.zip```

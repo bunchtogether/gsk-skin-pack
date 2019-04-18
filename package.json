@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "extract": "bash ./extract.sh",
-    "package": "rm -rf package && rm -rf tube && gulp revision && gulp package && mv package tube && zip -r tube.1096.zip ./tube && rm -rf tube"
+    "package": "rm -rf package && rm -rf devtube && gulp revision && gulp package && mv package devtube && zip -r devtube.1096.zip ./devtube && rm -rf devtube"
   },
   "author": "Bunch Inc",
   "devDependencies": {
